@@ -3,27 +3,6 @@ export function generateHTML(isDevelopment) {
   return `
   <div class="bg-container">
     <div class="main-container">
-      <div class="logo1">
-        <img src="assets/images/logo1-part1.png" alt="Logo 1 Part 1" class="logo1-part1">
-        <img src="assets/images/logo1-part2.png" alt="Logo 1 Part 2" class="logo1-part2">
-      </div>
-      <div class="title"></div>
-      <div class="game-container">
-      </div>
-    </div>
-    <div class="media-container">
-      <div class="box1">
-        <div class="box-man1">
-          <img src="assets/images/man1-part1.png" alt="Man 1 Part 1" class="man1-part1">
-          <img src="assets/images/man1-part2.png" alt="Man 1 Part 2" class="man1-part2">
-        </div>
-      </div>
-      <div class="box2">
-        <div class="box-man2">
-          <img src="assets/images/man2-part1.png" alt="Man 2 Part 1" class="man2-part1">
-          <img src="assets/images/man2-part2.png" alt="Man 2 Part 2" class="man2-part2">
-        </div>
-      </div>
     </div>
   </div>
   ${isDevelopment ? `

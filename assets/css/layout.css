@@ -1,0 +1,32 @@
+.main-container {
+  max-width: min(650px, 95vw);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px 0 20px 0;
+  box-sizing: border-box;
+}
+
+/* Media container and boxes removed */
+
+/* Game container styles removed */
+
+/* Responsive styles for removed elements */
+
+/* Tablet portrait - move wheel up */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .main-container {
+    padding-bottom: 15vh;
+  }
+}
+
+/* All tablets in portrait */
+@media (orientation: portrait) and (min-width: 768px) {
+  .main-container {
+    padding-bottom: 15vh;
+  }
+}
+
+/* Orientation styles for removed elements */

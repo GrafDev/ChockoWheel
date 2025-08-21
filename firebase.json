@@ -1,8 +1,8 @@
 {
   "hosting": [
     {
-      "site": "scratch-indiana-click",
-      "public": "dist/scratch-indiana-click",
+      "site": "chocko-wheel-click",
+      "public": "dist/chocko-wheel-click",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -16,8 +16,8 @@
       ]
     },
     {
-      "site": "scratch-indiana-auto",
-      "public": "dist/scratch-indiana-auto",
+      "site": "chocko-wheel-auto",
+      "public": "dist/chocko-wheel-auto",
       "ignore": [
         "firebase.json",
         "**/.*",

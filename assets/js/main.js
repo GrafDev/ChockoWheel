@@ -1,7 +1,6 @@
 // IMPORTS
 import '../css/main.css'
 import { initializeEntranceAnimations } from './appearance-animations.js'
-import { showModal, hideModal } from './modal-animations.js'
 import { generateHTML } from './html-template.js'
 import { setupDevPanel, updateDevToggleText } from './dev-panel.js'
 import { applyResponsiveSizing } from './responsive-sizing.js'

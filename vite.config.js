@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from 'vite'
+import { viteSingleFile } from 'vite-plugin-singlefile'
 import { VERSION } from './version.js'
 
 export default defineConfig(({ mode }) => {
@@ -6,16 +7,24 @@ export default defineConfig(({ mode }) => {
     const privateEnv = loadEnv('private', process.cwd(), '')
     
     let gameMode = 'click'
+    let region = null
+    let isPlayable = false
     
     if (mode && mode !== 'development') {
         const parts = mode.split('-')
-        if (parts.length >= 1) {
+        if (parts[0] === 'playable') {
+            isPlayable = true
+            gameMode = parts[1] || 'click'
+            region = parts[2] || 'eu'
+        } else if (parts.length >= 1) {
             gameMode = parts[0]
         }
     }
     
     const currentSettings = {
-        VITE_GAME_MODE: gameMode
+        VITE_GAME_MODE: gameMode,
+        VITE_REGION: region,
+        VITE_IS_PLAYABLE: isPlayable
     }
     
     const mergedEnv = { ...publicEnv, ...privateEnv, ...currentSettings }
@@ -35,17 +44,22 @@ export default defineConfig(({ mode }) => {
                 '@css': '/src/assets/css'
             }
         },
+        plugins: isPlayable ? [viteSingleFile()] : [],
         build: {
-            outDir: mode === 'auto' ? 'dist/wheel-visit-auto' : 
-                    mode === 'click' ? 'dist/wheel-visit-click' : 'dist',
-            assetsDir: 'assets',
-            cssCodeSplit: true,
+            outDir: isPlayable ? `dist/playable-${gameMode}-${region}` :
+                    mode === 'auto' ? 'dist/chocko-wheel-auto' : 
+                    mode === 'click' ? 'dist/chocko-wheel-click' : 'dist',
+            assetsDir: isPlayable ? '' : 'assets',
+            cssCodeSplit: !isPlayable,
             cssMinify: true,
             rollupOptions: {
                 input: {
                     main: '/index.html'
                 },
-                output: {
+                output: isPlayable ? {
+                    manualChunks: undefined,
+                    inlineDynamicImports: true
+                } : {
                     assetFileNames: (assetInfo) => {
                         let extType = assetInfo.name.split('.')[1];
                         if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {

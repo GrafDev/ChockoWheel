@@ -34,22 +34,7 @@ export function applyResponsiveSizing() {
   // Set default media gap
   document.documentElement.style.setProperty('--max-media-gap', `${wheelSize * 1.4}px`);
   
-  // Set modal size based on wheel size with aspect ratio 1.29
-  const modalContent = document.querySelector('.modal-content');
-  if (modalContent) {
-    // Make modal bigger on mobile
-    const screenWidth = window.innerWidth;
-    const aspectRatio = screenWidth / window.innerHeight;
-    let modalWidth = wheelSize;
-    
-    if (aspectRatio < 0.6) {
-      // Mobile portrait: 95% of screen width
-      modalWidth = screenWidth * 0.95;
-    }
-    
-    modalContent.style.width = `${modalWidth}px`;
-    modalContent.style.height = `${modalWidth / 1.29}px`;
-  }
+  // Modal sizing removed
   
   console.log(`Wheel size set to: ${wheelSize}px`);
   console.log(`Main container width: ${mainContainerWidth}px`);
