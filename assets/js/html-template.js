@@ -21,7 +21,7 @@ export function generateHTML(isDevelopment) {
         </div>
         
         <div class="box2">
-          <!-- Chicken will be here -->
+          <img src="/assets/images/common/chicken.png" alt="Chicken">
         </div>
         
         <div class="game-box">

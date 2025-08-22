@@ -1,6 +1,5 @@
 // IMPORTS
 import '../css/main.css'
-import { generateHTML } from './html-template.js'
 import { GameManager } from './game-manager.js'
 
 // CONFIGURATION
@@ -14,13 +13,18 @@ async function initGame() {
   try {
     console.log('Starting game initialization...');
     
-    // First generate HTML
-    document.querySelector('#app').innerHTML = generateHTML(isDevelopment);
+    // Show dev panel in development mode
+    if (isDevelopment) {
+      const devPanel = document.getElementById('devPanel');
+      if (devPanel) {
+        devPanel.style.display = 'block';
+      }
+    }
     
     // Wait a bit for DOM to settle
     await new Promise(resolve => setTimeout(resolve, 100));
     
-    // Then initialize GameManager
+    // Initialize GameManager
     gameManager = new GameManager();
     await gameManager.init();
     console.log('Game initialized successfully');

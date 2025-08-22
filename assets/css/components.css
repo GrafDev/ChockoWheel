@@ -1,5 +1,39 @@
-/* Logo and title styles removed */
+/* Wheel Container */
+.wheel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
 
-/* Box and man components removed */
+.wheel-container img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+}
 
-/* Mobile styles for removed elements */
+.wheel-border {
+  z-index: 10;
+}
+
+.wheel-sectors {
+  z-index: 20;
+}
+
+.wheel-text {
+  z-index: 30;
+}
+
+.wheel-pointer {
+  z-index: 40;
+}
+
+.wheel-center {
+  z-index: 50;
+}
