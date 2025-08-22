@@ -6,23 +6,20 @@ export default defineConfig(({ mode }) => {
     const publicEnv = loadEnv('public', process.cwd(), '')
     const privateEnv = loadEnv('private', process.cwd(), '')
     
-    let gameMode = 'click'
-    let region = null
+    let region = 'eu'
     let isPlayable = false
     
     if (mode && mode !== 'development') {
         const parts = mode.split('-')
         if (parts[0] === 'playable') {
             isPlayable = true
-            gameMode = parts[1] || 'click'
-            region = parts[2] || 'eu'
+            region = parts[1] || 'eu'
         } else if (parts.length >= 1) {
-            gameMode = parts[0]
+            region = parts[0]
         }
     }
     
     const currentSettings = {
-        VITE_GAME_MODE: gameMode,
         VITE_REGION: region,
         VITE_IS_PLAYABLE: isPlayable
     }
@@ -46,9 +43,10 @@ export default defineConfig(({ mode }) => {
         },
         plugins: isPlayable ? [viteSingleFile()] : [],
         build: {
-            outDir: isPlayable ? `dist/playable-${gameMode}-${region}` :
-                    mode === 'auto' ? 'dist/chocko-wheel-auto' : 
-                    mode === 'click' ? 'dist/chocko-wheel-click' : 'dist',
+            outDir: isPlayable ? `dist/playable-${region}` :
+                    mode === 'eu' ? 'dist/chocko-wheel-eu' : 
+                    mode === 'kr' ? 'dist/chocko-wheel-kr' : 
+                    mode === 'ca' ? 'dist/chocko-wheel-ca' : 'dist',
             assetsDir: isPlayable ? '' : 'assets',
             cssCodeSplit: !isPlayable,
             cssMinify: true,

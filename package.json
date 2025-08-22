@@ -4,21 +4,16 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:all",
     "preview": "vite preview",
-    "build:all": "npm run build:click && npm run build:auto",
-    "deploy:all": "npm run build:all && firebase deploy",
-    "build:click": "vite build --mode click",
-    "build:auto": "vite build --mode auto",
-    "deploy:click": "npm run build:click && firebase deploy --only hosting:wheel-visit-click",
-    "deploy:auto": "npm run build:auto && firebase deploy --only hosting:wheel-visit-auto",
-    "build:playable-click-eu": "vite build --mode playable-click-eu",
-    "build:playable-click-kr": "vite build --mode playable-click-kr",
-    "build:playable-click-ca": "vite build --mode playable-click-ca",
-    "build:playable-auto-eu": "vite build --mode playable-auto-eu",
-    "build:playable-auto-kr": "vite build --mode playable-auto-kr",
-    "build:playable-auto-ca": "vite build --mode playable-auto-ca",
-    "build:playable-all": "npm run build:playable-click-eu && npm run build:playable-click-kr && npm run build:playable-click-ca && npm run build:playable-auto-eu && npm run build:playable-auto-kr && npm run build:playable-auto-ca"
+    "build:all": "npm run build:eu && npm run build:kr && npm run build:ca",
+    "build:eu": "vite build --mode playable-eu",
+    "build:kr": "vite build --mode playable-kr", 
+    "build:ca": "vite build --mode playable-ca",
+    "deploy": "npm run build:all && firebase deploy",
+    "deploy:eu": "npm run build:eu && firebase deploy --only hosting:chocko-wheel-eu",
+    "deploy:kr": "npm run build:kr && firebase deploy --only hosting:chocko-wheel-kr",
+    "deploy:ca": "npm run build:ca && firebase deploy --only hosting:chocko-wheel-ca"
   },
   "keywords": [],
   "author": "",
@@ -27,5 +22,8 @@
   "devDependencies": {
     "vite": "^7.1.2",
     "vite-plugin-singlefile": "^2.3.0"
+  },
+  "dependencies": {
+    "pixi.js": "^8.12.0"
   }
 }

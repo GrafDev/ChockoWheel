@@ -1,22 +1,73 @@
 // HTML template generation
 export function generateHTML(isDevelopment) {
   return `
-  <div class="bg-container">
-    <div class="main-container">
+  <div class="main-container">
+    <!-- Page 1: Wheel Screen -->
+    <div class="page" id="wheelPage">
+      <div class="header">
+        <div class="logo">
+          <img src="/assets/images/common/logo1.png" alt="Logo">
+        </div>
+        <div class="nav-buttons">
+          <button class="how-to-play-btn">How to play?</button>
+          <div class="counter">627 154: 19</div>
+          <button class="fullscreen-btn">⛶</button>
+        </div>
+      </div>
+      
+      <div class="main-box">
+        <div class="box1">
+          <img src="/assets/images/common/logo2.png" alt="Logo2">
+        </div>
+        
+        <div class="box2">
+          <!-- Chicken will be here -->
+        </div>
+        
+        <div class="game-box">
+          <!-- Wheel and spin button will be here -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Page 2: Road Screen -->
+    <div class="page" id="roadPage" style="display: none;">
+      <div class="header">
+        <div class="logo">
+          <img src="/assets/images/common/logo1.png" alt="Logo">
+        </div>
+        <div class="nav-buttons">
+          <button class="how-to-play-btn">How to play?</button>
+          <div class="counter">627 154: 19</div>
+          <button class="fullscreen-btn">⛶</button>
+        </div>
+      </div>
+      
+      <div class="main-box">
+        <!-- Road content will be here -->
+      </div>
+    </div>
+    
+    <!-- Page 3: Bank App Screen -->
+    <div class="page" id="bankPage" style="display: none;">
+      <!-- Bank app content will be here -->
+    </div>
+    
+    <!-- Page 4: Download Screen -->
+    <div class="page" id="downloadPage" style="display: none;">
+      <!-- Download content will be here -->
     </div>
   </div>
   ${isDevelopment ? `
-  <div class="dev-panel" id="devPanel" style="display: none;">
+  <div class="dev-trigger" id="devTrigger"></div>
+  <div class="dev-panel" id="devPanel">
     <div class="dev-section">
-      <h4>Game Mode</h4>
-      <div class="mode-switcher">
-        <span class="mode-label">Click</span>
-        <label class="switch">
-          <input type="checkbox" id="modeSwitcher">
-          <span class="slider"></span>
-        </label>
-        <span class="mode-label">Auto</span>
-      </div>
+      <h4>Region</h4>
+      <select id="regionSelector">
+        <option value="eu">EU (EUR)</option>
+        <option value="kr">KR (KRW)</option>
+        <option value="ca">CA (CAD)</option>
+      </select>
     </div>
     <div class="dev-section">
       <h4>Debug</h4>
@@ -25,7 +76,6 @@ export function generateHTML(isDevelopment) {
       </label>
     </div>
   </div>
-  <button class="dev-toggle" id="devToggle">DEV</button>
   ` : ''}
 `;
 }

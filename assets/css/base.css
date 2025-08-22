@@ -37,7 +37,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('../images/bg-main.png');
+  background-color: #363755;
+  background-image: url('../images/common/bg-part1.png');
   background-size: cover;
   background-position: left bottom;
   background-repeat: no-repeat;
@@ -46,6 +47,6 @@ body {
 
 @media (orientation: portrait) {
   .bg-container {
-    background-image: url('../images/bg-mobile.png');
+    background-image: url('../images/common/bg-part1.png');
   }
 }

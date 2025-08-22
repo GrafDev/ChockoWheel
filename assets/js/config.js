@@ -1,3 +1,16 @@
+// Region configurations
+export const regionsConfig = {
+  eu: {
+    // European region settings - to be filled
+  },
+  kr: {
+    // Korean region settings - to be filled  
+  },
+  ca: {
+    // Canadian region settings - to be filled
+  }
+}
+
 export const gameConfig = {
   // Base wheel size coefficient (300px base)
   baseWheelSize: 300,
@@ -13,11 +26,6 @@ export const gameConfig = {
     maxRotations: 5, // maximum number of full rotations
     currentSector: 0, // current sector position (starts at 0)
     isSpinning: false // flag to prevent multiple spins
-  },
-  
-  // Auto mode configuration
-  autoMode: {
-    autoSpinDelay: 500 // delay before auto spin in ms
   },
   
   // Responsive breakpoints and multipliers

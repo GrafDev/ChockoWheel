@@ -17,9 +17,9 @@ export function applyResponsiveSizing() {
   const titleSize = getElementSize('title');
   const wheelElementSize = getElementSize('wheel');
   
-  // Get main-container width
-  const mainContainer = document.querySelector('.main-container');
-  const mainContainerWidth = mainContainer.offsetWidth;
+  // Get container width (using bg-container now)
+  const container = document.querySelector('.bg-container');
+  const containerWidth = container ? container.offsetWidth : window.innerWidth;
   
   // Set CSS custom properties
   document.documentElement.style.setProperty('--wheel-size', `${wheelSize}px`);
@@ -37,5 +37,5 @@ export function applyResponsiveSizing() {
   // Modal sizing removed
   
   console.log(`Wheel size set to: ${wheelSize}px`);
-  console.log(`Main container width: ${mainContainerWidth}px`);
+  console.log(`Container width: ${containerWidth}px`);
 }

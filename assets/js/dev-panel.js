@@ -2,50 +2,69 @@
 
 let devMode = false;
 
-export function setupDevPanel(gameMode, updateGameMode, isDevelopment) {
+export function setupDevPanel(currentRegion, updateRegion, isDevelopment) {
   if (!isDevelopment) return;
 
-  const devToggle = document.getElementById('devToggle');
+  console.log('Setting up dev panel for region:', currentRegion);
+
+  const devTrigger = document.getElementById('devTrigger');
   const devPanel = document.getElementById('devPanel');
+  const regionSelector = document.getElementById('regionSelector');
   const showBordersCheckbox = document.getElementById('showBorders');
-  const modeSwitcher = document.getElementById('modeSwitcher');
 
-  devToggle.addEventListener('click', () => {
-    devMode = !devMode;
-    devPanel.style.display = devMode ? 'block' : 'none';
-    updateGameMode();
+  console.log('Dev panel elements:', { devTrigger, devPanel, regionSelector, showBordersCheckbox });
+
+  if (!devTrigger || !devPanel || !regionSelector) {
+    console.error('Dev panel elements not found!');
+    return;
+  }
+
+  // Show/hide panel on hover
+  devTrigger.addEventListener('mouseenter', () => {
+    console.log('Dev trigger hovered');
+    devPanel.classList.add('show');
   });
 
-  // Initialize switcher based on current mode
-  modeSwitcher.checked = gameMode === 'auto';
-  devToggle.textContent = `DEV (${gameMode.toUpperCase()})`;
-
-  showBordersCheckbox.addEventListener('change', (e) => {
-    if (e.target.checked) {
-      document.body.classList.add('dev-borders');
-    } else {
-      document.body.classList.remove('dev-borders');
-    }
+  devPanel.addEventListener('mouseenter', () => {
+    devPanel.classList.add('show');
   });
 
-  // Mode switcher handler
-  modeSwitcher.addEventListener('change', (e) => {
-    gameMode = e.target.checked ? 'auto' : 'click';
-    // Save mode before reload
-    localStorage.setItem('visitWheel_gameMode', gameMode);
-    updateGameMode();
-    // Reload application to apply changes
+  devPanel.addEventListener('mouseleave', () => {
+    devPanel.classList.remove('show');
+  });
+
+  devTrigger.addEventListener('mouseleave', () => {
+    // Small delay to allow moving to panel
+    setTimeout(() => {
+      if (!devPanel.matches(':hover')) {
+        devPanel.classList.remove('show');
+      }
+    }, 100);
+  });
+
+  // Initialize selector based on current region
+  regionSelector.value = currentRegion;
+
+  // Borders checkbox handler (if exists)
+  if (showBordersCheckbox) {
+    showBordersCheckbox.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        document.body.classList.add('dev-borders');
+      } else {
+        document.body.classList.remove('dev-borders');
+      }
+    });
+  }
+
+  // Region selector handler
+  regionSelector.addEventListener('change', (e) => {
+    const newRegion = e.target.value;
+    console.log('Region changed to:', newRegion);
+    
+    // Save region and reload
+    localStorage.setItem('chockoWheel_region', newRegion);
     location.reload();
   });
 
-  return { devMode, gameMode };
-}
-
-export function updateDevToggleText(gameMode, isDevelopment) {
-  if (!isDevelopment) return;
-  
-  const devToggle = document.getElementById('devToggle');
-  if (devToggle) {
-    devToggle.textContent = devMode ? `HIDE DEV (${gameMode.toUpperCase()})` : `DEV (${gameMode.toUpperCase()})`;
-  }
+  return { currentRegion };
 }

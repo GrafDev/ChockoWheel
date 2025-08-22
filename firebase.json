@@ -1,8 +1,8 @@
 {
   "hosting": [
     {
-      "site": "chocko-wheel-click",
-      "public": "dist/chocko-wheel-click",
+      "site": "chocko-wheel-eu",
+      "public": "dist/playable-eu",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -16,8 +16,23 @@
       ]
     },
     {
-      "site": "chocko-wheel-auto",
-      "public": "dist/chocko-wheel-auto",
+      "site": "chocko-wheel-kr",
+      "public": "dist/playable-kr",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "site": "chocko-wheel-ca",
+      "public": "dist/playable-ca",
       "ignore": [
         "firebase.json",
         "**/.*",
