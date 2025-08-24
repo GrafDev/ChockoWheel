@@ -141,18 +141,25 @@
     top: 0;
     z-index: 10;
     flex: none;
-    width: auto;
+    width: calc(85% / 3);
     height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .box1 img {
+    margin-right: 0;
   }
   
   .box2 {
     position: absolute;
     right: 0;
-    top: 0;
+    bottom: 20%;
     z-index: 10;
     flex: none;
-    width: auto;
-    height: 100%;
+    width: calc(85% / 3);
+    height: auto;
+    transform: scaleX(-1);
   }
   
   .game-box {
