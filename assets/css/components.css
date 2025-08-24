@@ -4,18 +4,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 300px;
-  height: 300px;
+  width: 70dvh;
+  height: 70dvh;
   margin: 0 auto;
 }
 
-.wheel-container img {
+.wheel-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+.wheel-wrapper img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.wheel-container > img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .wheel-border {
@@ -32,8 +52,34 @@
 
 .wheel-pointer {
   z-index: 40;
+  transform: translate(-50%, -50%) scale(1.1) !important;
 }
 
 .wheel-center {
   z-index: 50;
+}
+
+/* Spin Button */
+.spin-btn {
+  background-image: url('/assets/images/common/spin-button.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  width: calc(70dvh * 0.5);
+  height: calc(70dvh * 0.5 * 0.5);
+  padding: 10px;
+  cursor: pointer;
+  color: transparent;
+  font-size: 0;
+  transition: transform 0.1s ease;
+}
+
+.spin-btn:hover {
+  transform: scale(1.05);
+}
+
+.spin-btn:active {
+  transform: scale(0.95);
 }

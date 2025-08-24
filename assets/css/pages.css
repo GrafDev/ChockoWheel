@@ -5,6 +5,10 @@
   height: 100vh;
   position: relative;
   background-color: #363755;
+  background-image: url('../images/common/bg-part1.png');
+  background-size: cover;
+  background-position: left bottom;
+  background-repeat: no-repeat;
 }
 
 .page {
@@ -18,7 +22,7 @@
 /* Header styles */
 .header {
   width: 100%;
-  height: 80px;
+  height: max(5vh, 80px);
   background-color: #3B4150;
   display: flex;
   justify-content: space-between;
@@ -71,7 +75,7 @@
 
 /* Main box layout */
 .main-box {
-  height: calc(100% - 80px);
+  height: calc(100% - max(5vh, 80px));
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -79,15 +83,18 @@
 }
 
 .box1 {
-  flex: 0 0 auto;
+  flex: 1;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding-top: 20px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .box1 img {
-  height: 60px;
+  width: 100%;
+  height: auto;
+  margin-right: 30%;
 }
 
 .box2 {
@@ -98,14 +105,71 @@
   height: 100%;
 }
 
+.box2 img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+}
+
 .game-box {
   flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 50dvw;
+}
+
+.game-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 40px;
-  height: 100%;
+  transform: scale(0.87);
+}
+
+/* Portrait orientation styles */
+@media (orientation: portrait) {
+  .main-box {
+    position: relative;
+  }
+  
+  .box1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    flex: none;
+    width: auto;
+    height: 100%;
+  }
+  
+  .box2 {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    flex: none;
+    width: auto;
+    height: 100%;
+  }
+  
+  .game-box {
+    width: 100%;
+    flex: none;
+    justify-content: center;
+  }
+  
+  .game-content {
+    width: 85%;
+  }
+  
+  .game-content .wheel-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
 }
 
 /* Mobile styles */
