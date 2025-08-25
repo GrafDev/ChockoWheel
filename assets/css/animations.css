@@ -26,3 +26,66 @@
       0 0 90px rgba(255, 255, 255, 0.2);
   }
 }
+
+@keyframes gradient-pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes light-combined {
+  0% {
+    opacity: 0.6;
+  }
+  12.5% {
+    opacity: 1;
+  }
+  22% {
+    opacity: 0.2;
+  }
+  22.1% {
+    opacity: 0.9;
+  }
+  22.2% {
+    opacity: 0.1;
+  }
+  22.3% {
+    opacity: 0.8;
+  }
+  22.4% {
+    opacity: 0.3;
+  }
+  22.5% {
+    opacity: 1;
+  }
+  22.6% {
+    opacity: 0.1;
+  }
+  22.7% {
+    opacity: 0.7;
+  }
+  22.8% {
+    opacity: 0.2;
+  }
+  22.9% {
+    opacity: 0.9;
+  }
+  23% {
+    opacity: 0.4;
+  }
+  23.1% {
+    opacity: 1;
+  }
+  23.2%, 50% {
+    opacity: 0.6;
+  }
+  62.5% {
+    opacity: 1;
+  }
+  75%, 100% {
+    opacity: 0.6;
+  }
+}

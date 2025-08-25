@@ -20,17 +20,8 @@ class WheelAnimations {
      * Start continuous light rotation using CSS transform
      */
     startLightRotation() {
-        if (!this.wheelLightElement) return;
-        
-        let rotation = 0;
-        
-        const animate = () => {
-            rotation += 0.3; // Degrees per frame (slower rotation)
-            this.wheelLightElement.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
-            requestAnimationFrame(animate);
-        };
-        
-        animate();
+        // Rotation disabled
+        return;
     }
 }
 

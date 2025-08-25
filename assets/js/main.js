@@ -1,5 +1,4 @@
 // IMPORTS
-import '../css/main.css'
 import { GameManager } from './game-manager.js'
 
 // CONFIGURATION
@@ -8,6 +7,7 @@ const isDevelopment = import.meta.env.DEV;
 // GAME INITIALIZATION
 let gameManager = null;
 let wheelAnimations = null;
+let wheelLightAnimation = null;
 
 // Initialize game
 async function initGame() {
@@ -30,6 +30,13 @@ async function initGame() {
       wheelAnimations = new window.WheelAnimations();
       wheelAnimations.init();
       console.log('Wheel animations initialized');
+    }
+    
+    // Initialize Wheel Light Animation
+    if (window.WheelLightAnimation) {
+      wheelLightAnimation = new window.WheelLightAnimation();
+      wheelLightAnimation.init();
+      console.log('Wheel light animation initialized');
     }
     
     // Initialize GameManager

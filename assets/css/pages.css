@@ -1,14 +1,24 @@
 /* Page structure styles */
 
+.bg-part1-animated {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/common/bg-part1.png');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 10;
+}
+
 .main-container {
   width: 100vw;
   height: 100vh;
   position: relative;
   background-color: #363755;
-  background-image: url('../images/common/bg-part1.png');
-  background-size: 100% 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
 }
 
 .page {
@@ -29,6 +39,8 @@
   align-items: center;
   padding: 0 20px;
   box-sizing: border-box;
+  z-index: 20;
+  position: relative;
 }
 
 .header .logo img {
@@ -100,7 +112,8 @@
     radial-gradient(circle at bottom left, rgba(255, 178, 11, 0.2) 0%, transparent 25%),
     radial-gradient(circle at bottom right, rgba(255, 178, 11, 0.2) 0%, transparent 25%);
   pointer-events: none;
-  z-index: 1;
+  z-index: 30;
+  animation: gradient-pulse 3s ease-in-out infinite;
 }
 
 .box1 {
