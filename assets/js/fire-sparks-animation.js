@@ -3,9 +3,9 @@
  * Creates flying sparks from center to screen edges with perspective effect
  */
 
-// PixiJS will be available globally or imported by build system
+import * as PIXI from '/node_modules/pixi.js/dist/pixi.mjs'
 
-class FireSparksAnimation {
+export class FireSparksAnimation {
     constructor() {
         this.app = null;
         this.container = null;
@@ -151,10 +151,9 @@ class FireSparksAnimation {
         // White spark with yellow glow
         const color = 0xFFFFFF; // White core
         
-        // Draw white spark
-        spark.beginFill(color, alpha);
-        spark.drawCircle(0, 0, size);
-        spark.endFill();
+        // Draw white spark using modern PixiJS v8 API
+        spark.circle(0, 0, size);
+        spark.fill({ color: color, alpha: alpha });
     }
 
     /**

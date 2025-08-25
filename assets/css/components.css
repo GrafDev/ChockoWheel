@@ -71,6 +71,24 @@
   z-index: 15;
 }
 
+.spin-section {
+  position: relative;
+  width: 50%;
+}
+
+.hand-pointer {
+  position: absolute;
+  width: 60px;
+  height: 80px;
+  background-image: url('/assets/images/common/hand-pointer.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 100;
+  pointer-events: none;
+  transform-origin: top left;
+}
+
 /* Spin Button */
 .spin-btn-landscape {
   background-image: url('/assets/images/common/spin-button.png');
@@ -104,7 +122,7 @@
   background-position: center;
   background-color: transparent;
   border: none;
-  width: 50%;
+  width: 100%;
   aspect-ratio: 3/1;
   padding: 10px;
   cursor: pointer;

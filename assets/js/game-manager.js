@@ -122,7 +122,6 @@ export class GameManager {
     
     animate()
   }
-  
 
   showPage(pageId) {
     // Hide all pages
