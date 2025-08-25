@@ -8,6 +8,7 @@ const isDevelopment = import.meta.env.DEV;
 let gameManager = null;
 let wheelAnimations = null;
 let wheelLightAnimation = null;
+let fireSparksAnimation = null;
 
 // Initialize game
 async function initGame() {
@@ -37,6 +38,13 @@ async function initGame() {
       wheelLightAnimation = new window.WheelLightAnimation();
       wheelLightAnimation.init();
       console.log('Wheel light animation initialized');
+    }
+    
+    // Initialize Fire Sparks Animation
+    if (window.FireSparksAnimation) {
+      fireSparksAnimation = new window.FireSparksAnimation();
+      await fireSparksAnimation.init();
+      console.log('Fire sparks animation initialized');
     }
     
     // Initialize GameManager
