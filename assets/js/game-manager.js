@@ -88,12 +88,12 @@ export class GameManager {
   }
   
   getCurrentRotation(element) {
-    const transform = window.getComputedStyle(element).transform
-    if (transform && transform !== 'none') {
-      const values = transform.split('(')[1].split(')')[0].split(',')
-      const a = parseFloat(values[0])
-      const b = parseFloat(values[1])
-      return Math.atan2(b, a) * (180 / Math.PI)
+    const style = element.style.transform
+    if (style && style.includes('rotate(')) {
+      const match = style.match(/rotate\(([^)]+)deg\)/)
+      if (match) {
+        return parseFloat(match[1])
+      }
     }
     return 0
   }

@@ -121,16 +121,7 @@ export class SimpleEntranceAnimations {
   }
   
   animateWheelCenter() {
-    const element = document.querySelector('.wheel-center')
-    if (!element) return
-    
-    element.style.opacity = '1'
-    element.style.transform = 'translate(-50%, -50%) scale(3.0)'
-    
-    const animation = { scale: 3.0 }
-    this.animate(animation, { scale: 1 }, 1000, this.easeOutBack, (values) => {
-      element.style.transform = `translate(-50%, -50%) scale(${values.scale})`
-    })
+    // Wheel center should be static - no animation
   }
   
   animateChicken() {

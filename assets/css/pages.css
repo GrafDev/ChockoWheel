@@ -63,35 +63,43 @@
 .how-to-play-btn {
   background: #505566;
   color: white;
-  border: none;
-  padding: 8px 16px;
+  padding: 5px 12px;
   border-radius: 7px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: calc(0.35 * max(5vh, 80px));
+  font-weight: bold;
   white-space: nowrap;
+  height: 95%;
+  display: flex;
+  align-items: center;
 }
 
 .counter {
   background: #505566;
   color: white;
-  padding: 8px 16px;
+  padding: 5px 12px;
   border-radius: 7px;
-  font-size: 12px;
+  font-size: calc(0.35 * max(5vh, 80px));
+  font-weight: bold;
   white-space: nowrap;
+  height: 95%;
+  display: flex;
+  align-items: center;
 }
 
 .fullscreen-btn {
   background: #505566;
   color: white;
-  border: none;
-  padding: 8px;
+  padding: 5px 12px;
   border-radius: 7px;
   cursor: pointer;
-  width: 30px;
-  height: 30px;
+  height: 95%;
+  min-width: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: calc(0.35 * max(5vh, 80px));
+  font-weight: bold;
   white-space: nowrap;
 }
 
@@ -302,7 +310,7 @@
 /* Mobile landscape styles - ONLY for mobile phones landscape */
 @media (max-width: 667px) and (orientation: landscape) {
   .header {
-    height: max(5vh, 50px);
+    height: max(5vh, 70px);
   }
   .main-box {
     height: calc(100% - max(5vh, 50px));
