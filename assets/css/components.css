@@ -53,10 +53,15 @@
 .wheel-pointer {
   z-index: 40;
   transform: translate(-50%, -50%) scale(1.1) !important;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 .wheel-center {
   z-index: 50;
+}
+
+.wheel-light {
+  z-index: 5;
 }
 
 /* Spin Button */
@@ -67,8 +72,8 @@
   background-position: center;
   background-color: transparent;
   border: none;
-  width: calc(70dvh * 0.5);
-  height: calc(70dvh * 0.5 * 0.5);
+  width: 50%;
+  aspect-ratio: 3/1;
   padding: 10px;
   cursor: pointer;
   color: transparent;

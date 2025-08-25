@@ -7,6 +7,7 @@ const isDevelopment = import.meta.env.DEV;
 
 // GAME INITIALIZATION
 let gameManager = null;
+let wheelAnimations = null;
 
 // Initialize game
 async function initGame() {
@@ -23,6 +24,13 @@ async function initGame() {
     
     // Wait a bit for DOM to settle
     await new Promise(resolve => setTimeout(resolve, 100));
+    
+    // Initialize Wheel Animations
+    if (window.WheelAnimations) {
+      wheelAnimations = new window.WheelAnimations();
+      wheelAnimations.init();
+      console.log('Wheel animations initialized');
+    }
     
     // Initialize GameManager
     gameManager = new GameManager();

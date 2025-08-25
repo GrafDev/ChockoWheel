@@ -6,8 +6,8 @@
   position: relative;
   background-color: #363755;
   background-image: url('../images/common/bg-part1.png');
-  background-size: cover;
-  background-position: left bottom;
+  background-size: 100% 100%;
+  background-position: center center;
   background-repeat: no-repeat;
 }
 
@@ -33,6 +33,7 @@
 
 .header .logo img {
   height: 40px;
+  object-fit: contain;
 }
 
 .nav-buttons {
@@ -42,35 +43,38 @@
 }
 
 .how-to-play-btn {
-  background: #333333;
+  background: #505566;
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 15px;
+  border-radius: 7px;
   cursor: pointer;
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .counter {
-  background: #444444;
+  background: #505566;
   color: white;
   padding: 8px 16px;
-  border-radius: 15px;
+  border-radius: 7px;
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .fullscreen-btn {
-  background: #333333;
+  background: #505566;
   color: white;
   border: none;
   padding: 8px;
-  border-radius: 5px;
+  border-radius: 7px;
   cursor: pointer;
   width: 30px;
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 }
 
 /* Main box layout */
@@ -80,6 +84,23 @@
   flex-direction: row;
   align-items: stretch;
   padding: 20px;
+  position: relative;
+}
+
+.main-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at top left, rgba(255, 178, 11, 0.2) 0%, transparent 25%),
+    radial-gradient(circle at top right, rgba(255, 178, 11, 0.2) 0%, transparent 25%),
+    radial-gradient(circle at bottom left, rgba(255, 178, 11, 0.2) 0%, transparent 25%),
+    radial-gradient(circle at bottom right, rgba(255, 178, 11, 0.2) 0%, transparent 25%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .box1 {
@@ -181,8 +202,72 @@
 
 /* Mobile styles */
 @media (max-width: 768px) {
-  .how-to-play-btn {
-    display: none;
+  .main-box {
+    padding: 0;
+  }
+  
+  .game-box {
+    width: 95%;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  
+  .game-content {
+    width: 100%;
+  }
+}
+
+/* Tablet portrait styles */
+@media (max-width: 1024px) and (min-width: 769px) and (orientation: portrait) {
+  .game-content {
+    width: 95%;
+  }
+}
+
+/* Mobile portrait styles */
+@media (max-width: 768px) and (orientation: portrait) {
+  .box1 {
+    width: 40%;
+    justify-content: center;
+    left: 30%;
+  }
+  
+  .box2 {
+    width: 33.33%;
+    justify-content: center;
+    align-items: flex-end;
+    right: 33.33%;
+    bottom: 2%;
+  }
+  
+  .game-box {
+    padding: 0;
+    margin: 0 auto;
+  }
+  
+  .spin-btn {
+    aspect-ratio: 4/1;
+  }
+  
+  .header .logo {
+    flex: 0 0 33.33%;
+  }
+  
+  .header .logo img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+  .nav-buttons {
+    flex: 1;
+    justify-content: flex-end;
+  }
+  
+  @media (max-width: 480px) and (orientation: portrait) {
+    .how-to-play-btn {
+      display: none;
+    }
   }
   
   .nav-buttons {
