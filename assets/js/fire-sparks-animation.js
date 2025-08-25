@@ -3,6 +3,8 @@
  * Creates flying sparks from center to screen edges with perspective effect
  */
 
+// PixiJS will be available globally or imported by build system
+
 class FireSparksAnimation {
     constructor() {
         this.app = null;
@@ -72,7 +74,7 @@ class FireSparksAnimation {
         
         // Random direction from center
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 1.5 + 0.5; // Slower: 0.5-2
+        const speed = Math.random() * 2.5 + 1.5; // Faster: 1.5-4
         
         // Start at center (will be invisible until halfway)
         spark.x = centerX;
@@ -90,7 +92,7 @@ class FireSparksAnimation {
         // Spark properties
         spark.life = 1.0;
         spark.maxLife = 10.0; // Long life to reach screen edges
-        spark.size = Math.random() * 1.5 + 1; // Fixed size 1-2.5px
+        spark.size = Math.random() * 3 + 3; // Fixed size 3-6px
         spark.brightness = Math.random() * 0.3 + 0.7; // 0.7-1.0
         
         // Flickering properties - 40% chance to be flickering
@@ -149,12 +151,7 @@ class FireSparksAnimation {
         // White spark with yellow glow
         const color = 0xFFFFFF; // White core
         
-        // Draw yellow glow first (larger, transparent)
-        spark.beginFill(0xFFFF00, alpha * 0.3); // Yellow glow
-        spark.drawCircle(0, 0, size * 1.5);
-        spark.endFill();
-        
-        // Draw white core
+        // Draw white spark
         spark.beginFill(color, alpha);
         spark.drawCircle(0, 0, size);
         spark.endFill();
@@ -229,5 +226,9 @@ class FireSparksAnimation {
     }
 }
 
-// Export for use in main.js
-window.FireSparksAnimation = FireSparksAnimation;
+// Export for ES modules or make global for standalone usage
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { FireSparksAnimation };
+} else if (typeof window !== 'undefined') {
+    window.FireSparksAnimation = FireSparksAnimation;
+}

@@ -1,10 +1,14 @@
 import { setupDevPanel } from './dev-panel.js'
+import { SimpleEntranceAnimations } from './simple-entrance-animations.js'
 
 export class GameManager {
   constructor() {
     this.currentPage = 'wheelPage'
     this.currentRegion = 'eu'
     this.isDevelopment = import.meta.env.DEV
+    this.isSpinning = false
+    this.isReady = false
+    this.entranceAnimations = null
   }
 
   async init() {
@@ -24,6 +28,12 @@ export class GameManager {
 
     // Show initial page
     this.showPage('wheelPage')
+    
+    // Start entrance animations
+    this.entranceAnimations = new SimpleEntranceAnimations()
+    await this.entranceAnimations.start(() => {
+      this.isReady = true
+    })
   }
 
   setupPageNavigation() {
@@ -32,9 +42,87 @@ export class GameManager {
   }
 
   setupGameInteractions() {
-    // Setup button clicks and interactions
-    // This will be implemented later for each specific element
+    // Setup spin button clicks
+    this.setupSpinButtons()
   }
+  
+  setupSpinButtons() {
+    // Regular spin button
+    const spinBtn = document.querySelector('.game-content .spin-btn')
+    if (spinBtn) {
+      spinBtn.addEventListener('click', () => this.handleSpin())
+    }
+    
+    // Landscape spin button
+    const spinBtnLandscape = document.querySelector('.box2 .spin-btn-landscape')
+    if (spinBtnLandscape) {
+      spinBtnLandscape.addEventListener('click', () => this.handleSpin())
+    }
+  }
+  
+  handleSpin() {
+    if (this.isSpinning || !this.isReady) return
+    
+    this.isSpinning = true
+    console.log('Starting wheel spin...')
+    
+    // Get wheel element
+    const wheelElements = document.querySelectorAll('.wheel-wrapper')
+    const wheelElement = wheelElements[0]
+    
+    if (!wheelElement) {
+      console.warn('Wheel element not found')
+      this.isSpinning = false
+      return
+    }
+    
+    // Get current rotation
+    const currentRotation = this.getCurrentRotation(wheelElement)
+    
+    // Calculate target rotation (current + 180 degrees + some randomness for "reluctance")
+    const reluctance = Math.random() * 60 - 30 // ±30 degrees randomness
+    const targetRotation = currentRotation + 180 + reluctance + (360 * 3) // 3 full spins + target
+    
+    // Animate rotation
+    this.animateWheelRotation(wheelElement, currentRotation, targetRotation)
+  }
+  
+  getCurrentRotation(element) {
+    const transform = window.getComputedStyle(element).transform
+    if (transform && transform !== 'none') {
+      const values = transform.split('(')[1].split(')')[0].split(',')
+      const a = parseFloat(values[0])
+      const b = parseFloat(values[1])
+      return Math.atan2(b, a) * (180 / Math.PI)
+    }
+    return 0
+  }
+  
+  animateWheelRotation(element, startRotation, endRotation) {
+    const duration = 3000 // 3 seconds
+    const startTime = Date.now()
+    
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      
+      // Easing function (ease-out for "reluctance" effect)
+      const easedProgress = 1 - Math.pow(1 - progress, 3)
+      const currentRotation = startRotation + (endRotation - startRotation) * easedProgress
+      
+      element.style.transform = `translate(-50%, -50%) rotate(${currentRotation}deg)`
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate)
+      } else {
+        this.isSpinning = false
+        console.log('Wheel stopped at', currentRotation % 360, 'degrees')
+      }
+    }
+    
+    animate()
+  }
+  
 
   showPage(pageId) {
     // Hide all pages

@@ -40,12 +40,7 @@ async function initGame() {
       console.log('Wheel light animation initialized');
     }
     
-    // Initialize Fire Sparks Animation
-    if (window.FireSparksAnimation) {
-      fireSparksAnimation = new window.FireSparksAnimation();
-      await fireSparksAnimation.init();
-      console.log('Fire sparks animation initialized');
-    }
+    // Fire sparks animation now handled by SimpleEntranceAnimations
     
     // Initialize GameManager
     gameManager = new GameManager();

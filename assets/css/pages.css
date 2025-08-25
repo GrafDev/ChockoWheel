@@ -171,6 +171,7 @@
 
 /* Portrait orientation styles */
 @media (orientation: portrait) {
+  
   .main-box {
     position: relative;
   }
@@ -199,7 +200,7 @@
     flex: none;
     width: calc(85% / 3);
     height: auto;
-    transform: scaleX(-1);
+    /* Transform handled by JavaScript animation */
   }
   
   .game-box {
@@ -220,7 +221,7 @@
 }
 
 /* Mobile styles */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .main-box {
     padding: 0;
   }
@@ -237,14 +238,14 @@
 }
 
 /* Tablet portrait styles */
-@media (max-width: 1024px) and (min-width: 769px) and (orientation: portrait) {
+@media (max-width: 1024px) and (min-width: 481px) and (orientation: portrait) {
   .game-content {
     width: 95%;
   }
 }
 
 /* Mobile portrait styles */
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 480px) and (orientation: portrait) {
   .box1 {
     width: 40%;
     justify-content: center;
@@ -297,3 +298,60 @@
     padding: 0 10px;
   }
 }
+
+/* Mobile landscape styles - ONLY for mobile phones landscape */
+@media (max-width: 667px) and (orientation: landscape) {
+  .header {
+    height: max(5vh, 50px);
+  }
+  .main-box {
+    height: calc(100% - max(5vh, 50px));
+  }
+  
+  .box2 {
+    order: 3;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 40px;
+  }
+  
+  .box2 img {
+    /* Transform handled by JavaScript animation */
+  }
+  
+  .game-box {
+    order: 2;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .game-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+  
+  .wheel-container {
+    width: 85vh;
+    height: 85vh;
+  }
+  
+  .game-content .wheel-container {
+    width: 90vh;
+    height: 90vh;
+  }
+  
+  .box2 .spin-btn-landscape {
+    display: block !important;
+    width: 75%;
+    margin: 0 auto;
+  }
+  
+  .game-content .spin-btn {
+    display: none;
+  }
+  
+}
+
