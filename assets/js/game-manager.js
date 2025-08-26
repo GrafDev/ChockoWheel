@@ -9,6 +9,7 @@ export class GameManager {
     this.isSpinning = false
     this.isReady = false
     this.entranceAnimations = null
+    this.currentAnimationFrame = null
   }
 
   async init() {
@@ -61,7 +62,10 @@ export class GameManager {
   }
   
   handleSpin() {
-    if (this.isSpinning || !this.isReady) return
+    if (this.isSpinning || !this.isReady) {
+      console.log('Spin blocked - already spinning or not ready')
+      return
+    }
     
     this.isSpinning = true
     console.log('Starting wheel spin...')
@@ -79,12 +83,24 @@ export class GameManager {
     // Get current rotation
     const currentRotation = this.getCurrentRotation(wheelElement)
     
-    // Calculate target rotation (current + 180 degrees + some randomness for "reluctance")
-    const reluctance = Math.random() * 60 - 30 // ±30 degrees randomness
-    const targetRotation = currentRotation + 180 + reluctance + (360 * 3) // 3 full spins + target
+    // Choose random target: 180 or 45 degrees
+    const targetPositions = [180, 45]
+    const targetPosition = targetPositions[Math.floor(Math.random() * targetPositions.length)]
+    
+    // Calculate target rotation (multiple full spins + target position + small overshoot)
+    const fullSpins = 360 * 3 // 3 full spins
+    const overshoot = 5 + Math.random() * 5 // 5-10 degrees overshoot
+    const targetRotation = currentRotation + fullSpins + targetPosition + overshoot
+    
+    // Stop any existing animation
+    if (this.currentAnimationFrame) {
+      cancelAnimationFrame(this.currentAnimationFrame)
+      this.currentAnimationFrame = null
+    }
     
     // Animate rotation
-    this.animateWheelRotation(wheelElement, currentRotation, targetRotation)
+    const finalTargetRotation = currentRotation + fullSpins + targetPosition // Exact target without overshoot
+    this.animateWheelRotation(wheelElement, currentRotation, targetRotation, finalTargetRotation)
   }
   
   getCurrentRotation(element) {
@@ -98,25 +114,41 @@ export class GameManager {
     return 0
   }
   
-  animateWheelRotation(element, startRotation, endRotation) {
+  animateWheelRotation(element, startRotation, endRotation, finalTarget) {
     const duration = 3000 // 3 seconds
     const startTime = Date.now()
+    
+    const easeWithSpring = (t) => {
+      if (t < 0.9) {
+        // Normal ease out to overshoot position
+        return 1 - Math.pow(1 - t / 0.9, 3)
+      } else {
+        // More visible spring back from overshoot to exact target
+        const springT = (t - 0.9) / 0.1
+        const overshootAmount = (endRotation - finalTarget) / (endRotation - startRotation)
+        const bounce = Math.sin(springT * Math.PI * 3) * Math.pow(1 - springT, 1.5) // 1.5 oscillations
+        
+        // Start from full position, spring back with more visible bounce
+        return 1 - overshootAmount * springT + bounce * overshootAmount * 1.2
+      }
+    }
     
     const animate = () => {
       const elapsed = Date.now() - startTime
       const progress = Math.min(elapsed / duration, 1)
       
-      // Easing function (ease-out for "reluctance" effect)
-      const easedProgress = 1 - Math.pow(1 - progress, 3)
+      const easedProgress = easeWithSpring(progress)
       const currentRotation = startRotation + (endRotation - startRotation) * easedProgress
       
       element.style.transform = `translate(-50%, -50%) rotate(${currentRotation}deg)`
       
       if (progress < 1) {
-        requestAnimationFrame(animate)
+        this.currentAnimationFrame = requestAnimationFrame(animate)
       } else {
+        this.currentAnimationFrame = null
         this.isSpinning = false
-        console.log('Wheel stopped at', currentRotation % 360, 'degrees')
+        const finalPosition = currentRotation % 360
+        console.log('Wheel stopped at', finalPosition, 'degrees')
       }
     }
     

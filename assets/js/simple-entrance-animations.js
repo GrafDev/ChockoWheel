@@ -105,12 +105,10 @@ export class SimpleEntranceAnimations {
     if (!element) return
     
     element.style.opacity = '0'
-    element.style.transform = 'scale(0.8)'
     
-    const animation = { opacity: 0, scale: 0.8 }
-    this.animate(animation, { opacity: 1, scale: 1 }, 600, this.easeOutBack, (values) => {
+    const animation = { opacity: 0 }
+    this.animate(animation, { opacity: 1 }, 600, this.easeOutQuad, (values) => {
       element.style.opacity = values.opacity
-      element.style.transform = `scale(${values.scale})`
     })
   }
   
@@ -119,17 +117,23 @@ export class SimpleEntranceAnimations {
     if (!element) return
     
     element.style.opacity = '0'
-    element.style.transform = 'translate(-50%, -50%) scale(0) rotate(-360deg)'
     
-    const animation = { opacity: 0, scale: 0, rotation: -360 }
-    this.animate(animation, { opacity: 1, scale: 1, rotation: 0 }, 1200, this.easeOutBack, (values) => {
+    const animation = { opacity: 0 }
+    this.animate(animation, { opacity: 1 }, 800, this.easeOutQuad, (values) => {
       element.style.opacity = values.opacity
-      element.style.transform = `translate(-50%, -50%) scale(${values.scale}) rotate(${values.rotation}deg)`
     })
   }
   
   animateWheelCenter() {
-    // Wheel center should be static - no animation
+    const element = document.querySelector('.wheel-center')
+    if (!element) return
+    
+    element.style.opacity = '0'
+    
+    const animation = { opacity: 0 }
+    this.animate(animation, { opacity: 1 }, 600, this.easeOutQuad, (values) => {
+      element.style.opacity = values.opacity
+    })
   }
   
   animateChicken() {
@@ -261,14 +265,13 @@ export class SimpleEntranceAnimations {
     
     elements.forEach(element => {
       element.style.opacity = '0'
-      element.style.transform = 'scale(0.9)'
-      element.style.filter = 'blur(3px) brightness(2)'
+      element.disabled = true // Make button inactive
+      element.style.pointerEvents = 'none' // Disable clicks
+      element.style.filter = 'grayscale(0.5)' // Visual indication
       
-      const animation = { opacity: 0, scale: 0.9, blur: 3, brightness: 2 }
-      this.animate(animation, { opacity: 1, scale: 1, blur: 0, brightness: 1 }, 1000, this.easeOutQuad, (values) => {
+      const animation = { opacity: 0 }
+      this.animate(animation, { opacity: 1 }, 800, this.easeOutQuad, (values) => {
         element.style.opacity = values.opacity
-        element.style.transform = `scale(${values.scale})`
-        element.style.filter = `blur(${values.blur}px) brightness(${values.brightness})`
       })
     })
     
