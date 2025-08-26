@@ -6,6 +6,8 @@ export class PixiHandAnimation {
     this.app = null
     this.handSprite = null
     this.isInitialized = false
+    this.currentButton = null
+    this.resizeObserver = null
   }
 
   async init() {
@@ -38,25 +40,19 @@ export class PixiHandAnimation {
       
       // Create hand sprite
       this.handSprite = new PIXI.Sprite(handTexture)
-      this.handSprite.anchor.set(0, 1)
-      this.handSprite.alpha = 1 // Make visible for testing
-      this.handSprite.scale.set(3) // Smaller scale for testing
-      
-      // Position in center for testing
-      this.handSprite.x = window.innerWidth * 0.5
-      this.handSprite.y = window.innerHeight * 0.5
+      this.handSprite.anchor.set(0, 0.8) // Anchor at bottom part of hand for rotation axis
+      this.handSprite.alpha = 0 // Start hidden
+      this.handSprite.scale.set(10) // Start at large scale
       
       this.app.stage.addChild(this.handSprite)
       
       console.log('Hand sprite created:', this.handSprite)
       
-      // Keep DOM hand visible as fallback for now
+      // Hide DOM hand completely - using ONLY PixiJS now
       const domHand = document.querySelector('.hand-pointer')
       if (domHand) {
-        console.log('DOM hand found:', domHand)
-        // domHand.style.visibility = 'hidden' // Keep visible for debugging
-      } else {
-        console.warn('DOM hand element not found')
+        domHand.style.display = 'none'
+        console.log('DOM hand completely hidden - using PIXI only')
       }
       
       this.isInitialized = true
@@ -78,58 +74,119 @@ export class PixiHandAnimation {
   async start() {
     if (!this.isInitialized) return
 
-    // Position hand initially (off-screen)
-    const spinBtn = document.querySelector('.spin-btn')
-    let targetX = window.innerWidth * 0.5
-    let targetY = window.innerHeight * 0.8
+    // Position and start immediately - no delay needed since called from animation sync
+    this.positionAndStartAnimation()
     
-    if (spinBtn) {
-      const rect = spinBtn.getBoundingClientRect()
-      targetX = rect.left + rect.width * 0.5
-      targetY = rect.top + rect.height * 0.5
+    // Start monitoring for button changes
+    this.startButtonMonitoring()
+  }
+
+  positionAndStartAnimation() {
+    // Find ALL spin buttons and check their positions
+    const allSpinBtns = document.querySelectorAll('.spin-btn, .spin-btn-landscape')
+    let buttonCenterX = window.innerWidth * 0.5
+    let buttonCenterY = window.innerHeight * 0.8
+    let foundButton = null
+    
+    console.log('Found spin buttons:', allSpinBtns.length)
+    
+    allSpinBtns.forEach((btn, index) => {
+      const rect = btn.getBoundingClientRect()
+      const isVisible = rect.width > 0 && rect.height > 0 && 
+                       getComputedStyle(btn).display !== 'none' && 
+                       getComputedStyle(btn).visibility !== 'hidden'
+      
+      console.log(`Button ${index}:`, {
+        element: btn,
+        rect: rect,
+        visible: isVisible,
+        display: getComputedStyle(btn).display,
+        visibility: getComputedStyle(btn).visibility
+      })
+      
+      // Use the first visible button
+      if (isVisible && !foundButton) {
+        foundButton = btn
+        this.currentButton = btn // Store current button
+        buttonCenterX = rect.left + rect.width * 0.5
+        buttonCenterY = rect.top + rect.height * 0.5
+      }
+    })
+    
+    if (!foundButton) {
+      console.warn('No visible spin button found, using fallback position')
+    } else {
+      console.log('Using button:', foundButton, 'at position:', buttonCenterX, buttonCenterY)
     }
 
-    this.handSprite.x = targetX + 200
-    this.handSprite.y = targetY - 150
+    // Calculate hand position so finger points to button center
+    // Hand anchor is now at (0, 0.8) - bottom part for rotation axis
+    const handWidth = this.handSprite.texture.width * 3 // Final scale
+    const handHeight = this.handSprite.texture.height * 3
+    
+    // Adjust finger position for new anchor point (0, 0.8)
+    const fingerOffsetX = handWidth * -0.1 // Negative offset - hand appears even more to the right
+    const fingerOffsetY = handHeight * -0.6 // Finger tip is 60% above anchor point (20% from top - 80% anchor = -60%)
+    
+    const handTargetX = buttonCenterX - fingerOffsetX
+    const handTargetY = buttonCenterY - fingerOffsetY
 
-    setTimeout(() => {
-      // Start tapping immediately
-      this.startTapping()
-      
-      // Move to center
-      this.animateSprite(this.handSprite, {
-        x: targetX,
-        y: targetY,
-        'scale.x': 3,
-        'scale.y': 3,
-        alpha: 1
-      }, 800)
-    }, 2500)
+    console.log('Hand animation setup (updated):')
+    console.log('Button center:', buttonCenterX, buttonCenterY)
+    console.log('Hand texture size:', this.handSprite.texture.width, this.handSprite.texture.height)
+    console.log('Hand scaled size:', handWidth, handHeight)
+    console.log('Finger offset:', fingerOffsetX, fingerOffsetY)
+    console.log('Hand target position:', handTargetX, handTargetY)
+
+
+    // Set initial position - same target but large scale
+    this.handSprite.x = handTargetX
+    this.handSprite.y = handTargetY
+    this.handSprite.scale.set(10) // Large initial scale
+    this.handSprite.alpha = 0
+
+    // Start immediately
+    this.startTapping()
+    
+    // Animate appearance: scale down and fade in
+    this.animateSprite(this.handSprite, {
+      'scale.x': 3,
+      'scale.y': 3,
+      alpha: 1
+    }, 800)
+    
+    console.log('Hand animation started!')
   }
 
   startTapping() {
     if (!this.handSprite) return
 
-    let tapState = { skew: 0 }
-    
     const doTap = () => {
-      // Left skew
-      this.animateSprite(tapState, { skew: -0.26 }, 250, null, () => {
-        this.handSprite.skew.x = tapState.skew
-        
-        // Right skew
-        this.animateSprite(tapState, { skew: 0.26 }, 300, null, () => {
-          this.handSprite.skew.x = tapState.skew
-          
-          // Back to center
-          this.animateSprite(tapState, { skew: 0 }, 250, null, () => {
-            this.handSprite.skew.x = tapState.skew
-            doTap() // Continue immediately
+      // Press down - rotate around X axis (away from user) by squashing Y scale
+      this.animateSprite(this.handSprite, { 
+        'scale.y': 2.4 // Compress vertically = rotation away from user around X axis
+      }, 200, null, () => {
+        // Hold pressed position briefly
+        setTimeout(() => {
+          // Release - rotate back (toward user) by stretching Y scale  
+          this.animateSprite(this.handSprite, { 
+            'scale.y': 3.2 // Stretch vertically = rotation toward user around X axis
+          }, 200, null, () => {
+            // Back to neutral
+            this.animateSprite(this.handSprite, { 
+              'scale.y': 3 // Back to normal scale
+            }, 150, null, () => {
+              // Pause before next tap
+              setTimeout(() => {
+                doTap()
+              }, 800) // Pause between taps
+            })
           })
-        })
+        }, 50) // Brief hold
       })
     }
 
+    // Start first tap immediately
     doTap()
   }
 
@@ -174,6 +231,63 @@ export class PixiHandAnimation {
 
   easeOutQuad(t) {
     return 1 - (1 - t) * (1 - t)
+  }
+
+
+  startButtonMonitoring() {
+    // Monitor for window resize and button visibility changes
+    window.addEventListener('resize', () => this.checkButtonChange())
+    
+    // Check for button changes periodically
+    setInterval(() => this.checkButtonChange(), 1000)
+  }
+  
+  checkButtonChange() {
+    const allSpinBtns = document.querySelectorAll('.spin-btn, .spin-btn-landscape')
+    let activeButton = null
+    
+    allSpinBtns.forEach(btn => {
+      const rect = btn.getBoundingClientRect()
+      const isVisible = rect.width > 0 && rect.height > 0 && 
+                       getComputedStyle(btn).display !== 'none' && 
+                       getComputedStyle(btn).visibility !== 'hidden'
+      
+      if (isVisible && !activeButton) {
+        activeButton = btn
+      }
+    })
+    
+    // If active button changed, reposition hand
+    if (activeButton !== this.currentButton) {
+      console.log('Button changed from', this.currentButton, 'to', activeButton)
+      this.currentButton = activeButton
+      this.repositionHand()
+    }
+  }
+  
+  repositionHand() {
+    if (!this.handSprite || !this.currentButton) return
+    
+    const rect = this.currentButton.getBoundingClientRect()
+    const buttonCenterX = rect.left + rect.width * 0.5
+    const buttonCenterY = rect.top + rect.height * 0.5
+    
+    // Calculate new hand position
+    const handWidth = this.handSprite.texture.width * 3
+    const handHeight = this.handSprite.texture.height * 3
+    const fingerOffsetX = handWidth * -0.1
+    const fingerOffsetY = handHeight * -0.6
+    
+    const newHandX = buttonCenterX - fingerOffsetX
+    const newHandY = buttonCenterY - fingerOffsetY
+    
+    console.log('Repositioning hand to:', newHandX, newHandY)
+    
+    // Smoothly animate to new position
+    this.animateSprite(this.handSprite, {
+      x: newHandX,
+      y: newHandY
+    }, 500)
   }
 
   destroy() {

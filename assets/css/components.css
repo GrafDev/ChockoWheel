@@ -76,17 +76,26 @@
   width: 50%;
 }
 
+/* Spin Container */
+.spin-container {
+  position: relative;
+  display: inline-block;
+}
+
 .hand-pointer {
   position: absolute;
-  width: 60px;
-  height: 80px;
+  width: 100%;
+  height: 100%;
   background-image: url('/assets/images/common/hand-pointer.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   z-index: 100;
   pointer-events: none;
-  transform-origin: top left;
+  transform-origin: 10% 80%; /* Rotation axis at bottom left of hand */
+  /* Position relative to button - slightly right of center */
+  top: 30%;
+  left: 30%;
 }
 
 /* Spin Button */

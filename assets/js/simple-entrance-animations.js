@@ -1,12 +1,12 @@
 import { FireSparksAnimation } from './fire-sparks-animation.js'
-import { PixiHandAnimation } from './pixi-hand-animation.js'
+import { ChickenIdleAnimation } from './chicken-idle-animation.js'
 
 export class SimpleEntranceAnimations {
   constructor() {
     this.isReady = false
     this.activeAnimations = []
     this.fireSparksAnimation = null
-    this.pixiHandAnimation = null
+    this.chickenIdleAnimation = null
   }
   
   async start(onComplete) {
@@ -16,9 +16,9 @@ export class SimpleEntranceAnimations {
     this.fireSparksAnimation = new FireSparksAnimation()
     await this.fireSparksAnimation.init()
     
-    // Initialize PIXI hand animation
-    this.pixiHandAnimation = new PixiHandAnimation()
-    await this.pixiHandAnimation.init()
+    // Initialize chicken idle animation
+    this.chickenIdleAnimation = new ChickenIdleAnimation()
+    
     
     // Start all animations simultaneously
     this.animateHeader()
@@ -27,11 +27,8 @@ export class SimpleEntranceAnimations {
     this.animateWheelWrapper()
     this.animateWheelCenter()
     this.animateChicken()
-    this.animateSpinButtons()
-    this.animateHandPointer() // CSS анимация DOM руки
-    
-    // Start PIXI hand animation
-    this.pixiHandAnimation.start()
+    // Animate spin buttons and hand together
+    this.animateSpinButtonsAndHand()
     
     // Complete after longest animation (chicken = ~1.5s + bounces)
     setTimeout(() => {
@@ -39,6 +36,9 @@ export class SimpleEntranceAnimations {
       console.log('All entrance animations completed')
       if (onComplete) onComplete()
     }, 2500)
+    
+    // Handle window resize to restart sparks
+    this.setupResizeHandler()
   }
   
   easeOutQuad(t) {
@@ -183,7 +183,13 @@ export class SimpleEntranceAnimations {
     const makeJump = () => {
       if (currentJump >= totalJumps) {
         element.style.setProperty('transform', `translateX(0px) translateY(0px) scaleX(${scaleX})`, 'important')
-        setTimeout(() => this.chickenFinalBounces(element, scaleX), 100)
+        setTimeout(() => {
+          this.chickenFinalBounces(element, scaleX, () => {
+            // Start continuous jumping after entrance animation
+            this.chickenIdleAnimation.init(element, scaleX)
+            this.chickenIdleAnimation.start()
+          })
+        }, 100)
         return
       }
       
@@ -219,7 +225,7 @@ export class SimpleEntranceAnimations {
     makeJump()
   }
   
-  chickenFinalBounces(element, scaleX = 1) {
+  chickenFinalBounces(element, scaleX = 1, onComplete = null) {
     const bounces = [
       { y: -10, duration: 200 },
       { y: 0, duration: 100 },
@@ -230,19 +236,24 @@ export class SimpleEntranceAnimations {
     ]
     
     let delay = 0
-    bounces.forEach(bounce => {
+    bounces.forEach((bounce, index) => {
       setTimeout(() => {
         const animation = { y: parseFloat(element.style.transform.match(/translateY\(([^)]+)px\)/)?.[1] || 0) }
         this.animate(animation, { y: bounce.y }, bounce.duration, this.easeOutQuad, (values) => {
           const currentX = element.style.transform.match(/translateX\(([^)]+)px\)/)?.[1] || 0
           element.style.setProperty('transform', `translateX(${currentX}px) translateY(${values.y}px) scaleX(${scaleX})`, 'important')
+        }, () => {
+          // Call onComplete after last bounce
+          if (index === bounces.length - 1 && onComplete) {
+            onComplete()
+          }
         })
       }, delay)
       delay += bounce.duration
     })
   }
   
-  animateSpinButtons() {
+  animateSpinButtonsAndHand() {
     const elements = [
       document.querySelector('.spin-btn'),
       document.querySelector('.spin-btn-landscape')
@@ -260,81 +271,72 @@ export class SimpleEntranceAnimations {
         element.style.filter = `blur(${values.blur}px) brightness(${values.brightness})`
       })
     })
+    
+    // Animate hands with scale-down effect
+    const hands = [
+      document.querySelector('.hand-pointer'),
+      ...document.querySelectorAll('.hand-pointer')
+    ].filter(Boolean)
+    
+    console.log('Found hands for animation:', hands.length)
+    
+    hands.forEach(hand => {
+      hand.style.opacity = '0'
+      hand.style.transform = 'scale(2.5)'
+      
+      const animation = { opacity: 0, scale: 2.5 }
+      setTimeout(() => {
+        this.animate(animation, { opacity: 1, scale: 1 }, 800, this.easeOutBack, (values) => {
+          hand.style.opacity = values.opacity
+          hand.style.transform = `scale(${values.scale})`
+        }, () => {
+          // Start tapping animation after hand appears
+          this.startHandTapping(hand)
+        })
+      }, 600) // Start hand animation after buttons start appearing
+    })
   }
   
-  animateHandPointer() {
-    const element = document.querySelector('.hand-pointer')
-    if (!element) return
-    
-    // Start hidden СПРАВА и ВЫШЕ от кнопки
-    element.style.opacity = '0'
-    element.style.transform = 'translate(100%, -150%) scale(8)'
-    element.style.left = '50%'
-    element.style.top = '50%'
-    
-    // Wait for other entrance animations to finish
-    setTimeout(() => {
-      const animation = { 
-        opacity: 0,
-        scale: 8, 
-        x: 100,
-        y: -150
+  setupResizeHandler() {
+    window.addEventListener('resize', () => {
+      if (this.fireSparksAnimation) {
+        // Stop current animation
+        this.fireSparksAnimation.stop()
+        
+        // Restart after short delay to allow layout to settle
+        setTimeout(async () => {
+          this.fireSparksAnimation = new FireSparksAnimation()
+          await this.fireSparksAnimation.init()
+        }, 100)
       }
       
-      // Start tapping animation immediately with appearance
-      this.startHandTapping(element)
-      
-      this.animate(animation, { 
-        opacity: 1,
-        scale: 3, 
-        x: -50,
-        y: -50
-      }, 800, this.easeOutQuad, (values) => {
-        element.style.opacity = values.opacity
-        // Preserve existing skew from tapping animation
-        const currentTransform = element.style.transform
-        const skewMatch = currentTransform.match(/skewX\(([^)]+)deg\)/)
-        const currentSkew = skewMatch ? skewMatch[1] : '0'
-        element.style.transform = `translate(${values.x}%, ${values.y}%) scale(${values.scale}) skewX(${currentSkew}deg)`
-      })
-    }, 2500)
+      // Restart chicken animation on resize/orientation change
+      setTimeout(() => {
+        this.animateChicken()
+      }, 200)
+    })
   }
   
-  startHandTapping(element) {
-    // Create continuous tapping animation that works alongside positioning
-    let currentTapAnimation = { skewX: 0 }
-    
-    const doTap = () => {
-      // Sway left then right with perspective effect
-      this.animate(currentTapAnimation, { skewX: -15 }, 250, this.easeOutQuad, (values) => {
-        // Apply tapping animation while preserving positioning transforms
-        const currentTransform = element.style.transform
-        const positionMatch = currentTransform.match(/translate\([^)]+\)\s*scale\([^)]+\)/)
-        const baseTransform = positionMatch ? positionMatch[0] : 'translate(-50%, -50%) scale(3)'
-        element.style.transform = `${baseTransform} skewX(${values.skewX}deg)`
+  startHandTapping(hand) {
+    const tapAnimation = () => {
+      // Tap down
+      const downAnimation = { rotateX: 0 }
+      this.animate(downAnimation, { rotateX: 30 }, 300, this.easeOutQuad, (values) => {
+        hand.style.transform = `scale(1) rotateX(${values.rotateX}deg)`
       }, () => {
-        // Sway right immediately
-        this.animate(currentTapAnimation, { skewX: 15 }, 300, this.easeOutQuad, (values) => {
-          const currentTransform = element.style.transform
-          const positionMatch = currentTransform.match(/translate\([^)]+\)\s*scale\([^)]+\)/)
-          const baseTransform = positionMatch ? positionMatch[0] : 'translate(-50%, -50%) scale(3)'
-          element.style.transform = `${baseTransform} skewX(${values.skewX}deg)`
+        // Tap up
+        const upAnimation = { rotateX: 30 }
+        this.animate(upAnimation, { rotateX: 0 }, 300, this.easeOutQuad, (values) => {
+          hand.style.transform = `scale(1) rotateX(${values.rotateX}deg)`
         }, () => {
-          // Back to center immediately
-          this.animate(currentTapAnimation, { skewX: 0 }, 250, this.easeOutQuad, (values) => {
-            const currentTransform = element.style.transform
-            const positionMatch = currentTransform.match(/translate\([^)]+\)\s*scale\([^)]+\)/)
-            const baseTransform = positionMatch ? positionMatch[0] : 'translate(-50%, -50%) scale(3)'
-            element.style.transform = `${baseTransform} skewX(${values.skewX}deg)`
-          }, () => {
-            // Continuous tapping - restart immediately
-            doTap()
-          })
+          // Immediately start next tap
+          tapAnimation()
         })
       })
     }
     
-    // Start immediately
-    doTap()
+    // Start continuous tapping
+    tapAnimation()
   }
+  
 }

@@ -178,8 +178,25 @@
   transform: scale(0.87);
 }
 
+/* Default button visibility rules - landscape */
+.box2 .spin-container {
+  display: none;
+}
+
+.game-content .spin-container {
+  display: block;
+}
+
 /* Portrait orientation styles */
 @media (orientation: portrait) {
+  
+  .box2 .spin-container {
+    display: none;
+  }
+  
+  .game-content .spin-container {
+    display: block;
+  }
   
   .main-box {
     position: relative;
@@ -259,6 +276,14 @@
   .box2 img {
     transform: scaleX(-1);
   }
+  
+  .box2 .spin-container {
+    display: none;
+  }
+  
+  .game-content .spin-container {
+    display: block;
+  }
 }
 
 /* Mobile portrait styles */
@@ -284,6 +309,14 @@
   
   .spin-btn {
     aspect-ratio: 4/1;
+  }
+  
+  .box2 .spin-container {
+    display: none;
+  }
+  
+  .game-content .spin-container {
+    display: block;
   }
   
   .header .logo {
@@ -317,16 +350,28 @@
 }
 
 /* Mobile landscape styles - ONLY for mobile phones landscape */
-@media (max-width: 667px) and (orientation: landscape) {
+@media (orientation: landscape) and (max-height: 500px) {
+  
+  .header {
+    height: 50px;
+  }
+  
+  .main-box {
+    height: calc(100% - 50px);
+  }
+  
+  .how-to-play-btn,
+  .counter,
+  .fullscreen-btn {
+    font-size: 12px;
+  }
+  
+  .header .logo img {
+    height: 30px;
+  }
   
   .box2 img {
     transform: scaleX(-1);
-  }
-  .header {
-    height: max(5vh, 70px);
-  }
-  .main-box {
-    height: calc(100% - max(5vh, 50px));
   }
   
   .box2 {
@@ -365,12 +410,15 @@
   }
   
   .box2 .spin-btn-landscape {
-    display: block !important;
     width: 75%;
     margin: 0 auto;
   }
   
-  .game-content .spin-btn {
+  .box2 .spin-container {
+    display: block;
+  }
+  
+  .game-content .spin-container {
     display: none;
   }
   
