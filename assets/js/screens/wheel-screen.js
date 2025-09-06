@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js'
 import { regionsConfig } from '../config.js'
 import { Header } from '../components/header.js'
-import { Logo2 } from '../components/logo2.js'
 
 export class WheelScreen {
   constructor(app, region) {
@@ -9,7 +8,6 @@ export class WheelScreen {
     this.region = region
     this.container = new PIXI.Container()
     this.header = null
-    this.logo2 = null
     this.wheel = null
     this.spinButton = null
     this.chicken = null
@@ -22,7 +20,6 @@ export class WheelScreen {
     
     // Create UI elements
     this.createHeader()
-    this.createLogo2()
     this.createBackground()
     this.createWheel()
     this.createChicken() 
@@ -55,12 +52,6 @@ export class WheelScreen {
     this.header = new Header(this.app, this.region)
     const headerContainer = this.header.create()
     this.container.addChild(headerContainer)
-  }
-
-  createLogo2() {
-    this.logo2 = new Logo2(this.app)
-    const logo2Container = this.logo2.create()
-    this.container.addChild(logo2Container)
   }
 
   createBackground() {
@@ -195,11 +186,6 @@ export class WheelScreen {
     // Resize header
     if (this.header) {
       this.header.resize()
-    }
-    
-    // Resize logo2
-    if (this.logo2) {
-      this.logo2.resize()
     }
     
     // Position wheel in center (slightly lower to account for header)

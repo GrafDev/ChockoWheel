@@ -39,8 +39,6 @@ export class AssetsLoader {
       
       // UI elements
       logo: `${basePath}/${region}/logo.png`,
-      logo2Part1: `${basePath}/common/logo2-part1.png`,
-      logo2Part2: `${basePath}/common/logo2-part2.png`,
       
       // Result modal assets
       resultModal: `${basePath}/${region}/result-modal.png`,
@@ -119,18 +117,6 @@ export class AssetsLoader {
     const logoTexture = tempApp.renderer.generateTexture(logoGraphics)
     PIXI.Assets.cache.set(`${region}_logo`, logoTexture)
     
-    // Logo2 part1 placeholder
-    const logo2Part1Graphics = new PIXI.Graphics()
-    logo2Part1Graphics.rect(-100, -30, 200, 60).fill(0x00FF00)
-    const logo2Part1Texture = tempApp.renderer.generateTexture(logo2Part1Graphics)
-    PIXI.Assets.cache.set(`${region}_logo2Part1`, logo2Part1Texture)
-    
-    // Logo2 part2 placeholder  
-    const logo2Part2Graphics = new PIXI.Graphics()
-    logo2Part2Graphics.rect(-100, -30, 200, 60).fill(0xFF00FF)
-    const logo2Part2Texture = tempApp.renderer.generateTexture(logo2Part2Graphics)
-    PIXI.Assets.cache.set(`${region}_logo2Part2`, logo2Part2Texture)
-    
     // Cleanup temp app
     tempApp.destroy()
     
@@ -157,12 +143,6 @@ export class AssetsLoader {
         break
       case 'spinButton':
         graphics.roundRect(-75, -25, 150, 50, 25).fill(0x4CAF50)
-        break
-      case 'logo2Part1':
-        graphics.rect(-100, -30, 200, 60).fill(0x00FF00)
-        break
-      case 'logo2Part2':
-        graphics.rect(-100, -30, 200, 60).fill(0xFF00FF)
         break
       default:
         graphics.rect(-50, -50, 100, 100).fill(0xCCCCCC)

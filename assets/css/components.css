@@ -234,29 +234,3 @@
   z-index: 20;
 }
 
-/* Logo2 Container */
-.logo2-container {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  height: auto;
-  margin-right: 30%;
-  opacity: 0;
-}
-
-.logo2-container img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.logo2-part1 {
-  z-index: 10;
-}
-
-.logo2-part2 {
-  z-index: 20;
-}
