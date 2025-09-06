@@ -13,6 +13,8 @@ export class FireSparksAnimation {
         this.sparkPool = [];
         this.maxSparks = 800;
         this.sparkFrequency = 3.5; // Maximum sparks per frame
+        this.startTime = null;
+        this.speedMultiplier = 2.0; // Start with 2x speed
     }
 
     /**
@@ -54,6 +56,9 @@ export class FireSparksAnimation {
             this.createSpark();
         }
 
+        // Initialize start time
+        this.startTime = Date.now();
+        
         // Start animation loop
         this.app.ticker.add(this.animate.bind(this));
     }
@@ -74,7 +79,8 @@ export class FireSparksAnimation {
         
         // Random direction from center
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 2.5 + 1.5; // Faster: 1.5-4
+        const baseSpeed = Math.random() * 2.5 + 1.5; // Base speed: 1.5-4
+        const speed = baseSpeed * this.speedMultiplier;
         
         // Start at center (will be invisible until halfway)
         spark.x = centerX;
@@ -160,6 +166,20 @@ export class FireSparksAnimation {
      * Animation loop
      */
     animate() {
+        // Update speed multiplier based on elapsed time
+        const elapsedTime = (Date.now() - this.startTime) / 1000; // in seconds
+        if (elapsedTime < 2.0) {
+            // First 2 seconds: 2x speed
+            this.speedMultiplier = 2.0;
+        } else if (elapsedTime < 3.0) {
+            // Seconds 2-3: smooth transition from 2x to 1x
+            const transitionProgress = elapsedTime - 2.0; // 0.0 to 1.0
+            this.speedMultiplier = 2.0 - transitionProgress; // 2.0 to 1.0
+        } else {
+            // After 3 seconds: normal speed
+            this.speedMultiplier = 1.0;
+        }
+        
         // Create new sparks
         if (Math.random() < this.sparkFrequency) {
             if (this.sparks.length < this.maxSparks) {
