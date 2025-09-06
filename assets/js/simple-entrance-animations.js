@@ -137,7 +137,7 @@ export class SimpleEntranceAnimations {
   }
   
   animateChicken() {
-    const element = document.querySelector('.box2 img')
+    const element = document.querySelector('.chicken-container')
     if (!element) return
     
     const isMobile = window.innerWidth <= 667

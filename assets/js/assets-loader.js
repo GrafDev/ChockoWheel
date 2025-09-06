@@ -29,7 +29,8 @@ export class AssetsLoader {
     return {
       // Wheel screen assets
       wheel: `${basePath}/${region}/wheel.png`,
-      chicken: `${basePath}/${region}/chicken.png`,
+      chickenPart1: `${basePath}/common/chicken-part1.png`,
+      chickenPart2: `${basePath}/common/chicken-part2.png`,
       spinButton: `${basePath}/${region}/spin-button.png`,
       finger: `${basePath}/common/finger.png`,
       
@@ -38,6 +39,8 @@ export class AssetsLoader {
       
       // UI elements
       logo: `${basePath}/${region}/logo.png`,
+      logo2Part1: `${basePath}/common/logo2-part1.png`,
+      logo2Part2: `${basePath}/common/logo2-part2.png`,
       
       // Result modal assets
       resultModal: `${basePath}/${region}/result-modal.png`,
@@ -92,11 +95,17 @@ export class AssetsLoader {
     const wheelTexture = tempApp.renderer.generateTexture(wheelGraphics)
     PIXI.Assets.cache.set(`${region}_wheel`, wheelTexture)
     
-    // Chicken placeholder
-    const chickenGraphics = new PIXI.Graphics()
-    chickenGraphics.circle(0, 0, 50).fill(0xFFFFFF)
-    const chickenTexture = tempApp.renderer.generateTexture(chickenGraphics)
-    PIXI.Assets.cache.set(`${region}_chicken`, chickenTexture)
+    // Chicken part 1 placeholder
+    const chickenPart1Graphics = new PIXI.Graphics()
+    chickenPart1Graphics.circle(0, 0, 50).fill(0xFFFFFF)
+    const chickenPart1Texture = tempApp.renderer.generateTexture(chickenPart1Graphics)
+    PIXI.Assets.cache.set(`${region}_chickenPart1`, chickenPart1Texture)
+    
+    // Chicken part 2 placeholder
+    const chickenPart2Graphics = new PIXI.Graphics()
+    chickenPart2Graphics.circle(0, 0, 25).fill(0xFF0000)
+    const chickenPart2Texture = tempApp.renderer.generateTexture(chickenPart2Graphics)
+    PIXI.Assets.cache.set(`${region}_chickenPart2`, chickenPart2Texture)
     
     // Spin button placeholder
     const buttonGraphics = new PIXI.Graphics()
@@ -109,6 +118,18 @@ export class AssetsLoader {
     logoGraphics.rect(-100, -30, 200, 60).fill(0xFF6B6B)
     const logoTexture = tempApp.renderer.generateTexture(logoGraphics)
     PIXI.Assets.cache.set(`${region}_logo`, logoTexture)
+    
+    // Logo2 part1 placeholder
+    const logo2Part1Graphics = new PIXI.Graphics()
+    logo2Part1Graphics.rect(-100, -30, 200, 60).fill(0x00FF00)
+    const logo2Part1Texture = tempApp.renderer.generateTexture(logo2Part1Graphics)
+    PIXI.Assets.cache.set(`${region}_logo2Part1`, logo2Part1Texture)
+    
+    // Logo2 part2 placeholder  
+    const logo2Part2Graphics = new PIXI.Graphics()
+    logo2Part2Graphics.rect(-100, -30, 200, 60).fill(0xFF00FF)
+    const logo2Part2Texture = tempApp.renderer.generateTexture(logo2Part2Graphics)
+    PIXI.Assets.cache.set(`${region}_logo2Part2`, logo2Part2Texture)
     
     // Cleanup temp app
     tempApp.destroy()
@@ -128,11 +149,20 @@ export class AssetsLoader {
       case 'wheel':
         graphics.circle(0, 0, 150).fill(0xFFD700)
         break
-      case 'chicken':
+      case 'chickenPart1':
         graphics.circle(0, 0, 50).fill(0xFFFFFF)
+        break
+      case 'chickenPart2':
+        graphics.circle(0, 0, 25).fill(0xFF0000)
         break
       case 'spinButton':
         graphics.roundRect(-75, -25, 150, 50, 25).fill(0x4CAF50)
+        break
+      case 'logo2Part1':
+        graphics.rect(-100, -30, 200, 60).fill(0x00FF00)
+        break
+      case 'logo2Part2':
+        graphics.rect(-100, -30, 200, 60).fill(0xFF00FF)
         break
       default:
         graphics.rect(-50, -50, 100, 100).fill(0xCCCCCC)

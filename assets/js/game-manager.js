@@ -1,5 +1,6 @@
 import { setupDevPanel } from './dev-panel.js'
 import { SimpleEntranceAnimations } from './simple-entrance-animations.js'
+import { getModalImagePath, getWheelTextPath, getHeaderButtonPaths } from './config.js'
 
 export class GameManager {
   constructor() {
@@ -30,6 +31,9 @@ export class GameManager {
     // Show initial page
     this.showPage('wheelPage')
     
+    // Update region content on init
+    this.updateRegionContent(this.currentRegion)
+    
     // Start entrance animations
     this.entranceAnimations = new SimpleEntranceAnimations()
     await this.entranceAnimations.start(() => {
@@ -45,6 +49,9 @@ export class GameManager {
   setupGameInteractions() {
     // Setup spin button clicks
     this.setupSpinButtons()
+    
+    // Setup bonus modal
+    this.setupBonusModal()
   }
   
   setupSpinButtons() {
@@ -68,6 +75,7 @@ export class GameManager {
     }
     
     this.isSpinning = true
+    this.disableSpinButtons()
     console.log('Starting wheel spin...')
     
     // Get wheel element
@@ -149,10 +157,66 @@ export class GameManager {
         this.isSpinning = false
         const finalPosition = currentRotation % 360
         console.log('Wheel stopped at', finalPosition, 'degrees')
+        
+        // Show bonus modal after wheel stops
+        this.showBonusModal()
       }
     }
     
     animate()
+  }
+  
+  setupBonusModal() {
+    const bonusModalImage = document.getElementById('bonusModalImage')
+    if (bonusModalImage) {
+      bonusModalImage.addEventListener('click', () => this.hideBonusModal())
+    }
+    
+    const bonusModal = document.getElementById('bonusModal')
+    if (bonusModal) {
+      bonusModal.addEventListener('click', (e) => {
+        if (e.target === bonusModal || e.target.classList.contains('bonus-modal-overlay')) {
+          this.hideBonusModal()
+        }
+      })
+    }
+  }
+  
+  showBonusModal() {
+    const modal = document.getElementById('bonusModal')
+    const modalImage = document.getElementById('bonusModalImage')
+    
+    if (modal && modalImage) {
+      // Update image path based on current region using config
+      modalImage.src = getModalImagePath(this.currentRegion)
+      modal.style.display = 'block'
+    }
+  }
+  
+  hideBonusModal() {
+    const modal = document.getElementById('bonusModal')
+    if (modal) {
+      modal.style.display = 'none'
+      // Reset spinning state and enable buttons for new spins
+      this.isSpinning = false
+      this.enableSpinButtons()
+    }
+  }
+  
+  disableSpinButtons() {
+    const spinBtn = document.querySelector('.game-content .spin-btn')
+    const spinBtnLandscape = document.querySelector('.box2 .spin-btn-landscape')
+    
+    if (spinBtn) spinBtn.disabled = true
+    if (spinBtnLandscape) spinBtnLandscape.disabled = true
+  }
+  
+  enableSpinButtons() {
+    const spinBtn = document.querySelector('.game-content .spin-btn')
+    const spinBtnLandscape = document.querySelector('.box2 .spin-btn-landscape')
+    
+    if (spinBtn) spinBtn.disabled = false
+    if (spinBtnLandscape) spinBtnLandscape.disabled = false
   }
 
   showPage(pageId) {
@@ -198,8 +262,26 @@ export class GameManager {
   }
 
   updateRegionContent(region) {
+    // Update wheel text image for current region
+    const wheelTextImage = document.querySelector('.wheel-text')
+    if (wheelTextImage) {
+      wheelTextImage.src = getWheelTextPath(region)
+    }
+    
+    // Update header buttons for current region
+    const headerButtonPaths = getHeaderButtonPaths(region)
+    
+    const headerBtn1 = document.querySelector('.header-btn-1')
+    if (headerBtn1) {
+      headerBtn1.src = headerButtonPaths.button1
+    }
+    
+    const headerBtn3 = document.querySelector('.header-btn-3')
+    if (headerBtn3) {
+      headerBtn3.src = headerButtonPaths.button3
+    }
+    
     // Update counter, currency displays, etc. based on region
-    // This will be implemented later
     console.log(`Updating content for region: ${region}`)
   }
 

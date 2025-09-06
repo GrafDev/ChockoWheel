@@ -1,5 +1,6 @@
 // IMPORTS
 import { GameManager } from './game-manager.js'
+import { ChickenRotationAnimation } from './chicken-rotation-animation.js'
 
 // CONFIGURATION
 const isDevelopment = import.meta.env.DEV;
@@ -9,6 +10,7 @@ let gameManager = null;
 let wheelAnimations = null;
 let wheelLightAnimation = null;
 let fireSparksAnimation = null;
+let chickenRotationAnimation = null;
 
 // Initialize game
 async function initGame() {
@@ -41,6 +43,13 @@ async function initGame() {
     }
     
     // Fire sparks animation now handled by SimpleEntranceAnimations
+    
+    // Initialize Chicken Rotation Animation
+    chickenRotationAnimation = new ChickenRotationAnimation();
+    if (chickenRotationAnimation.init()) {
+      chickenRotationAnimation.start();
+      console.log('Chicken rotation animation initialized');
+    }
     
     // Initialize GameManager
     gameManager = new GameManager();

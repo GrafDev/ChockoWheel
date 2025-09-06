@@ -1,13 +1,40 @@
 // Region configurations
 export const regionsConfig = {
   eu: {
-    // European region settings - to be filled
-  },
-  kr: {
-    // Korean region settings - to be filled  
+    name: 'EU',
+    currency: 'EUR',
+    locale: 'en-EU',
+    modalImage: '/assets/images/eu/bg-modal.png',
+    wheelText: '/assets/images/eu/wheel-text.png',
+    button1Header: '/assets/images/eu/button1-header.png',
+    button2Header: '/assets/images/eu/button2-header.png',
+    button3Header: '/assets/images/common/button3-header.png',
+    counterFormat: '627 154: 19',
+    multiplier: 'x5'
   },
   ca: {
-    // Canadian region settings - to be filled
+    name: 'CA', 
+    currency: 'CAD',
+    locale: 'en-CA',
+    modalImage: '/assets/images/ca/bg-modal.png',
+    wheelText: '/assets/images/ca/wheel-text.png',
+    button1Header: '/assets/images/ca/button1-header.png',
+    button2Header: '/assets/images/ca/button2-header.png',
+    button3Header: '/assets/images/common/button3-header.png',
+    counterFormat: '627 154: 19',
+    multiplier: 'x5'
+  },
+  kr: {
+    name: 'KR',
+    currency: 'KRW', 
+    locale: 'ko-KR',
+    modalImage: '/assets/images/kr/bg-modal.png',
+    wheelText: '/assets/images/kr/wheel-text.png',
+    button1Header: '/assets/images/kr/button1-header.png',
+    button2Header: '/assets/images/kr/button2-header.png',
+    button3Header: '/assets/images/common/button3-header.png',
+    counterFormat: '627,154: 19',
+    multiplier: 'x5'
   }
 }
 
@@ -145,4 +172,31 @@ export function getNextTargetSector() {
   config.currentSpinIndex++;
   
   return targetSector;
+}
+
+// Get region configuration
+export function getRegionConfig(region = 'eu') {
+  return regionsConfig[region] || regionsConfig.eu;
+}
+
+// Get modal image path for current region
+export function getModalImagePath(region = 'eu') {
+  const config = getRegionConfig(region);
+  return config.modalImage;
+}
+
+// Get wheel text image path for current region
+export function getWheelTextPath(region = 'eu') {
+  const config = getRegionConfig(region);
+  return config.wheelText;
+}
+
+// Get header button paths for current region
+export function getHeaderButtonPaths(region = 'eu') {
+  const config = getRegionConfig(region);
+  return {
+    button1: config.button1Header,
+    button2: config.button2Header,
+    button3: config.button3Header
+  };
 }

@@ -21,7 +21,10 @@ export function generateHTML(isDevelopment) {
         </div>
         
         <div class="box2">
-          <img src="/assets/images/common/chicken.png" alt="Chicken">
+          <div class="chicken-container">
+            <img src="/assets/images/common/chicken-part1.png" alt="Chicken Part 1" class="chicken-part1">
+            <img src="/assets/images/common/chicken-part2.png" alt="Chicken Part 2" class="chicken-part2">
+          </div>
         </div>
         
         <div class="game-box">
