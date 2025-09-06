@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "build:all": "npm run build:eu && npm run build:kr && npm run build:ca",
     "build:eu": "vite build --mode playable-eu",
-    "build:kr": "vite build --mode playable-kr", 
+    "build:kr": "vite build --mode playable-kr",
     "build:ca": "vite build --mode playable-ca",
     "deploy": "npm run build:all && firebase deploy",
     "deploy:eu": "npm run build:eu && firebase deploy --only hosting:chocko-wheel-eu",
@@ -24,6 +24,7 @@
     "vite-plugin-singlefile": "^2.3.0"
   },
   "dependencies": {
+    "gsap": "^3.13.0",
     "pixi.js": "^8.12.0"
   }
 }

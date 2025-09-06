@@ -1,3 +1,5 @@
+import { gsap } from 'gsap'
+
 export class Logo1BounceAnimation {
   constructor() {
     this.element = null
@@ -17,8 +19,8 @@ export class Logo1BounceAnimation {
   }
   
   start() {
-    if (!this.element || !window.gsap) {
-      console.warn('Cannot start animation: missing element or GSAP')
+    if (!this.element) {
+      console.warn('Cannot start animation: missing element')
       return
     }
     

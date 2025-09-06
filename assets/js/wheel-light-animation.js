@@ -3,7 +3,7 @@
  * Handles smooth pulsing and flickering effects
  */
 
-class WheelLightAnimation {
+export class WheelLightAnimation {
     constructor() {
         this.wheelLightElement = null;
         this.baseOpacity = 0.6;
@@ -110,5 +110,3 @@ class WheelLightAnimation {
     }
 }
 
-// Export for use in main.js
-window.WheelLightAnimation = WheelLightAnimation;

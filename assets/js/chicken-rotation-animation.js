@@ -1,3 +1,5 @@
+import { gsap } from 'gsap'
+
 export class ChickenRotationAnimation {
   constructor() {
     this.part2Element = null
@@ -17,8 +19,8 @@ export class ChickenRotationAnimation {
   }
   
   start() {
-    if (!this.part2Element || !window.gsap) {
-      console.warn('Cannot start animation: missing element or GSAP')
+    if (!this.part2Element) {
+      console.warn('Cannot start animation: missing element')
       return
     }
     

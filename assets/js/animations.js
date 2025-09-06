@@ -3,7 +3,7 @@
  * Handles wheel-light rotation animation
  */
 
-class WheelAnimations {
+export class WheelAnimations {
     constructor() {
         this.wheelLightElement = null;
     }
@@ -25,5 +25,3 @@ class WheelAnimations {
     }
 }
 
-// Export for use in main.js
-window.WheelAnimations = WheelAnimations;

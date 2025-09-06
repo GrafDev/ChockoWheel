@@ -3,6 +3,9 @@ import { GameManager } from './game-manager.js'
 import { ChickenRotationAnimation } from './chicken-rotation-animation.js'
 import { CanvasFlameDistortion } from './canvas-flame-distortion.js'
 import { Logo1BounceAnimation } from './logo1-bounce-animation.js'
+import { SpinButtonBulgeAnimation } from './spin-button-bulge-animation.js'
+import { WheelAnimations } from './animations.js'
+import { WheelLightAnimation } from './wheel-light-animation.js'
 
 // CONFIGURATION
 const isDevelopment = import.meta.env.DEV;
@@ -15,6 +18,7 @@ let fireSparksAnimation = null;
 let chickenRotationAnimation = null;
 let canvasFlameDistortion = null;
 let logo1BounceAnimation = null;
+let spinButtonBulgeAnimation = null;
 
 // Initialize game
 async function initGame() {
@@ -33,18 +37,14 @@ async function initGame() {
     await new Promise(resolve => setTimeout(resolve, 100));
     
     // Initialize Wheel Animations
-    if (window.WheelAnimations) {
-      wheelAnimations = new window.WheelAnimations();
-      wheelAnimations.init();
-      console.log('Wheel animations initialized');
-    }
+    wheelAnimations = new WheelAnimations();
+    wheelAnimations.init();
+    console.log('Wheel animations initialized');
     
     // Initialize Wheel Light Animation
-    if (window.WheelLightAnimation) {
-      wheelLightAnimation = new window.WheelLightAnimation();
-      wheelLightAnimation.init();
-      console.log('Wheel light animation initialized');
-    }
+    wheelLightAnimation = new WheelLightAnimation();
+    wheelLightAnimation.init();
+    console.log('Wheel light animation initialized');
     
     // Fire sparks animation now handled by SimpleEntranceAnimations
     
@@ -67,6 +67,13 @@ async function initGame() {
     if (logo1BounceAnimation.init()) {
       logo1BounceAnimation.start();
       console.log('Logo1 bounce animation initialized');
+    }
+    
+    // Initialize Spin Button Bulge Animation
+    spinButtonBulgeAnimation = new SpinButtonBulgeAnimation();
+    if (await spinButtonBulgeAnimation.init()) {
+      spinButtonBulgeAnimation.start();
+      console.log('Spin button bulge animation initialized');
     }
     
     // Initialize GameManager
