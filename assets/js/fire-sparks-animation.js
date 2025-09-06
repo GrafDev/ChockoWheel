@@ -14,7 +14,7 @@ export class FireSparksAnimation {
         this.maxSparks = 800;
         this.sparkFrequency = 3.5; // Maximum sparks per frame
         this.startTime = null;
-        this.speedMultiplier = 2.0; // Start with 2x speed
+        this.speedMultiplier = 2.67; // Start with 2.67x speed (4.0 / 1.5)
     }
 
     /**
@@ -79,7 +79,7 @@ export class FireSparksAnimation {
         
         // Random direction from center
         const angle = Math.random() * Math.PI * 2;
-        const baseSpeed = Math.random() * 2.5 + 1.5; // Base speed: 1.5-4
+        const baseSpeed = Math.random() * 3.75 + 2.25; // Base speed: 2.25-6 (halved)
         const speed = baseSpeed * this.speedMultiplier;
         
         // Start at center (will be invisible until halfway)
@@ -100,6 +100,11 @@ export class FireSparksAnimation {
         spark.maxLife = 10.0; // Long life to reach screen edges
         spark.size = Math.random() * 3 + 3; // Fixed size 3-6px
         spark.brightness = Math.random() * 0.3 + 0.7; // 0.7-1.0
+        
+        // Trail properties
+        spark.trail = spark.trail || []; // Keep existing trail or create new
+        spark.trail.length = 0; // Clear trail for reused sparks
+        spark.maxTrailLength = 8; // Number of trail points
         
         // Flickering properties - 40% chance to be flickering
         spark.isFlickering = Math.random() < 0.4;
@@ -157,7 +162,23 @@ export class FireSparksAnimation {
         // White spark with yellow glow
         const color = 0xFFFFFF; // White core
         
-        // Draw white spark using modern PixiJS v8 API
+        // Draw trail first (behind the spark)
+        if (spark.trail && spark.trail.length > 1) {
+            for (let t = 0; t < spark.trail.length - 1; t++) {
+                const point = spark.trail[t];
+                
+                // Calculate trail alpha (fades from back to front)
+                const trailProgress = t / (spark.trail.length - 1); // 0 to 1 (oldest to newest)
+                const trailAlpha = alpha * trailProgress * 0.4; // Max 40% of spark alpha
+                const trailSize = size * (0.3 + trailProgress * 0.7); // 30% to 100% of spark size
+                
+                // Draw trail point
+                spark.circle(point.x - spark.x, point.y - spark.y, trailSize);
+                spark.fill({ color: color, alpha: trailAlpha });
+            }
+        }
+        
+        // Draw main spark on top
         spark.circle(0, 0, size);
         spark.fill({ color: color, alpha: alpha });
     }
@@ -169,15 +190,15 @@ export class FireSparksAnimation {
         // Update speed multiplier based on elapsed time
         const elapsedTime = (Date.now() - this.startTime) / 1000; // in seconds
         if (elapsedTime < 2.0) {
-            // First 2 seconds: 2x speed
-            this.speedMultiplier = 2.0;
+            // First 2 seconds: 2.67x speed (was 4x, now 1.5x slower)
+            this.speedMultiplier = 2.67;
         } else if (elapsedTime < 3.0) {
-            // Seconds 2-3: smooth transition from 2x to 1x
+            // Seconds 2-3: smooth transition from 2.67x to 1.5x
             const transitionProgress = elapsedTime - 2.0; // 0.0 to 1.0
-            this.speedMultiplier = 2.0 - transitionProgress; // 2.0 to 1.0
+            this.speedMultiplier = 2.67 - (1.17 * transitionProgress); // 2.67 to 1.5
         } else {
-            // After 3 seconds: normal speed
-            this.speedMultiplier = 1.0;
+            // After 3 seconds: 1.5x speed (was 3x, now halved)
+            this.speedMultiplier = 1.5;
         }
         
         // Create new sparks
@@ -190,6 +211,12 @@ export class FireSparksAnimation {
         // Update existing sparks
         for (let i = this.sparks.length - 1; i >= 0; i--) {
             const spark = this.sparks[i];
+            
+            // Save current position to trail before moving
+            spark.trail.push({ x: spark.x, y: spark.y });
+            if (spark.trail.length > spark.maxTrailLength) {
+                spark.trail.shift(); // Remove oldest trail point
+            }
             
             // Move spark
             spark.x += spark.vx;

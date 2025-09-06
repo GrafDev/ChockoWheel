@@ -1,12 +1,14 @@
 export class ChickenIdleAnimation {
   constructor() {
     this.element = null
+    this.part3Element = null
     this.scaleX = 1
     this.isAnimating = false
   }
   
   init(element, scaleX = 1) {
     this.element = element
+    this.part3Element = document.querySelector('.chicken-part3')
     this.scaleX = scaleX
   }
   
@@ -50,6 +52,11 @@ export class ChickenIdleAnimation {
           setTimeout(() => doJump(), 60) // Small pause between jumps
         })
       })
+      
+      // Animate part3 upward during jump
+      if (this.part3Element) {
+        this.animatePart3Jump()
+      }
     }
     
     doJump()
@@ -95,5 +102,52 @@ export class ChickenIdleAnimation {
   
   easeOutQuad(t) {
     return 1 - (1 - t) * (1 - t)
+  }
+  
+  easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3)
+  }
+  
+  easeInCubic(t) {
+    return t * t * t
+  }
+  
+  animatePart3Jump() {
+    if (!this.part3Element) return
+    
+    const startTime = Date.now()
+    const jumpDuration = 180 // Total jump duration (up and down)
+    const maxHeight = -15 // Maximum upward movement
+    
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / jumpDuration, 1)
+      
+      // Create a bounce curve: up then down
+      let yOffset = 0
+      if (progress <= 0.5) {
+        // Going up (first half)
+        const upProgress = progress * 2 // 0 to 1
+        yOffset = maxHeight * this.easeOutQuad(upProgress)
+      } else {
+        // Coming down (second half)
+        const downProgress = (progress - 0.5) * 2 // 0 to 1
+        yOffset = maxHeight * (1 - this.easeOutQuad(downProgress))
+      }
+      
+      // Apply transform
+      const currentTransform = this.part3Element.style.transform || ''
+      const newTransform = currentTransform.includes('translateY')
+        ? currentTransform.replace(/translateY\([^)]*\)/, `translateY(${yOffset}px)`)
+        : currentTransform + ` translateY(${yOffset}px)`
+      
+      this.part3Element.style.transform = newTransform
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate)
+      }
+    }
+    
+    requestAnimationFrame(animate)
   }
 }
