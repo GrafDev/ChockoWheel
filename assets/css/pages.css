@@ -57,7 +57,7 @@
 .nav-buttons {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .how-to-play-btn {
@@ -74,33 +74,12 @@
   align-items: center;
 }
 
-.counter {
-  background: #505566;
-  color: white;
-  padding: 5px 12px;
-  border-radius: 7px;
-  font-size: calc(0.35 * max(5vh, 80px));
-  font-weight: bold;
-  white-space: nowrap;
+.header-btn-1,
+.header-btn-2,
+.header-btn-3 {
   height: 95%;
-  display: flex;
-  align-items: center;
-}
-
-.fullscreen-btn {
-  background: #505566;
-  color: white;
-  padding: 5px 12px;
-  border-radius: 7px;
   cursor: pointer;
-  height: 95%;
-  min-width: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(0.35 * max(5vh, 80px));
-  font-weight: bold;
-  white-space: nowrap;
+  object-fit: contain;
 }
 
 /* Main box layout */

@@ -276,6 +276,11 @@ export class GameManager {
       headerBtn1.src = headerButtonPaths.button1
     }
     
+    const headerBtn2 = document.querySelector('.header-btn-2')
+    if (headerBtn2) {
+      headerBtn2.src = headerButtonPaths.button2
+    }
+    
     const headerBtn3 = document.querySelector('.header-btn-3')
     if (headerBtn3) {
       headerBtn3.src = headerButtonPaths.button3

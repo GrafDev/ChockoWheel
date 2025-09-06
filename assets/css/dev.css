@@ -1,14 +1,3 @@
-.dev-trigger {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 30px;
-  z-index: 1010;
-  background: transparent;
-  cursor: pointer;
-}
 
 .dev-panel {
   position: fixed;
@@ -21,14 +10,13 @@
   border: 1px solid #ccc;
   z-index: 1000;
   min-width: 200px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  opacity: 0.3;
+  visibility: visible;
+  transition: opacity 0.3s ease;
 }
 
-.dev-panel.show {
+.dev-panel:hover {
   opacity: 1;
-  visibility: visible;
 }
 
 .dev-section {

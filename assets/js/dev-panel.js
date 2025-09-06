@@ -7,40 +7,16 @@ export function setupDevPanel(currentRegion, updateRegion, isDevelopment) {
 
   console.log('Setting up dev panel for region:', currentRegion);
 
-  const devTrigger = document.getElementById('devTrigger');
   const devPanel = document.getElementById('devPanel');
   const regionSelector = document.getElementById('regionSelector');
   const showBordersCheckbox = document.getElementById('showBorders');
 
-  console.log('Dev panel elements:', { devTrigger, devPanel, regionSelector, showBordersCheckbox });
+  console.log('Dev panel elements:', { devPanel, regionSelector, showBordersCheckbox });
 
-  if (!devTrigger || !devPanel || !regionSelector) {
+  if (!devPanel || !regionSelector) {
     console.error('Dev panel elements not found!');
     return;
   }
-
-  // Show/hide panel on hover
-  devTrigger.addEventListener('mouseenter', () => {
-    console.log('Dev trigger hovered');
-    devPanel.classList.add('show');
-  });
-
-  devPanel.addEventListener('mouseenter', () => {
-    devPanel.classList.add('show');
-  });
-
-  devPanel.addEventListener('mouseleave', () => {
-    devPanel.classList.remove('show');
-  });
-
-  devTrigger.addEventListener('mouseleave', () => {
-    // Small delay to allow moving to panel
-    setTimeout(() => {
-      if (!devPanel.matches(':hover')) {
-        devPanel.classList.remove('show');
-      }
-    }, 100);
-  });
 
   // Initialize selector based on current region
   regionSelector.value = currentRegion;
