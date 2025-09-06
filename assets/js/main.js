@@ -2,6 +2,7 @@
 import { GameManager } from './game-manager.js'
 import { ChickenRotationAnimation } from './chicken-rotation-animation.js'
 import { CanvasFlameDistortion } from './canvas-flame-distortion.js'
+import { Logo1BounceAnimation } from './logo1-bounce-animation.js'
 
 // CONFIGURATION
 const isDevelopment = import.meta.env.DEV;
@@ -13,6 +14,7 @@ let wheelLightAnimation = null;
 let fireSparksAnimation = null;
 let chickenRotationAnimation = null;
 let canvasFlameDistortion = null;
+let logo1BounceAnimation = null;
 
 // Initialize game
 async function initGame() {
@@ -58,6 +60,13 @@ async function initGame() {
     if (await canvasFlameDistortion.init()) {
       canvasFlameDistortion.start();
       console.log('Canvas flame distortion initialized');
+    }
+    
+    // Initialize Logo1 Bounce Animation
+    logo1BounceAnimation = new Logo1BounceAnimation();
+    if (logo1BounceAnimation.init()) {
+      logo1BounceAnimation.start();
+      console.log('Logo1 bounce animation initialized');
     }
     
     // Initialize GameManager

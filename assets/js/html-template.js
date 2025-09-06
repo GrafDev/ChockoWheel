@@ -6,7 +6,10 @@ export function generateHTML(isDevelopment) {
     <div class="page" id="wheelPage">
       <div class="header">
         <div class="logo">
-          <img src="/assets/images/common/logo1.png" alt="Logo">
+          <div class="logo1">
+            <img src="/assets/images/common/logo1-part1.png" alt="Logo1 Part 1" class="logo1-part1">
+            <img src="/assets/images/common/logo1-part2.png" alt="Logo1 Part 2" class="logo1-part2">
+          </div>
         </div>
         <div class="nav-buttons">
           <button class="how-to-play-btn">How to play?</button>
@@ -40,7 +43,10 @@ export function generateHTML(isDevelopment) {
     <div class="page" id="roadPage" style="display: none;">
       <div class="header">
         <div class="logo">
-          <img src="/assets/images/common/logo1.png" alt="Logo">
+          <div class="logo1">
+            <img src="/assets/images/common/logo1-part1.png" alt="Logo1 Part 1" class="logo1-part1">
+            <img src="/assets/images/common/logo1-part2.png" alt="Logo1 Part 2" class="logo1-part2">
+          </div>
         </div>
         <div class="nav-buttons">
           <button class="how-to-play-btn">How to play?</button>
