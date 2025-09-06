@@ -139,12 +139,6 @@
   box-sizing: border-box;
 }
 
-.box1 img {
-  width: 100%;
-  height: auto;
-  margin-right: 30%;
-  opacity: 0;
-}
 
 .box2 {
   flex: 1;

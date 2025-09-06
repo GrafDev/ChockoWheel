@@ -89,7 +89,8 @@ export class SimpleEntranceAnimations {
   }
   
   animateBox1() {
-    const element = document.querySelector('.box1 img')
+    const element = document.querySelector('.logo2')
+    console.log('animateBox1 found element:', element)
     if (!element) return
     
     element.style.opacity = '0'
@@ -97,6 +98,7 @@ export class SimpleEntranceAnimations {
     const animation = { opacity: 0 }
     this.animate(animation, { opacity: 1 }, 800, this.easeOutQuad, (values) => {
       element.style.opacity = values.opacity
+      console.log('animating logo2 opacity to:', values.opacity)
     })
   }
   

@@ -17,7 +17,10 @@ export function generateHTML(isDevelopment) {
       
       <div class="main-box">
         <div class="box1">
-          <img src="/assets/images/common/logo2.png" alt="Logo2">
+          <div class="logo2">
+            <img src="/assets/images/common/logo2-part1.png" alt="Logo2 Part 1" class="logo2-part1">
+            <img src="/assets/images/common/logo2-part2.png" alt="Logo2 Part 2" class="logo2-part2">
+          </div>
         </div>
         
         <div class="box2">
