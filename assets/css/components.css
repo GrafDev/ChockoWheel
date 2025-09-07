@@ -99,6 +99,7 @@
   /* Position relative to button - slightly right of center */
   top: 30%;
   left: 30%;
+  opacity: 0;
 }
 
 

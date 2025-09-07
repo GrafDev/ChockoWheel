@@ -1,5 +1,5 @@
 import { setupDevPanel } from './dev-panel.js'
-import { SimpleEntranceAnimations } from './simple-entrance-animations.js'
+import { EntranceAnimations } from './entrance-animations.js'
 import { getModalImagePath, getWheelTextPath, getHeaderButtonPaths } from './config.js'
 
 export class GameManager {
@@ -35,7 +35,7 @@ export class GameManager {
     this.updateRegionContent(this.currentRegion)
     
     // Start entrance animations
-    this.entranceAnimations = new SimpleEntranceAnimations()
+    this.entranceAnimations = new EntranceAnimations()
     await this.entranceAnimations.start(() => {
       this.isReady = true
     })
