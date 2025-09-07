@@ -100,10 +100,10 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at top left, rgba(255, 178, 11, 0.2) 0%, transparent 25%),
-    radial-gradient(circle at top right, rgba(255, 178, 11, 0.2) 0%, transparent 25%),
-    radial-gradient(circle at bottom left, rgba(255, 178, 11, 0.2) 0%, transparent 25%),
-    radial-gradient(circle at bottom right, rgba(255, 178, 11, 0.2) 0%, transparent 25%);
+    radial-gradient(circle at top left, rgba(255, 178, 11, 0.25) 0%, transparent 25%),
+    radial-gradient(circle at top right, rgba(255, 178, 11, 0.25) 0%, transparent 25%),
+    radial-gradient(circle at bottom left, rgba(255, 178, 11, 0.25) 0%, transparent 25%),
+    radial-gradient(circle at bottom right, rgba(255, 178, 11, 0.25) 0%, transparent 25%);
   pointer-events: none;
   z-index: 30;
   animation: gradient-pulse 3s ease-in-out infinite;

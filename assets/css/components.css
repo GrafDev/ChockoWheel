@@ -57,7 +57,7 @@
 .wheel-pointer {
   z-index: 40;
   transform: translate(-50%, -50%) scale(1.1) !important;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
 }
 
 .wheel-center {
@@ -151,6 +151,16 @@
 .spin-btn.visible {
   opacity: 1;
   transform: scale(1);
+}
+
+.spin-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.7);
+}
+
+.spin-btn.visible:disabled {
+  opacity: 0.5;
 }
 
 .spin-btn:hover {

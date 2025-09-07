@@ -22,6 +22,7 @@ export class EntranceAnimations {
     // Complete after 1 second - button becomes active
     setTimeout(() => {
       this.isReady = true
+      this.enableSpinButton()
       console.log('All entrance animations completed')
       if (onComplete) onComplete()
     }, 1000)
@@ -57,6 +58,9 @@ export class EntranceAnimations {
       return
     }
     
+    // Set button as disabled initially
+    button.disabled = true
+    
     // Start animation immediately - CSS already sets initial state
     const animation = { opacity: 0, scale: 0 }
     this.animate(animation, { opacity: 1, scale: 1 }, 400, this.easeOutBack, (values) => {
@@ -71,6 +75,14 @@ export class EntranceAnimations {
     })
     
     console.log('Spin button entrance animation started')
+  }
+
+  enableSpinButton() {
+    const button = document.querySelector('.game-content .spin-btn')
+    if (button) {
+      button.disabled = false
+      console.log('Spin button enabled')
+    }
   }
 
   easeOutQuad(t) {
