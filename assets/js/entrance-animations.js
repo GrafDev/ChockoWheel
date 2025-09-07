@@ -9,7 +9,6 @@ export class EntranceAnimations {
   }
   
   async start(onComplete) {
-    console.log('Starting entrance animations...')
     
     // Start all entrance animations
     this.animateHeader()
@@ -23,7 +22,6 @@ export class EntranceAnimations {
     setTimeout(() => {
       this.isReady = true
       this.enableSpinButton()
-      console.log('All entrance animations completed')
       if (onComplete) onComplete()
     }, 1000)
     
@@ -48,7 +46,6 @@ export class EntranceAnimations {
       element.style.transform = `translateY(${values.y}%)`
     })
     
-    console.log('Header entrance animation started')
   }
 
   animateSpinButtons() {
@@ -74,14 +71,12 @@ export class EntranceAnimations {
       button.style.transform = ''
     })
     
-    console.log('Spin button entrance animation started')
   }
 
   enableSpinButton() {
     const button = document.querySelector('.game-content .spin-btn')
     if (button) {
       button.disabled = false
-      console.log('Spin button enabled')
     }
   }
 
@@ -139,7 +134,6 @@ export class EntranceAnimations {
       })
     })
     
-    console.log('Logo2 entrance animation started')
   }
 
   animateWheel() {
@@ -163,7 +157,6 @@ export class EntranceAnimations {
       element.style.transform = 'scale(1)'
     })
     
-    console.log('Wheel entrance animation started')
   }
   
   animateChicken() {
@@ -174,36 +167,17 @@ export class EntranceAnimations {
     const isTablet = window.innerWidth <= 1400 && window.innerWidth > 667
     const isLandscape = window.innerWidth > window.innerHeight
     
-    // Move from RIGHT in: mobile landscape OR tablet portrait
-    const moveFromRight = (isMobile && isLandscape) || (isTablet && !isLandscape)
+    // Move from RIGHT in: mobile (any orientation) OR tablet portrait
+    const moveFromRight = isMobile || (isTablet && !isLandscape)
     
-    console.log('DEVICE CHECK:', {
-      screenWidth: window.innerWidth,
-      screenHeight: window.innerHeight,
-      isMobile,
-      isTablet,
-      isLandscape,
-      moveFromRight
-    })
     const startX = moveFromRight ? window.innerWidth + 200 : -(window.innerWidth + 200)
     
     // Flip chicken only when moving from right (opposite to movement direction)
     const scaleX = moveFromRight ? -1 : 1
     
-    console.log('CHICKEN DEBUG:', {
-      screenWidth: window.innerWidth,
-      screenHeight: window.innerHeight,
-      isMobile: isMobile,
-      isTablet: isTablet,
-      isLandscape: isLandscape,
-      moveFromRight: moveFromRight,
-      scaleX: scaleX,
-      startX: startX
-    })
-    
     // Make chicken visible and set initial position
-    element.style.opacity = '1'
-    element.style.transform = `translateX(${startX}px) translateY(0px) scaleX(${scaleX})`
+    element.style.setProperty('opacity', '1', 'important')
+    element.style.setProperty('transform', `translateX(${startX}px) translateY(0px) scaleX(${scaleX})`, 'important')
     
     const animation = { x: startX, y: 0 }
     let startTime = Date.now()
@@ -221,7 +195,6 @@ export class EntranceAnimations {
         setTimeout(() => {
           this.chickenFinalBounces(element, scaleX, () => {
             // Entrance animation complete - persistent animations handle continuous jumping
-            console.log('Chicken entrance animation complete')
           })
         }, 100)
         return
@@ -302,8 +275,6 @@ export class EntranceAnimations {
       ...document.querySelectorAll('.hand-pointer')
     ].filter(Boolean)
     
-    console.log('Found hands for animation:', hands.length)
-    
     hands.forEach(hand => {
       hand.style.opacity = '0'
       hand.style.transform = 'scale(2.5)'
@@ -314,7 +285,6 @@ export class EntranceAnimations {
         hand.style.opacity = values.opacity
         hand.style.transform = `scale(${values.scale})`
       }, () => {
-        console.log('Hand appearance animation complete')
         // Start persistent hand tapping animation
         if (window.persistentAnimations) {
           window.persistentAnimations.startHandTapping()

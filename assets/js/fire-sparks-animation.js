@@ -46,7 +46,6 @@ export class FireSparksAnimation {
         // Try to load spark texture
         try {
             this.sparkTexture = await PIXI.Assets.load('/assets/images/common/spark.png');
-            console.log('Spark texture loaded:', this.sparkTexture.width, 'x', this.sparkTexture.height);
         } catch (error) {
             console.error('Failed to load spark texture:', error);
             // Fallback to regular container
@@ -85,7 +84,6 @@ export class FireSparksAnimation {
             return;
         }
         
-        console.log('Testing ParticleContainer with texture:', this.sparkTexture);
         
         // Store references to test sprites
         this.testSprites = [];
@@ -105,16 +103,12 @@ export class FireSparksAnimation {
             
             this.container.addParticle(spark); // ParticleContainer requires addParticle
             this.testSprites.push(spark); // Store reference
-            console.log(`Spark ${i} added at ${spark.x}, ${spark.y}`);
         }
         
-        console.log('ParticleContainer children count:', this.container.children.length);
         
-        console.log('Test sprites stored:', this.testSprites.length);
         
         // Test if sprites are actually rendered by moving them
         setTimeout(() => {
-            console.log('Moving test sprites...');
             for (let i = 0; i < this.testSprites.length; i++) {
                 this.testSprites[i].x += 100;
                 this.testSprites[i].y += 100;
@@ -141,7 +135,6 @@ export class FireSparksAnimation {
         spark.alpha = 0.5 + Math.random() * 0.5;
         
         this.container.addParticle(spark);
-        console.log('Test spark created at:', spark.x, spark.y);
     }
 
     /**

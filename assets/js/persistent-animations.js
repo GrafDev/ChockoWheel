@@ -22,32 +22,27 @@ export class PersistentAnimations {
 
   async init() {
     try {
-      console.log('Initializing persistent animations...')
 
       // Initialize Logo1 Bounce Animation
       this.logo1BounceAnimation = new Logo1BounceAnimation()
       if (this.logo1BounceAnimation.init()) {
         this.logo1BounceAnimation.start()
-        console.log('Logo1 bounce animation initialized')
       }
       
       // Initialize Logo2 Flame Animation
       this.logo2FlameAnimation = new Logo2FlameAnimation()
       if (await this.logo2FlameAnimation.init()) {
         this.logo2FlameAnimation.start()
-        console.log('Logo2 flame animation initialized')
       }
 
       // Initialize Fire Sparks Animation
       this.fireSparksAnimation = new FireSparksAnimation()
       await this.fireSparksAnimation.init()
-      console.log('Fire sparks animation initialized')
 
       // Initialize Chicken Rotation Animation
       this.chickenRotationAnimation = new ChickenRotationAnimation()
       if (this.chickenRotationAnimation.init()) {
         this.chickenRotationAnimation.start()
-        console.log('Chicken rotation animation initialized')
       }
 
       // Initialize Chicken Idle Animation (jumping + part3)
@@ -56,19 +51,16 @@ export class PersistentAnimations {
       if (chickenElement) {
         this.chickenIdleAnimation.init(chickenElement, 1)
         this.chickenIdleAnimation.start()
-        console.log('Chicken idle animation initialized')
       }
 
       // Initialize Chicken Mouse Tracking (head follows mouse)
       this.chickenMouseTracking = new ChickenMouseTracking()
       if (this.chickenMouseTracking.init()) {
         this.chickenMouseTracking.start()
-        console.log('Chicken mouse tracking initialized')
       }
 
       // Hand tapping animation will be started after entrance animation completes
 
-      console.log('All persistent animations initialized')
       return true
     } catch (error) {
       console.error('Failed to initialize persistent animations:', error)
@@ -96,7 +88,6 @@ export class PersistentAnimations {
       this.chickenMouseTracking.stop()
     }
     this.stopHandTapping()
-    console.log('Persistent animations stopped')
   }
 
   resize() {
@@ -114,7 +105,6 @@ export class PersistentAnimations {
       ...document.querySelectorAll('.hand-pointer')
     ].filter(Boolean)
     
-    console.log('Found hands for tapping animation:', hands.length)
     
     if (hands.length === 0) return
     

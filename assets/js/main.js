@@ -20,7 +20,6 @@ let spinButtonBulgeAnimation = null;
 // Initialize game
 async function initGame() {
   try {
-    console.log('Starting game initialization...');
     
     // Show dev panel in development mode
     if (isDevelopment) {
@@ -36,17 +35,14 @@ async function initGame() {
     // Initialize Wheel Animations
     wheelAnimations = new WheelAnimations();
     wheelAnimations.init();
-    console.log('Wheel animations initialized');
     
     // Initialize Wheel Light Animation
     wheelLightAnimation = new WheelLightAnimation();
     wheelLightAnimation.init();
-    console.log('Wheel light animation initialized');
     
     // Initialize persistent animations
     persistentAnimations = new PersistentAnimations();
     await persistentAnimations.init();
-    console.log('Persistent animations initialized');
     
     // Original fire sparks animation now runs via SimpleEntranceAnimations
     
@@ -54,7 +50,6 @@ async function initGame() {
     canvasFlameDistortion = new CanvasFlameDistortion();
     if (await canvasFlameDistortion.init()) {
       canvasFlameDistortion.start();
-      console.log('Canvas flame distortion initialized');
     }
     
     // Spin button bulge animation disabled (filter issue)
@@ -67,7 +62,6 @@ async function initGame() {
     // Initialize GameManager
     gameManager = new GameManager();
     await gameManager.init();
-    console.log('Game initialized successfully');
     
     // Make animations globally accessible for stopping
     window.wheelLightAnimation = wheelLightAnimation;

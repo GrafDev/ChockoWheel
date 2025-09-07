@@ -76,7 +76,6 @@ export class GameManager {
   
   handleSpin() {
     if (this.isSpinning || !this.isReady) {
-      console.log('Spin blocked - already spinning or not ready')
       return
     }
     
@@ -86,7 +85,6 @@ export class GameManager {
     // Fade out hand when spinning starts
     this.fadeOutHand()
     
-    console.log('Starting wheel spin...')
     
     // Get wheel element
     const wheelElements = document.querySelectorAll('.wheel-wrapper')
@@ -166,7 +164,6 @@ export class GameManager {
         this.currentAnimationFrame = null
         this.isSpinning = false
         const finalPosition = currentRotation % 360
-        console.log('Wheel stopped at', finalPosition, 'degrees')
         
         // Show bonus modal after wheel stops
         this.showBonusModal()
@@ -303,7 +300,6 @@ export class GameManager {
       // Save to localStorage
       localStorage.setItem('chockoWheel_region', newRegion)
       
-      console.log(`Region updated to: ${newRegion}`)
     }
   }
 
@@ -333,7 +329,6 @@ export class GameManager {
     }
     
     // Update counter, currency displays, etc. based on region
-    console.log(`Updating content for region: ${region}`)
   }
 
   destroy() {

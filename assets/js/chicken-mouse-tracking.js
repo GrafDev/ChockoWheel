@@ -24,7 +24,6 @@ export class ChickenMouseTracking {
       return false
     }
     
-    console.log('Chicken mouse tracking initialized')
     return true
   }
 
@@ -35,7 +34,6 @@ export class ChickenMouseTracking {
     document.addEventListener('mousemove', this.onMouseMove)
     this.update()
     
-    console.log('Chicken mouse tracking started')
   }
 
   stop() {
@@ -49,7 +47,6 @@ export class ChickenMouseTracking {
       this.animationFrame = null
     }
     
-    console.log('Chicken mouse tracking stopped')
   }
 
   onMouseMove(event) {

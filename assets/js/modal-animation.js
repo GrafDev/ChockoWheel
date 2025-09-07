@@ -41,7 +41,6 @@ export class ModalAnimation {
       // Add canvas to modal container
       this.container.appendChild(this.app.canvas)
 
-      console.log('Modal animation initialized')
       return true
     } catch (error) {
       console.error('Failed to initialize modal animation:', error)
@@ -274,7 +273,6 @@ export class ModalAnimation {
     // Animation complete
     
     this.isAnimating = false
-    console.log('Epic modal animation complete!')
   }
 
 
