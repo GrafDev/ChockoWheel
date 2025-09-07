@@ -6,7 +6,6 @@ import { Logo1BounceAnimation } from './logo1-bounce-animation.js'
 import { SpinButtonBulgeAnimation } from './spin-button-bulge-animation.js'
 import { WheelAnimations } from './animations.js'
 import { WheelLightAnimation } from './wheel-light-animation.js'
-import { TestParticleSparks } from './test-particle-sparks.js'
 
 // CONFIGURATION
 const isDevelopment = import.meta.env.DEV;
@@ -20,7 +19,6 @@ let chickenRotationAnimation = null;
 let canvasFlameDistortion = null;
 let logo1BounceAnimation = null;
 let spinButtonBulgeAnimation = null;
-let testParticleSparks = null;
 
 // Initialize game
 async function initGame() {
