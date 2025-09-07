@@ -82,6 +82,10 @@ export class GameManager {
     
     this.isSpinning = true
     this.disableSpinButtons()
+    
+    // Fade out hand when spinning starts
+    this.fadeOutHand()
+    
     console.log('Starting wheel spin...')
     
     // Get wheel element
@@ -208,6 +212,9 @@ export class GameManager {
     if (window.spinButtonBulgeAnimation) window.spinButtonBulgeAnimation.stop()
     if (window.canvasFlameDistortion) window.canvasFlameDistortion.stop()
     if (window.logo2FlameAnimation) window.logo2FlameAnimation.stop()
+    
+    // Stop hand tapping animation
+    if (window.persistentAnimations) window.persistentAnimations.stopHandTapping()
   }
   
   hideBonusModal() {
@@ -238,6 +245,24 @@ export class GameManager {
     
     if (spinBtn) spinBtn.disabled = false
     if (spinBtnLandscape) spinBtnLandscape.disabled = false
+  }
+
+  fadeOutHand() {
+    const hands = [
+      document.querySelector('.hand-pointer'),
+      ...document.querySelectorAll('.hand-pointer')
+    ].filter(Boolean)
+    
+    // Stop hand tapping animation first
+    if (window.persistentAnimations) {
+      window.persistentAnimations.stopHandTapping()
+    }
+    
+    // Fade out all hands
+    hands.forEach(hand => {
+      hand.style.transition = 'opacity 0.5s ease-out'
+      hand.style.opacity = '0'
+    })
   }
 
   showPage(pageId) {

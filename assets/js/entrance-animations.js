@@ -12,21 +12,67 @@ export class EntranceAnimations {
     console.log('Starting entrance animations...')
     
     // Start all entrance animations
+    this.animateHeader()
+    this.animateSpinButtons()
     this.animateLogo2()
+    this.animateWheel()
     this.animateChicken()
     this.animateHandAppearance()
     
-    // Complete after chicken animation (~1.5s + bounces)
+    // Complete after 1 second - button becomes active
     setTimeout(() => {
       this.isReady = true
       console.log('All entrance animations completed')
       if (onComplete) onComplete()
-    }, 2500)
+    }, 1000)
     
     // Handle window resize to restart chicken
     this.setupResizeHandler()
   }
   
+  animateHeader() {
+    const element = document.querySelector('.header')
+    if (!element) {
+      console.warn('Header element not found for entrance animation')
+      return
+    }
+    
+    // Start from above screen
+    element.style.transform = 'translateY(-100%)'
+    element.style.opacity = '1'
+    
+    // Slide down animation
+    const animation = { y: -100 }
+    this.animate(animation, { y: 0 }, 800, this.easeOutQuad, (values) => {
+      element.style.transform = `translateY(${values.y}%)`
+    })
+    
+    console.log('Header entrance animation started')
+  }
+
+  animateSpinButtons() {
+    const button = document.querySelector('.game-content .spin-btn')
+    if (!button) {
+      console.warn('Spin button not found for entrance animation')
+      return
+    }
+    
+    // Start animation immediately - CSS already sets initial state
+    const animation = { opacity: 0, scale: 0 }
+    this.animate(animation, { opacity: 1, scale: 1 }, 400, this.easeOutBack, (values) => {
+      button.style.opacity = values.opacity
+      button.style.transform = `scale(${values.scale})`
+    }, () => {
+      // Add visible class to maintain shown state
+      button.classList.add('visible')
+      // Reset inline styles to allow CSS control
+      button.style.opacity = ''
+      button.style.transform = ''
+    })
+    
+    console.log('Spin button entrance animation started')
+  }
+
   easeOutQuad(t) {
     return 1 - (1 - t) * (1 - t)
   }
@@ -68,11 +114,35 @@ export class EntranceAnimations {
     
     // Fade in animation
     const animation = { opacity: 0 }
-    this.animate(animation, { opacity: 1 }, 800, this.easeOutQuad, (values) => {
+    this.animate(animation, { opacity: 1 }, 600, this.easeOutQuad, (values) => {
       element.style.opacity = values.opacity
     })
     
     console.log('Logo2 entrance animation started')
+  }
+
+  animateWheel() {
+    const element = document.querySelector('.wheel-container')
+    if (!element) {
+      console.warn('Wheel container element not found for entrance animation')
+      return
+    }
+    
+    // Start with opacity 0 and small scale
+    element.style.opacity = '0'
+    element.style.transform = 'scale(0.5)'
+    
+    // Scale up and fade in animation
+    const animation = { opacity: 0, scale: 0.5 }
+    this.animate(animation, { opacity: 1, scale: 1 }, 800, this.easeOutBack, (values) => {
+      element.style.opacity = values.opacity
+      element.style.transform = `scale(${values.scale})`
+    }, () => {
+      // Reset transform to avoid conflicts with existing wheel animations
+      element.style.transform = 'scale(1)'
+    })
+    
+    console.log('Wheel entrance animation started')
   }
   
   animateChicken() {
@@ -110,6 +180,8 @@ export class EntranceAnimations {
       startX: startX
     })
     
+    // Make chicken visible and set initial position
+    element.style.opacity = '1'
     element.style.transform = `translateX(${startX}px) translateY(0px) scaleX(${scaleX})`
     
     const animation = { x: startX, y: 0 }
@@ -216,18 +288,17 @@ export class EntranceAnimations {
       hand.style.transform = 'scale(2.5)'
       
       const animation = { opacity: 0, scale: 2.5 }
-      setTimeout(() => {
-        this.animate(animation, { opacity: 1, scale: 1 }, 1000, this.easeOutBack, (values) => {
-          hand.style.opacity = values.opacity
-          hand.style.transform = `scale(${values.scale})`
-        }, () => {
-          console.log('Hand appearance animation complete')
-          // Start persistent hand tapping animation
-          if (window.persistentAnimations) {
-            window.persistentAnimations.startHandTapping()
-          }
-        })
-      }, 600)
+      // Start immediately, no delay
+      this.animate(animation, { opacity: 1, scale: 1 }, 800, this.easeOutBack, (values) => {
+        hand.style.opacity = values.opacity
+        hand.style.transform = `scale(${values.scale})`
+      }, () => {
+        console.log('Hand appearance animation complete')
+        // Start persistent hand tapping animation
+        if (window.persistentAnimations) {
+          window.persistentAnimations.startHandTapping()
+        }
+      })
     })
   }
 

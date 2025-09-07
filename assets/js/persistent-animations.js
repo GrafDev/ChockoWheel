@@ -7,6 +7,7 @@ import { Logo2FlameAnimation } from './logo2-flame-animation.js'
 import { FireSparksAnimation } from './fire-sparks-animation.js'
 import { ChickenRotationAnimation } from './chicken-rotation-animation.js'
 import { ChickenIdleAnimation } from './chicken-idle-animation.js'
+import { ChickenMouseTracking } from './chicken-mouse-tracking.js'
 
 export class PersistentAnimations {
   constructor() {
@@ -15,6 +16,7 @@ export class PersistentAnimations {
     this.fireSparksAnimation = null
     this.chickenRotationAnimation = null
     this.chickenIdleAnimation = null
+    this.chickenMouseTracking = null
     this.handTappingActive = false
   }
 
@@ -57,6 +59,13 @@ export class PersistentAnimations {
         console.log('Chicken idle animation initialized')
       }
 
+      // Initialize Chicken Mouse Tracking (head follows mouse)
+      this.chickenMouseTracking = new ChickenMouseTracking()
+      if (this.chickenMouseTracking.init()) {
+        this.chickenMouseTracking.start()
+        console.log('Chicken mouse tracking initialized')
+      }
+
       // Hand tapping animation will be started after entrance animation completes
 
       console.log('All persistent animations initialized')
@@ -82,6 +91,9 @@ export class PersistentAnimations {
     }
     if (this.chickenIdleAnimation) {
       this.chickenIdleAnimation.stop()
+    }
+    if (this.chickenMouseTracking) {
+      this.chickenMouseTracking.stop()
     }
     this.stopHandTapping()
     console.log('Persistent animations stopped')
