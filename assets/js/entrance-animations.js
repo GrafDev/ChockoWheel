@@ -121,13 +121,22 @@ export class EntranceAnimations {
       return
     }
     
-    // Start with opacity 0
+    // Force visibility and start animation
     element.style.opacity = '0'
     
-    // Fade in animation
+    // Animate logo2 container and all its images
+    const logo2Images = element.querySelectorAll('img')
+    logo2Images.forEach(img => {
+      img.style.opacity = '0'
+    })
+    
+    // Fade in animation for container and images
     const animation = { opacity: 0 }
     this.animate(animation, { opacity: 1 }, 600, this.easeOutQuad, (values) => {
       element.style.opacity = values.opacity
+      logo2Images.forEach(img => {
+        img.style.opacity = values.opacity
+      })
     })
     
     console.log('Logo2 entrance animation started')
