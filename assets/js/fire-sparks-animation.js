@@ -11,8 +11,8 @@ export class FireSparksAnimation {
         this.container = null;
         this.sparks = [];
         this.sparkPool = [];
-        this.maxSparks = 250;
-        this.sparkFrequency = 2; // Maximum sparks per frame
+        this.maxSparks = 750;
+        this.sparkFrequency = 6; // Maximum sparks per frame
         this.startTime = null;
         this.speedMultiplier = 2.67; // Start with 2.67x speed (4.0 / 1.5)
     }
@@ -64,8 +64,8 @@ export class FireSparksAnimation {
         // Enable sorting by zIndex
         this.app.stage.sortableChildren = true;
 
-        // Create a few initial sparks
-        for (let i = 0; i < 5; i++) {
+        // Create initial sparks
+        for (let i = 0; i < 15; i++) {
             this.createSpark();
         }
 
@@ -185,7 +185,9 @@ export class FireSparksAnimation {
         spark.size = Math.random() * 12 + 12; // Much bigger size 12-24px
         spark.brightness = Math.random() * 0.3 + 0.7; // 0.7-1.0
         
-        // Note: Trails not supported in ParticleContainer for performance
+        // Trail properties
+        spark.trail = [];
+        spark.maxTrailLength = 8; // Number of trail points
         
         // Flickering properties - 40% chance to be flickering
         spark.isFlickering = Math.random() < 0.4;
@@ -262,13 +264,34 @@ export class FireSparksAnimation {
             size = size * 0.75; // 75% size for medium distance sparks
         }
         
-        // Sprite mode only (ParticleContainer requirement)
-        spark.alpha = alpha; // Don't use visible property with ParticleContainer
+        // Update main spark sprite
+        spark.alpha = alpha;
         const scale = size / this.sparkTexture.width;
         spark.scale.set(scale);
+        spark.tint = 0xFFFFFF;
         
-        // Add color variation with tint
-        spark.tint = 0xFFFFFF; // White, could add variations here
+        // Create trail graphics if not exists
+        if (!spark.trailGraphics) {
+            spark.trailGraphics = new PIXI.Graphics();
+            this.container.addChild(spark.trailGraphics);
+        }
+        
+        // Clear and redraw trail (sparser - every other point)
+        spark.trailGraphics.clear();
+        if (spark.trail && spark.trail.length > 1) {
+            for (let t = 0; t < spark.trail.length - 1; t += 2) { // Skip every other point
+                const point = spark.trail[t];
+                
+                // Calculate trail alpha (fades from back to front)
+                const trailProgress = t / (spark.trail.length - 1); // 0 to 1 (oldest to newest)
+                const trailAlpha = alpha * trailProgress * 0.4; // Max 40% of spark alpha
+                const trailSize = size * (0.3 + trailProgress * 0.7) * 0.5; // Smaller trail
+                
+                // Draw trail point
+                spark.trailGraphics.circle(point.x, point.y, trailSize);
+                spark.trailGraphics.fill({ color: 0xFFFFFF, alpha: trailAlpha });
+            }
+        }
     }
 
     /**
@@ -299,6 +322,12 @@ export class FireSparksAnimation {
         // Update existing sparks
         for (let i = this.sparks.length - 1; i >= 0; i--) {
             const spark = this.sparks[i];
+            
+            // Save current position to trail before moving
+            spark.trail.push({ x: spark.x, y: spark.y });
+            if (spark.trail.length > spark.maxTrailLength) {
+                spark.trail.shift(); // Remove oldest trail point
+            }
             
             // Move spark
             spark.x += spark.vx;
@@ -334,8 +363,15 @@ export class FireSparksAnimation {
             if (isOffScreen || isDead) {
                 // Remove spark from container
                 this.container.removeChild(spark);
+                
+                // Remove trail graphics if exists
+                if (spark.trailGraphics) {
+                    this.container.removeChild(spark.trailGraphics);
+                    spark.trailGraphics.destroy();
+                }
+                
                 this.sparks.splice(i, 1);
-                // No pooling with ParticleContainer - let GC handle cleanup
+                // No pooling - let GC handle cleanup
             }
         }
     }
