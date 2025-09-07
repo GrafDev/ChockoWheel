@@ -80,6 +80,15 @@ async function initGame() {
     gameManager = new GameManager();
     await gameManager.init();
     console.log('Game initialized successfully');
+    
+    // Make animations globally accessible for stopping
+    window.wheelLightAnimation = wheelLightAnimation;
+    window.fireSparksAnimation = fireSparksAnimation;
+    window.chickenRotationAnimation = chickenRotationAnimation;
+    window.logo1BounceAnimation = logo1BounceAnimation;
+    window.spinButtonBulgeAnimation = spinButtonBulgeAnimation;
+    window.canvasFlameDistortion = canvasFlameDistortion;
+    window.logo2FlameAnimation = window.logo2FlameAnimation;
   } catch (error) {
     console.error('Failed to initialize game:', error);
   }

@@ -187,10 +187,24 @@ export class GameManager {
     const modalImage = document.getElementById('bonusModalImage')
     
     if (modal && modalImage) {
+      // Stop all animations
+      this.stopAllAnimations()
+      
       // Update image path based on current region using config
       modalImage.src = getModalImagePath(this.currentRegion)
-      modal.style.display = 'block'
+      modal.style.display = 'flex'
     }
+  }
+
+  stopAllAnimations() {
+    // Stop global animations
+    if (window.wheelLightAnimation) window.wheelLightAnimation.stop()
+    if (window.fireSparksAnimation) window.fireSparksAnimation.stop()
+    if (window.chickenRotationAnimation) window.chickenRotationAnimation.stop()
+    if (window.logo1BounceAnimation) window.logo1BounceAnimation.stop()
+    if (window.spinButtonBulgeAnimation) window.spinButtonBulgeAnimation.stop()
+    if (window.canvasFlameDistortion) window.canvasFlameDistortion.stop()
+    if (window.logo2FlameAnimation) window.logo2FlameAnimation.stop()
   }
   
   hideBonusModal() {
