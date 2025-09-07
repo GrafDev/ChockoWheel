@@ -1,5 +1,6 @@
 import { setupDevPanel } from './dev-panel.js'
 import { EntranceAnimations } from './entrance-animations.js'
+import { ModalAnimation } from './modal-animation.js'
 import { getModalImagePath, getWheelTextPath, getHeaderButtonPaths } from './config.js'
 
 export class GameManager {
@@ -10,6 +11,7 @@ export class GameManager {
     this.isSpinning = false
     this.isReady = false
     this.entranceAnimations = null
+    this.modalAnimation = null
     this.currentAnimationFrame = null
   }
 
@@ -33,6 +35,10 @@ export class GameManager {
     
     // Update region content on init
     this.updateRegionContent(this.currentRegion)
+    
+    // Initialize modal animation
+    this.modalAnimation = new ModalAnimation()
+    await this.modalAnimation.init()
     
     // Start entrance animations
     this.entranceAnimations = new EntranceAnimations()
@@ -167,32 +173,29 @@ export class GameManager {
   }
   
   setupBonusModal() {
-    const bonusModalImage = document.getElementById('bonusModalImage')
-    if (bonusModalImage) {
-      bonusModalImage.addEventListener('click', () => this.hideBonusModal())
-    }
-    
-    const bonusModal = document.getElementById('bonusModal')
-    if (bonusModal) {
-      bonusModal.addEventListener('click', (e) => {
-        if (e.target === bonusModal || e.target.classList.contains('bonus-modal-overlay')) {
-          this.hideBonusModal()
+    // Setup click handler for modal animation
+    if (this.modalAnimation) {
+      this.modalAnimation.handleClick(() => {
+        this.hideBonusModal()
+      })
+      
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        if (this.modalAnimation) {
+          this.modalAnimation.resize()
         }
       })
     }
   }
   
   showBonusModal() {
-    const modal = document.getElementById('bonusModal')
-    const modalImage = document.getElementById('bonusModalImage')
+    // Stop all animations
+    this.stopAllAnimations()
     
-    if (modal && modalImage) {
-      // Stop all animations
-      this.stopAllAnimations()
-      
-      // Update image path based on current region using config
-      modalImage.src = getModalImagePath(this.currentRegion)
-      modal.style.display = 'flex'
+    // Show modal with PixiJS animation
+    if (this.modalAnimation) {
+      const imagePath = getModalImagePath(this.currentRegion)
+      this.modalAnimation.show(imagePath)
     }
   }
 
@@ -208,10 +211,14 @@ export class GameManager {
   }
   
   hideBonusModal() {
-    const modal = document.getElementById('bonusModal')
-    if (modal) {
-      modal.style.display = 'none'
-      // Reset spinning state and enable buttons for new spins
+    if (this.modalAnimation) {
+      this.modalAnimation.hide(() => {
+        // Reset spinning state and enable buttons for new spins
+        this.isSpinning = false
+        this.enableSpinButtons()
+      })
+    } else {
+      // Fallback
       this.isSpinning = false
       this.enableSpinButtons()
     }
@@ -305,6 +312,12 @@ export class GameManager {
   }
 
   destroy() {
+    // Cleanup modal animation
+    if (this.modalAnimation) {
+      this.modalAnimation.destroy()
+      this.modalAnimation = null
+    }
+    
     // Cleanup event listeners if needed
   }
 }

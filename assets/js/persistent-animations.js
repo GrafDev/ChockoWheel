@@ -110,6 +110,7 @@ export class PersistentAnimations {
     
     hands.forEach(hand => {
       this.animateHandTapping(hand)
+      this.setupHandHover(hand)
     })
   }
 
@@ -177,5 +178,29 @@ export class PersistentAnimations {
     }
     
     requestAnimationFrame(update)
+  }
+
+  setupHandHover(hand) {
+    // Find spin buttons to detect hover
+    const spinButtons = [
+      document.querySelector('.spin-btn'),
+      document.querySelector('.spin-btn-landscape')
+    ].filter(Boolean)
+    
+    spinButtons.forEach(button => {
+      if (!button) return
+      
+      // Mouse enter - make hand semi-transparent
+      button.addEventListener('mouseenter', () => {
+        hand.style.transition = 'opacity 0.3s ease'
+        hand.style.opacity = '0.3'
+      })
+      
+      // Mouse leave - restore full opacity
+      button.addEventListener('mouseleave', () => {
+        hand.style.transition = 'opacity 0.3s ease'
+        hand.style.opacity = '1'
+      })
+    })
   }
 }
