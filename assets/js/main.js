@@ -6,6 +6,7 @@ import { Logo1BounceAnimation } from './logo1-bounce-animation.js'
 import { SpinButtonBulgeAnimation } from './spin-button-bulge-animation.js'
 import { WheelAnimations } from './animations.js'
 import { WheelLightAnimation } from './wheel-light-animation.js'
+import { TestParticleSparks } from './test-particle-sparks.js'
 
 // CONFIGURATION
 const isDevelopment = import.meta.env.DEV;
@@ -19,6 +20,7 @@ let chickenRotationAnimation = null;
 let canvasFlameDistortion = null;
 let logo1BounceAnimation = null;
 let spinButtonBulgeAnimation = null;
+let testParticleSparks = null;
 
 // Initialize game
 async function initGame() {
@@ -46,7 +48,7 @@ async function initGame() {
     wheelLightAnimation.init();
     console.log('Wheel light animation initialized');
     
-    // Fire sparks animation now handled by SimpleEntranceAnimations
+    // Original fire sparks animation now runs via SimpleEntranceAnimations
     
     // Initialize Chicken Rotation Animation
     chickenRotationAnimation = new ChickenRotationAnimation();
@@ -69,12 +71,12 @@ async function initGame() {
       console.log('Logo1 bounce animation initialized');
     }
     
-    // Initialize Spin Button Bulge Animation
-    spinButtonBulgeAnimation = new SpinButtonBulgeAnimation();
-    if (await spinButtonBulgeAnimation.init()) {
-      spinButtonBulgeAnimation.start();
-      console.log('Spin button bulge animation initialized');
-    }
+    // Spin button bulge animation disabled (filter issue)
+    // spinButtonBulgeAnimation = new SpinButtonBulgeAnimation();
+    // if (await spinButtonBulgeAnimation.init()) {
+    //   spinButtonBulgeAnimation.start();
+    //   console.log('Spin button bulge animation initialized');
+    // }
     
     // Initialize GameManager
     gameManager = new GameManager();

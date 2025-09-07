@@ -98,7 +98,6 @@ export class SimpleEntranceAnimations {
     const animation = { opacity: 0 }
     this.animate(animation, { opacity: 1 }, 800, this.easeOutQuad, (values) => {
       element.style.opacity = values.opacity
-      console.log('animating logo2 opacity to:', values.opacity)
     })
   }
   
