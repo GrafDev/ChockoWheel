@@ -86,16 +86,26 @@ export class CanvasFlameDistortion {
       this.originalImageData.height
     )
     
-    // Apply wave distortion
+    // Calculate brightness modulation - slower like real flame
+    const brightness = 1.1 + Math.sin(time * 1.5) * 0.2 // 0.9 to 1.3
+    
+    // Calculate vertical stretching
+    const stretchY = 1 + Math.sin(time * 1.5) * 0.01 // 0.99 to 1.01
+    
+    // Apply wave distortion with stretching
     for (let y = 0; y < distortedData.height; y++) {
       for (let x = 0; x < distortedData.width; x++) {
         // Calculate wave distortion
         const waveX = Math.sin(y * 0.05 + time * 2.2) * 2
         const waveY = Math.sin(x * 0.03 + time * 1.8) * 1.5
         
+        // Apply vertical stretching - bottom static, top stretches upward
+        const heightRatio = y / distortedData.height // 0 at bottom, 1 at top
+        const stretchedY = Math.round(y * (1 - heightRatio * (stretchY - 1)))
+        
         // Get source pixel position
         const srcX = Math.round(x + waveX)
-        const srcY = Math.round(y + waveY)
+        const srcY = Math.round(stretchedY + waveY)
         
         // Bounds check
         if (srcX >= 0 && srcX < this.originalImageData.width && 
@@ -104,10 +114,10 @@ export class CanvasFlameDistortion {
           const srcIndex = (srcY * this.originalImageData.width + srcX) * 4
           const destIndex = (y * distortedData.width + x) * 4
           
-          // Copy pixel data
-          distortedData.data[destIndex] = this.originalImageData.data[srcIndex]         // R
-          distortedData.data[destIndex + 1] = this.originalImageData.data[srcIndex + 1] // G
-          distortedData.data[destIndex + 2] = this.originalImageData.data[srcIndex + 2] // B
+          // Copy pixel data with brightness modulation
+          distortedData.data[destIndex] = Math.min(255, this.originalImageData.data[srcIndex] * brightness)         // R
+          distortedData.data[destIndex + 1] = Math.min(255, this.originalImageData.data[srcIndex + 1] * brightness) // G
+          distortedData.data[destIndex + 2] = Math.min(255, this.originalImageData.data[srcIndex + 2] * brightness) // B
           distortedData.data[destIndex + 3] = this.originalImageData.data[srcIndex + 3] // A
         }
       }

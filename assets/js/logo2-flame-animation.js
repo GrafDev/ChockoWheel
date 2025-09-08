@@ -49,8 +49,8 @@ export class Logo2FlameAnimation {
     
     this.app.stage.addChild(this.part2Sprite)
     
-    // Keep HTML element visible - PixiJS not working
-    this.htmlElement.style.opacity = '1'
+    // Hide HTML element - use PixiJS animation instead
+    this.htmlElement.style.display = 'none'
     
     return true
   }
@@ -83,16 +83,7 @@ export class Logo2FlameAnimation {
     this.resize()
     let time = 0
     
-    // Simple movement animation for now
-    this.app.ticker.add(() => {
-      time += 0.02
-      
-      // Simple flame-like movement
-      this.part2Sprite.x = Math.sin(time * 0.5) * 2
-      this.part2Sprite.y = Math.cos(time * 0.7) * 1
-      this.part2Sprite.rotation = Math.sin(time * 1.5) * 0.02
-      this.part2Sprite.scale.set(1 + Math.sin(time * 2) * 0.01)
-    })
+    // No animation - static sprite
   }
   
   resize() {
