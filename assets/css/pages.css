@@ -185,6 +185,7 @@
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
+    pointer-events: none;
   }
   
   .box1 img {
@@ -206,6 +207,7 @@
     flex: none;
     width: calc(85% / 3);
     height: 40dvw;
+    pointer-events: none;
   }
   
   .box2 img {

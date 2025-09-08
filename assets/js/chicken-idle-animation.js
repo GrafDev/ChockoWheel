@@ -124,7 +124,7 @@ export class ChickenIdleAnimation {
     if (!this.part3Element) return
     
     const startTime = Date.now()
-    const jumpDuration = 240 // Total jump duration (up and down) - match main animation timing
+    const jumpDuration = 180 // Total jump duration (up and down) - match main animation timing
     const maxHeight = -15 // Maximum upward movement
     
     const animate = () => {

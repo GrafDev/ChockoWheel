@@ -231,8 +231,9 @@ export class PersistentAnimations {
   }
 
   getChickenScaleX() {
-    const isMobile = window.innerWidth <= 667
-    const isTablet = window.innerWidth <= 1400 && window.innerWidth > 667
+    const aspectRatio = window.innerWidth / window.innerHeight
+    const isMobile = aspectRatio > 2 || (window.innerWidth <= 667 && window.innerHeight > window.innerWidth)
+    const isTablet = !isMobile && window.innerWidth <= 1400
     const isLandscape = window.innerWidth > window.innerHeight
     
     // Move from RIGHT in: mobile (any orientation) OR tablet portrait
