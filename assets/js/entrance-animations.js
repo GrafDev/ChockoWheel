@@ -25,8 +25,8 @@ export class EntranceAnimations {
       if (onComplete) onComplete()
     }, 1000)
     
-    // Handle window resize to restart chicken
-    this.setupResizeHandler()
+    // Handle window resize to restart chicken - DISABLED
+    // this.setupResizeHandler()
   }
   
   animateHeader() {
