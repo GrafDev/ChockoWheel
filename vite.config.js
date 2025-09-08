@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => {
         base: './',
         server: {
             open: true,
-            port: 5173
+            port: 5174
         },
         resolve: {
             alias: {

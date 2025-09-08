@@ -205,7 +205,7 @@
     z-index: 10;
     flex: none;
     width: calc(85% / 3);
-    height: auto;
+    height: 33dvw;
   }
   
   .box2 img {
@@ -281,6 +281,7 @@
   
   .box2 {
     width: 33.33%;
+    height: 33dvw;
     justify-content: center;
     align-items: flex-end;
     right: 33.33%;
