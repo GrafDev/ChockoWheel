@@ -67,6 +67,8 @@ async function initGame() {
     window.wheelLightAnimation = wheelLightAnimation;
     window.fireSparksAnimation = persistentAnimations?.fireSparksAnimation;
     window.chickenRotationAnimation = persistentAnimations?.chickenRotationAnimation;
+    window.chickenIdleAnimation = persistentAnimations?.chickenIdleAnimation;
+    window.chickenMouseTracking = persistentAnimations?.chickenMouseTracking;
     window.logo1BounceAnimation = persistentAnimations?.logo1BounceAnimation;
     window.spinButtonBulgeAnimation = spinButtonBulgeAnimation;
     window.canvasFlameDistortion = canvasFlameDistortion;

@@ -210,8 +210,13 @@ export class GameManager {
     if (window.canvasFlameDistortion) window.canvasFlameDistortion.stop()
     if (window.logo2FlameAnimation) window.logo2FlameAnimation.stop()
     
+    // Stop all chicken animations
+    if (window.chickenIdleAnimation) window.chickenIdleAnimation.stop()
+    if (window.chickenMouseTracking) window.chickenMouseTracking.stop()
+    
     // Stop hand tapping animation
     if (window.persistentAnimations) window.persistentAnimations.stopHandTapping()
+    
   }
   
   hideBonusModal() {
