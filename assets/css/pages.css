@@ -212,6 +212,10 @@
     /* Animation handled by JavaScript */
   }
   
+  .box2 .chicken-part3 {
+    transform: scaleX(-1);
+  }
+  
   .game-box {
     width: 100%;
     flex: none;
@@ -252,7 +256,7 @@
     width: 95%;
   }
   
-  .box2 img {
+  .box2 .chicken-part3 {
     transform: scaleX(-1);
   }
   
@@ -362,7 +366,7 @@
     height: 30px;
   }
   
-  .box2 img {
+  .box2 .chicken-part3 {
     transform: scaleX(-1);
   }
   
@@ -372,10 +376,6 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 40px;
-  }
-  
-  .box2 img {
-    /* Animation handled by JavaScript */
   }
   
   .game-box {
