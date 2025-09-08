@@ -29,15 +29,23 @@
   transform: scale(1.02);
 }
 
+/* Tablet adjustments */
+@media (min-width: 668px) and (max-width: 1400px) {
+  .bonus-modal-image {
+    max-width: 50dvw;
+    max-height: 50dvw;
+  }
+}
+
 /* Desktop adjustments */
-@media (min-width: 1024px) {
+@media (min-width: 1401px) {
   .bonus-modal-image {
     max-height: 33vw;
   }
 }
 
 /* Mobile adjustments */
-@media (max-width: 768px) {
+@media (max-width: 667px) {
   .bonus-modal-image{
     max-width: 95vw;
     max-height: 85vh;

@@ -373,7 +373,7 @@ export class FireSparksAnimation {
      * Handle window resize
      */
     resize() {
-        if (this.app) {
+        if (this.app && this.app.renderer) {
             this.app.renderer.resize(window.innerWidth, window.innerHeight);
         }
     }

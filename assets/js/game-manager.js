@@ -214,11 +214,15 @@ export class GameManager {
     if (window.logo2FlameAnimation) window.logo2FlameAnimation.stop()
     
     // Stop all chicken animations
-    if (window.chickenIdleAnimation) window.chickenIdleAnimation.stop()
-    if (window.chickenMouseTracking) window.chickenMouseTracking.stop()
-    
-    // Stop hand tapping animation
-    if (window.persistentAnimations) window.persistentAnimations.stopHandTapping()
+    if (window.persistentAnimations) {
+      if (window.persistentAnimations.chickenIdleAnimation) {
+        window.persistentAnimations.chickenIdleAnimation.stop()
+      }
+      if (window.persistentAnimations.chickenMouseTracking) {
+        window.persistentAnimations.chickenMouseTracking.stop()
+      }
+      window.persistentAnimations.stopHandTapping()
+    }
     
   }
   

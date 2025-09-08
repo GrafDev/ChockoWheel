@@ -84,6 +84,9 @@ async function initGame() {
       } else {
         console.log('persistentAnimations is null!');
       }
+      if (gameManager && gameManager.modalAnimation) {
+        gameManager.modalAnimation.resize();
+      }
     });
     
     // Also add orientationchange for mobile devices
@@ -91,6 +94,9 @@ async function initGame() {
       setTimeout(() => {
         if (persistentAnimations) {
           persistentAnimations.resize();
+        }
+        if (gameManager && gameManager.modalAnimation) {
+          gameManager.modalAnimation.resize();
         }
       }, 100);
     });
