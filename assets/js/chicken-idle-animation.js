@@ -4,6 +4,7 @@ export class ChickenIdleAnimation {
     this.part3Element = null
     this.scaleX = 1
     this.isAnimating = false
+    this.animationTimeout = null
   }
   
   init(element, scaleX = 1) {
@@ -13,7 +14,10 @@ export class ChickenIdleAnimation {
   }
   
   start() {
-    if (!this.element || this.isAnimating) return
+    if (!this.element) return
+    
+    // Stop any existing animation first
+    this.stop()
     
     this.isAnimating = true
     this.continuousJumping()
@@ -21,6 +25,10 @@ export class ChickenIdleAnimation {
   
   stop() {
     this.isAnimating = false
+    if (this.animationTimeout) {
+      clearTimeout(this.animationTimeout)
+      this.animationTimeout = null
+    }
   }
   
   continuousJumping() {
@@ -29,7 +37,7 @@ export class ChickenIdleAnimation {
     // Make 5 quick jumps
     this.makeJumpSequence(5, () => {
       // Pause before next sequence
-      setTimeout(() => {
+      this.animationTimeout = setTimeout(() => {
         this.continuousJumping()
       }, 2000) // 2 second pause
     })
@@ -116,7 +124,7 @@ export class ChickenIdleAnimation {
     if (!this.part3Element) return
     
     const startTime = Date.now()
-    const jumpDuration = 180 // Total jump duration (up and down)
+    const jumpDuration = 240 // Total jump duration (up and down) - match main animation timing
     const maxHeight = -15 // Maximum upward movement
     
     const animate = () => {

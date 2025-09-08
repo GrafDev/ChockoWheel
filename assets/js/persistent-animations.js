@@ -18,6 +18,7 @@ export class PersistentAnimations {
     this.chickenIdleAnimation = null
     this.chickenMouseTracking = null
     this.handTappingActive = false
+    this.resizeTimeout = null
   }
 
   async init() {
@@ -49,7 +50,8 @@ export class PersistentAnimations {
       this.chickenIdleAnimation = new ChickenIdleAnimation()
       const chickenElement = document.querySelector('.chicken-container')
       if (chickenElement) {
-        this.chickenIdleAnimation.init(chickenElement, 1)
+        const scaleX = this.getChickenScaleX()
+        this.chickenIdleAnimation.init(chickenElement, scaleX)
         this.chickenIdleAnimation.start()
       }
 
@@ -91,12 +93,34 @@ export class PersistentAnimations {
   }
 
   resize() {
-    if (this.logo2FlameAnimation && this.logo2FlameAnimation.resize) {
-      this.logo2FlameAnimation.resize()
+    // Clear previous timeout to debounce resize events
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout)
     }
-    if (this.fireSparksAnimation && this.fireSparksAnimation.resize) {
-      this.fireSparksAnimation.resize()
-    }
+    
+    this.resizeTimeout = setTimeout(() => {
+      if (this.logo2FlameAnimation && this.logo2FlameAnimation.resize) {
+        this.logo2FlameAnimation.resize()
+      }
+      if (this.fireSparksAnimation && this.fireSparksAnimation.resize) {
+        this.fireSparksAnimation.resize()
+      }
+      
+      // Update chicken scale when window resizes
+      if (this.chickenIdleAnimation) {
+        const chickenElement = document.querySelector('.chicken-container')
+        if (chickenElement) {
+          const scaleX = this.getChickenScaleX()
+          // Stop current animation
+          this.chickenIdleAnimation.stop()
+          // Reinitialize with new scaleX
+          this.chickenIdleAnimation.init(chickenElement, scaleX)
+          // Restart animation
+          this.chickenIdleAnimation.start()
+        }
+      }
+      
+    }, 200) // Wait 200ms after last resize event
   }
 
   startHandTapping() {
@@ -204,5 +228,17 @@ export class PersistentAnimations {
         hand.style.opacity = '1'
       })
     })
+  }
+
+  getChickenScaleX() {
+    const isMobile = window.innerWidth <= 667
+    const isTablet = window.innerWidth <= 1400 && window.innerWidth > 667
+    const isLandscape = window.innerWidth > window.innerHeight
+    
+    // Move from RIGHT in: mobile (any orientation) OR tablet portrait
+    const moveFromRight = isMobile || (isTablet && !isLandscape)
+    
+    // Flip chicken only when moving from right (opposite to movement direction)
+    return moveFromRight ? -1 : 1
   }
 }

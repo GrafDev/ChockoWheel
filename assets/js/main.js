@@ -74,6 +74,27 @@ async function initGame() {
     window.canvasFlameDistortion = canvasFlameDistortion;
     window.logo2FlameAnimation = persistentAnimations?.logo2FlameAnimation;
     window.persistentAnimations = persistentAnimations;
+    
+    // Add resize handler directly in main.js
+    window.addEventListener('resize', () => {
+      console.log('RESIZE EVENT TRIGGERED!');
+      if (persistentAnimations) {
+        console.log('Calling persistentAnimations.resize()');
+        persistentAnimations.resize();
+      } else {
+        console.log('persistentAnimations is null!');
+      }
+    });
+    
+    // Also add orientationchange for mobile devices
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        if (persistentAnimations) {
+          persistentAnimations.resize();
+        }
+      }, 100);
+    });
+    
   } catch (error) {
     console.error('Failed to initialize game:', error);
   }

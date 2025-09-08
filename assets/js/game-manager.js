@@ -185,6 +185,9 @@ export class GameManager {
         if (this.modalAnimation) {
           this.modalAnimation.resize()
         }
+        if (window.persistentAnimations) {
+          window.persistentAnimations.resize()
+        }
       })
     }
   }
