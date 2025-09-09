@@ -168,14 +168,6 @@ export class EntranceAnimations {
     const isTablet = !isMobile && window.innerWidth <= 1400
     const isLandscape = window.innerWidth > window.innerHeight
     
-    // Debug info
-    console.log('Chicken direction debug:', {
-      width: window.innerWidth,
-      height: window.innerHeight,
-      isMobile,
-      isTablet, 
-      isLandscape
-    })
     
     // Move from RIGHT in: mobile (any orientation) OR tablet portrait
     const moveFromRight = isMobile || (isTablet && !isLandscape)
