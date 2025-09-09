@@ -382,22 +382,22 @@
 @media (orientation: landscape) and (max-height: 500px) {
   
   .header {
-    height: 50px;
+    height: 35px;
   }
   
   .main-box {
-    height: calc(100% - 50px);
+    height: calc(100% - 35px);
   }
   
   
   .header .logo img {
-    height: 30px;
+    height: 20px;
   }
   
-  .header-btn-1,
-  .header-btn-2,
-  .header-btn-3 {
-    height: 40px !important;
+  .header .nav-buttons .header-btn-1,
+  .header .nav-buttons .header-btn-2,
+  .header .nav-buttons .header-btn-3 {
+    height: 20px !important;
   }
   
   .box2 .chicken-part3 {
