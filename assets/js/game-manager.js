@@ -1,7 +1,7 @@
 import { setupDevPanel } from './dev-panel.js'
 import { EntranceAnimations } from './entrance-animations.js'
 import { ModalAnimation } from './modal-animation.js'
-import { getModalImagePath, getWheelTextPath, getHeaderButtonPaths } from './config.js'
+import { getModalImagePath } from './config.js'
 
 export class GameManager {
   constructor() {
@@ -33,8 +33,6 @@ export class GameManager {
     // Show initial page
     this.showPage('wheelPage')
     
-    // Update region content on init
-    this.updateRegionContent(this.currentRegion)
     
     // Initialize modal animation
     this.modalAnimation = new ModalAnimation()
@@ -315,33 +313,6 @@ export class GameManager {
     }
   }
 
-  updateRegionContent(region) {
-    // Update wheel text image for current region
-    const wheelTextImage = document.querySelector('.wheel-text')
-    if (wheelTextImage) {
-      wheelTextImage.src = getWheelTextPath(region)
-    }
-    
-    // Update header buttons for current region
-    const headerButtonPaths = getHeaderButtonPaths(region)
-    
-    const headerBtn1 = document.querySelector('.header-btn-1')
-    if (headerBtn1) {
-      headerBtn1.src = headerButtonPaths.button1
-    }
-    
-    const headerBtn2 = document.querySelector('.header-btn-2')
-    if (headerBtn2) {
-      headerBtn2.src = headerButtonPaths.button2
-    }
-    
-    const headerBtn3 = document.querySelector('.header-btn-3')
-    if (headerBtn3) {
-      headerBtn3.src = headerButtonPaths.button3
-    }
-    
-    // Update counter, currency displays, etc. based on region
-  }
 
   destroy() {
     // Cleanup modal animation

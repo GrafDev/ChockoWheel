@@ -90,7 +90,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url('/assets/images/hand-pointer.png');
+  background-image: url('/images/hand-pointer.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -106,7 +106,7 @@
 
 /* Spin Button */
 .spin-btn-landscape {
-  background-image: url('/assets/images/spin-button.png');
+  background-image: url('/images/spin-button.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -131,7 +131,7 @@
 }
 
 .spin-btn {
-  background-image: url('/assets/images/spin-button.png');
+  background-image: url('/images/spin-button.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -229,7 +229,9 @@
 /* Logo1 Block */
 .logo1 {
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: auto;
 }
@@ -239,6 +241,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: center;
   z-index: 10;
 }
 
@@ -258,6 +261,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: center center;
   z-index: 20;
 }
 

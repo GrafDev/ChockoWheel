@@ -4,11 +4,11 @@ export const regionsConfig = {
     name: 'EU',
     currency: 'EUR',
     locale: 'en-EU',
-    modalImage: './assets/images/bg-modal.png',
-    wheelText: './assets/images/wheel-text.png',
-    button1Header: './assets/images/button1-header.png',
-    button2Header: './assets/images/button2-header.png',
-    button3Header: './assets/images/button3-header.png',
+    modalImage: './images/bg-modal.png',
+    wheelText: './images/wheel-text.png',
+    button1Header: './images/button1-header.png',
+    button2Header: './images/button2-header.png',
+    button3Header: './images/button3-header.png',
     counterFormat: '627 154: 19',
     multiplier: 'x5'
   }

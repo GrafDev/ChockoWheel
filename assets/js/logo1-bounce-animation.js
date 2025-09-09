@@ -47,19 +47,23 @@ export class Logo1BounceAnimation {
     this.bounceCount = 0
     
     // Create bounce animation with callback to track bounces
-    this.bounceAnimation = gsap.to(this.element, {
-      y: -5,
-      duration: 0.8,
-      ease: "elastic.out(1, 0.3)",
-      yoyo: true,
-      repeat: -1,
-      onRepeat: () => {
-        this.bounceCount++
-        if (this.bounceCount === 9) {
-          this.showPart3()
+    this.bounceAnimation = gsap.timeline({ repeat: -1 })
+      .to(this.element, {
+        y: -5,
+        duration: 0.4,
+        ease: "power2.out",
+        onComplete: () => {
+          this.bounceCount++
+          if (this.bounceCount === 9) {
+            this.showPart3()
+          }
         }
-      }
-    })
+      })
+      .to(this.element, {
+        y: 0,
+        duration: 0.4,
+        ease: "power2.in"
+      })
     
     // Create brightness animation using fromTo for explicit control
     this.brightnessAnimation = gsap.fromTo(this.element, 

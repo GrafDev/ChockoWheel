@@ -7,8 +7,8 @@ export function generateHTML(isDevelopment) {
       <div class="header">
         <div class="logo">
           <div class="logo1">
-            <img src="/assets/images/logo1-part1.png" alt="Logo1 Part 1" class="logo1-part1">
-            <img src="/assets/images/logo1-part2.png" alt="Logo1 Part 2" class="logo1-part2">
+            <img src=./images/logo1-part1.png" alt="Logo1 Part 1" class="logo1-part1">
+            <img src=./images/logo1-part2.png" alt="Logo1 Part 2" class="logo1-part2">
           </div>
         </div>
         <div class="nav-buttons">
@@ -21,15 +21,15 @@ export function generateHTML(isDevelopment) {
       <div class="main-box">
         <div class="box1">
           <div class="logo2">
-            <img src="/assets/images/logo2-part1.png" alt="Logo2 Part 1" class="logo2-part1">
-            <img src="/assets/images/logo2-part2.png" alt="Logo2 Part 2" class="logo2-part2">
+            <img src=./images/logo2-part1.png" alt="Logo2 Part 1" class="logo2-part1">
+            <img src=./images/logo2-part2.png" alt="Logo2 Part 2" class="logo2-part2">
           </div>
         </div>
         
         <div class="box2">
           <div class="chicken-container">
-            <img src="/assets/images/chicken-part1.png" alt="Chicken Part 1" class="chicken-part1">
-            <img src="/assets/images/chicken-part2.png" alt="Chicken Part 2" class="chicken-part2">
+            <img src=./images/chicken-part1.png" alt="Chicken Part 1" class="chicken-part1">
+            <img src=./images/chicken-part2.png" alt="Chicken Part 2" class="chicken-part2">
           </div>
         </div>
         
@@ -44,8 +44,8 @@ export function generateHTML(isDevelopment) {
       <div class="header">
         <div class="logo">
           <div class="logo1">
-            <img src="/assets/images/logo1-part1.png" alt="Logo1 Part 1" class="logo1-part1">
-            <img src="/assets/images/logo1-part2.png" alt="Logo1 Part 2" class="logo1-part2">
+            <img src=./images/logo1-part1.png" alt="Logo1 Part 1" class="logo1-part1">
+            <img src=./images/logo1-part2.png" alt="Logo1 Part 2" class="logo1-part2">
           </div>
         </div>
         <div class="nav-buttons">

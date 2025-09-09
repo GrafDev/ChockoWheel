@@ -46,7 +46,7 @@ export class FireSparksAnimation {
         // Load spark texture from preloaded images only
         try {
             const { imagePreloader } = await import('./image-preloader.js');
-            const preloadedImg = imagePreloader.getImage('./assets/images/spark.png');
+            const preloadedImg = imagePreloader.getImage('./images/spark.png');
             
             if (preloadedImg) {
                 this.sparkTexture = PIXI.Texture.from(preloadedImg);
