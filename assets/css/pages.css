@@ -99,7 +99,7 @@
 
 /* Main box layout */
 .main-box {
-  height: calc(100% - max(5vh, 80px));
+  height: 100vh;
   display: flex;
   flex-direction: row;
   align-items: stretch;

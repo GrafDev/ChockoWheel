@@ -1,5 +1,12 @@
 
+/* Hide dev panel in production */
 .dev-panel {
+  display: none;
+}
+
+/* Show dev panel only in development mode (when body has dev class) */
+body.dev-mode .dev-panel {
+  display: block;
   position: fixed;
   top: 20px;
   right: 20px;
@@ -15,7 +22,7 @@
   transition: opacity 0.3s ease;
 }
 
-.dev-panel:hover {
+body.dev-mode .dev-panel:hover {
   opacity: 1;
 }
 

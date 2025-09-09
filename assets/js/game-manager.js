@@ -27,6 +27,7 @@ export class GameManager {
 
     // Setup dev panel
     if (this.isDevelopment) {
+      document.body.classList.add('dev-mode')
       setupDevPanel(this.currentRegion, (region) => this.updateRegion(region), this.isDevelopment)
     }
 
