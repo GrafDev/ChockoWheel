@@ -159,7 +159,7 @@ export class EntranceAnimations {
     
   }
   
-  animateChicken() {
+  async animateChicken() {
     const element = document.querySelector('.chicken-container')
     if (!element) return
     
@@ -168,70 +168,18 @@ export class EntranceAnimations {
     const isTablet = !isMobile && window.innerWidth <= 1400
     const isLandscape = window.innerWidth > window.innerHeight
     
-    
     // Move from RIGHT in: mobile (any orientation) OR tablet portrait
     const moveFromRight = isMobile || (isTablet && !isLandscape)
     
-    const startX = moveFromRight ? window.innerWidth + 200 : -(window.innerWidth + 200)
+    // Use unified chicken animation for entrance
+    const { ChickenAnimation } = await import('./chicken-animation.js')
+    const chickenAnimation = new ChickenAnimation()
     
-    // Flip chicken only when moving from right (opposite to movement direction)
-    const scaleX = moveFromRight ? -1 : 1
-    
-    // Make chicken visible and set initial position
-    element.style.setProperty('opacity', '1', 'important')
-    element.style.setProperty('transform', `translateX(${startX}px) translateY(0px) scaleX(${scaleX})`, 'important')
-    
-    const animation = { x: startX, y: 0 }
-    let startTime = Date.now()
-    
-    // Chicken hops in discrete steps
-    const totalJumps = 8
-    const jumpDistance = Math.abs(startX) / totalJumps
-    const jumpDuration = 150 // ms per jump
-    let currentJump = 0
-    let currentX = startX
-    
-    const makeJump = () => {
-      if (currentJump >= totalJumps) {
-        element.style.setProperty('transform', `translateX(0px) translateY(0px) scaleX(${scaleX})`, 'important')
-        setTimeout(() => {
-          this.chickenFinalBounces(element, scaleX, () => {
-            // Entrance animation complete - persistent animations handle continuous jumping
-          })
-        }, 100)
-        return
-      }
-      
-      // Calculate next position
-      const targetX = moveFromRight ? 
-        startX - (jumpDistance * (currentJump + 1)) :
-        startX + (jumpDistance * (currentJump + 1))
-      
-      // Jump animation
-      const jumpStart = Date.now()
-      const animateJump = () => {
-        const elapsed = Date.now() - jumpStart
-        const progress = Math.min(elapsed / jumpDuration, 1)
-        
-        const jumpHeight = Math.sin(progress * Math.PI) * 25
-        const x = currentX + (targetX - currentX) * progress
-        
-        element.style.transform = `translateX(${x}px) translateY(${-jumpHeight}px) scaleX(${scaleX})`
-        element.style.setProperty('transform', `translateX(${x}px) translateY(${-jumpHeight}px) scaleX(${scaleX})`, 'important')
-        
-        if (progress < 1) {
-          requestAnimationFrame(animateJump)
-        } else {
-          currentX = targetX
-          currentJump++
-          setTimeout(makeJump, 20) // Small pause between jumps
-        }
-      }
-      
-      animateJump()
+    if (chickenAnimation.init(element, moveFromRight ? -1 : 1)) {
+      chickenAnimation.animateEntrance(moveFromRight, () => {
+        // Entrance animation complete - persistent animations handle continuous jumping
+      })
     }
-    
-    makeJump()
   }
   
   chickenFinalBounces(element, scaleX = 1, onComplete = null) {

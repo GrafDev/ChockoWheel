@@ -5,18 +5,14 @@
 import { Logo1BounceAnimation } from './logo1-bounce-animation.js'
 import { Logo2FlameAnimation } from './logo2-flame-animation.js'
 import { FireSparksAnimation } from './fire-sparks-animation.js'
-import { ChickenRotationAnimation } from './chicken-rotation-animation.js'
-import { ChickenIdleAnimation } from './chicken-idle-animation.js'
-import { ChickenMouseTracking } from './chicken-mouse-tracking.js'
+import { ChickenAnimation } from './chicken-animation.js'
 
 export class PersistentAnimations {
   constructor() {
     this.logo1BounceAnimation = null
     this.logo2FlameAnimation = null
     this.fireSparksAnimation = null
-    this.chickenRotationAnimation = null
-    this.chickenIdleAnimation = null
-    this.chickenMouseTracking = null
+    this.chickenAnimation = null
     this.handTappingActive = false
     this.resizeTimeout = null
   }
@@ -40,25 +36,16 @@ export class PersistentAnimations {
       this.fireSparksAnimation = new FireSparksAnimation()
       await this.fireSparksAnimation.init()
 
-      // Initialize Chicken Rotation Animation
-      this.chickenRotationAnimation = new ChickenRotationAnimation()
-      if (this.chickenRotationAnimation.init()) {
-        this.chickenRotationAnimation.start()
-      }
-
-      // Initialize Chicken Idle Animation (jumping + part3)
-      this.chickenIdleAnimation = new ChickenIdleAnimation()
+      // Initialize Chicken Animation (all chicken animations in one place)
+      this.chickenAnimation = new ChickenAnimation()
       const chickenElement = document.querySelector('.chicken-container')
       if (chickenElement) {
         const scaleX = this.getChickenScaleX()
-        this.chickenIdleAnimation.init(chickenElement, scaleX)
-        this.chickenIdleAnimation.start()
-      }
-
-      // Initialize Chicken Mouse Tracking (head follows mouse)
-      this.chickenMouseTracking = new ChickenMouseTracking()
-      if (this.chickenMouseTracking.init()) {
-        this.chickenMouseTracking.start()
+        if (this.chickenAnimation.init(chickenElement, scaleX)) {
+          this.chickenAnimation.startIdleAnimation()
+          this.chickenAnimation.startRotationAnimation()
+          this.chickenAnimation.startMouseTracking()
+        }
       }
 
       // Hand tapping animation will be started after entrance animation completes
@@ -80,14 +67,8 @@ export class PersistentAnimations {
     if (this.fireSparksAnimation) {
       this.fireSparksAnimation.stop()
     }
-    if (this.chickenRotationAnimation) {
-      this.chickenRotationAnimation.stop()
-    }
-    if (this.chickenIdleAnimation) {
-      this.chickenIdleAnimation.stop()
-    }
-    if (this.chickenMouseTracking) {
-      this.chickenMouseTracking.stop()
+    if (this.chickenAnimation) {
+      this.chickenAnimation.stopAll()
     }
     this.stopHandTapping()
   }
@@ -107,16 +88,18 @@ export class PersistentAnimations {
       }
       
       // Update chicken scale when window resizes
-      if (this.chickenIdleAnimation) {
+      if (this.chickenAnimation) {
         const chickenElement = document.querySelector('.chicken-container')
         if (chickenElement) {
           const scaleX = this.getChickenScaleX()
-          // Stop current animation
-          this.chickenIdleAnimation.stop()
+          // Stop all animations
+          this.chickenAnimation.stopAll()
           // Reinitialize with new scaleX
-          this.chickenIdleAnimation.init(chickenElement, scaleX)
-          // Restart animation
-          this.chickenIdleAnimation.start()
+          this.chickenAnimation.init(chickenElement, scaleX)
+          // Restart all animations
+          this.chickenAnimation.startIdleAnimation()
+          this.chickenAnimation.startRotationAnimation()
+          this.chickenAnimation.startMouseTracking()
         }
       }
       
