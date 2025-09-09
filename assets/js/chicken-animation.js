@@ -189,12 +189,21 @@ export class ChickenAnimation {
   animateRandomRotation() {
     if (!this.isRotationAnimating) return
     
-    // Generate random angle between 70 and 170 degrees
-    const randomAngle = 70 + Math.random() * (170 - 70)
+    // Get current rotation
+    const currentRotation = gsap.getProperty(this.part2Element, "rotation") || 0
     
-    // Rotate to the random angle
+    // Generate random rotation change between 70 and 170 degrees
+    const rotationChange = 70 + Math.random() * (170 - 70)
+    
+    // Randomly decide direction (clockwise or counterclockwise)
+    const direction = Math.random() < 0.5 ? 1 : -1
+    
+    // Calculate new angle
+    const newAngle = currentRotation + (rotationChange * direction)
+    
+    // Rotate to the new angle
     this.rotationAnimation = gsap.to(this.part2Element, {
-      rotation: randomAngle,
+      rotation: newAngle,
       duration: 0.3,
       ease: "power2.out",
       onComplete: () => {

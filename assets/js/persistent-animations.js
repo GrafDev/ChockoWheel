@@ -44,7 +44,6 @@ export class PersistentAnimations {
         if (this.chickenAnimation.init(chickenElement, scaleX)) {
           this.chickenAnimation.startIdleAnimation()
           this.chickenAnimation.startRotationAnimation()
-          this.chickenAnimation.startMouseTracking()
         }
       }
 
@@ -99,7 +98,6 @@ export class PersistentAnimations {
           // Restart all animations
           this.chickenAnimation.startIdleAnimation()
           this.chickenAnimation.startRotationAnimation()
-          this.chickenAnimation.startMouseTracking()
         }
       }
       
