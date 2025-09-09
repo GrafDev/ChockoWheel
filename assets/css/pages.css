@@ -1,5 +1,20 @@
 /* Page structure styles */
 
+/* Hide box2 (chicken) when height < 768px and height/width ratio between 1 and 2 */
+@media (max-height: 767px) and (min-aspect-ratio: 1/2) and (max-aspect-ratio: 1/1) {
+  .box2 {
+    display: none !important;
+  }
+  
+  .game-box {
+    align-items: flex-end !important;
+  }
+  
+  .main-box {
+    align-items: flex-end !important;
+  }
+}
+
 .fire-sparks-layer {
   position: absolute;
   top: 0;
