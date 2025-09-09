@@ -2,9 +2,9 @@
 import { GameManager } from './game-manager.js'
 import { PersistentAnimations } from './persistent-animations.js'
 import { CanvasFlameDistortion } from './canvas-flame-distortion.js'
-import { SpinButtonBulgeAnimation } from './spin-button-bulge-animation.js'
 import { WheelAnimations } from './animations.js'
 import { WheelLightAnimation } from './wheel-light-animation.js'
+import { imagePreloader } from './image-preloader.js'
 
 // CONFIGURATION
 const isDevelopment = import.meta.env.DEV;
@@ -16,6 +16,57 @@ let wheelAnimations = null;
 let wheelLightAnimation = null;
 let canvasFlameDistortion = null;
 let spinButtonBulgeAnimation = null;
+
+// Preload images function
+async function preloadAllImages() {
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  
+  // Get region from URL params or default to 'eu'
+  const urlParams = new URLSearchParams(window.location.search);
+  const region = urlParams.get('region') || 'eu';
+  
+  console.log(`Preloading images for region: ${region}`);
+  
+  return new Promise((resolve) => {
+    imagePreloader.preloadImages(
+      region,
+      // onProgress callback
+      (progress, loaded, total) => {
+        progressFill.style.width = `${progress}%`;
+        progressText.textContent = `${progress}%`;
+        console.log(`Image preload progress: ${progress}% (${loaded}/${total})`);
+      },
+      // onComplete callback
+      () => {
+        console.log('Image preloading completed');
+        setTimeout(resolve, 500); // Small delay for smooth transition
+      }
+    );
+  });
+}
+
+// Hide loading screen and show app
+function showApp() {
+  const loadingScreen = document.getElementById('loadingScreen');
+  const app = document.getElementById('app');
+  
+  // Fade out loading screen
+  loadingScreen.style.opacity = '0';
+  loadingScreen.style.transition = 'opacity 0.5s ease';
+  
+  setTimeout(() => {
+    loadingScreen.style.display = 'none';
+    app.style.display = 'block';
+    
+    // Fade in app
+    app.style.opacity = '0';
+    app.style.transition = 'opacity 0.5s ease';
+    setTimeout(() => {
+      app.style.opacity = '1';
+    }, 50);
+  }, 500);
+}
 
 // Initialize game
 async function initGame() {
@@ -106,9 +157,33 @@ async function initGame() {
   }
 }
 
-// Wait for DOM to be ready, then start the game
+// Main entry point
+async function startApp() {
+  try {
+    // First preload all images
+    await preloadAllImages();
+    
+    // Then show the app
+    showApp();
+    
+    // Wait a moment for transition, then init game
+    setTimeout(() => {
+      initGame();
+    }, 600);
+    
+  } catch (error) {
+    console.error('Failed to start app:', error);
+    // Show app anyway if preloading fails
+    showApp();
+    setTimeout(() => {
+      initGame();
+    }, 600);
+  }
+}
+
+// Wait for DOM to be ready, then start the app
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initGame);
+  document.addEventListener('DOMContentLoaded', startApp);
 } else {
-  initGame();
+  startApp();
 }

@@ -42,8 +42,23 @@ export class Logo2FlameAnimation {
       logo2Container.appendChild(this.app.canvas)
     }
     
-    // Create sprite for part2 image - no filters first
-    const texture = PIXI.Texture.from('/assets/images/common/logo2-part2.png')
+    // Create sprite for part2 image - use preloaded image only
+    let texture;
+    try {
+      const { imagePreloader } = await import('./image-preloader.js');
+      const preloadedImg = imagePreloader.getImage('/assets/images/common/logo2-part2.png');
+      
+      if (preloadedImg) {
+        texture = PIXI.Texture.from(preloadedImg);
+        console.log('Using preloaded logo2-part2 texture');
+      } else {
+        throw new Error('Logo2-part2 image not preloaded');
+      }
+    } catch (error) {
+      console.error('Failed to get preloaded logo2-part2 texture:', error);
+      return false;
+    }
+    
     this.part2Sprite = new PIXI.Sprite(texture)
     this.part2Sprite.anchor.set(0, 0)
     

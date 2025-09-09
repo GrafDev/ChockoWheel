@@ -43,11 +43,19 @@ export class FireSparksAnimation {
             this.app.canvas.style.pointerEvents = 'none';
         }
 
-        // Try to load spark texture
+        // Load spark texture from preloaded images only
         try {
-            this.sparkTexture = await PIXI.Assets.load('/assets/images/common/spark.png');
+            const { imagePreloader } = await import('./image-preloader.js');
+            const preloadedImg = imagePreloader.getImage('/assets/images/common/spark.png');
+            
+            if (preloadedImg) {
+                this.sparkTexture = PIXI.Texture.from(preloadedImg);
+                console.log('Using preloaded spark texture');
+            } else {
+                throw new Error('Spark image not preloaded');
+            }
         } catch (error) {
-            console.error('Failed to load spark texture:', error);
+            console.error('Failed to get preloaded spark texture:', error);
             // Fallback to regular container
             this.container = new PIXI.Container();
             this.container.zIndex = 0;

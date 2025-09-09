@@ -8,7 +8,20 @@
     <title>ChockoWheel</title>
   </head>
   <body>
-    <div id="app">
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+      <div class="loading-content">
+        <div class="loading-logo">Loading...</div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text" id="progressText">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="app" style="display: none;">
       <div class="main-container">
         <div class="fire-sparks-layer"></div>
         <div class="bg-part1-animated"></div>
@@ -17,35 +30,35 @@
           <div class="header">
             <div class="logo">
               <div class="logo1">
-                <img src="/assets/images/common/logo1-part1.png" alt="Logo1 Part 1" class="logo1-part1">
+                <img src="./assets/images/common/logo1-part1.png" alt="Logo1 Part 1" class="logo1-part1">
                 <div class="logo1-animated-parts">
-                  <img src="/assets/images/common/logo1-part2.png" alt="Logo1 Part 2" class="logo1-part2">
-                  <img src="/assets/images/common/logo1-part3.png" alt="Logo1 Part 3" class="logo1-part3">
+                  <img src="./assets/images/common/logo1-part2.png" alt="Logo1 Part 2" class="logo1-part2">
+                  <img src="./assets/images/common/logo1-part3.png" alt="Logo1 Part 3" class="logo1-part3">
                 </div>
               </div>
             </div>
             <div class="nav-buttons">
-              <img src="/assets/images/eu/button1-header.png" alt="How to play?" class="header-btn-1">
-              <img src="/assets/images/eu/button2-header.png" alt="Counter" class="header-btn-2">
-              <img src="/assets/images/common/button3-header.png" alt="Fullscreen" class="header-btn-3">
+              <img src="./assets/images/eu/button1-header.png" alt="How to play?" class="header-btn-1">
+              <img src="./assets/images/eu/button2-header.png" alt="Counter" class="header-btn-2">
+              <img src="./assets/images/common/button3-header.png" alt="Fullscreen" class="header-btn-3">
             </div>
           </div>
           
           <div class="main-box">
             <div class="box1">
               <div class="logo2">
-                <img src="/assets/images/common/logo2-part1.png" alt="Logo2 Part 1" class="logo2-part1">
-                <img src="/assets/images/common/logo2-part2.png" alt="Logo2 Part 2" class="logo2-part2">
+                <img src="./assets/images/common/logo2-part1.png" alt="Logo2 Part 1" class="logo2-part1">
+                <img src="./assets/images/common/logo2-part2.png" alt="Logo2 Part 2" class="logo2-part2">
               </div>
             </div>
             
             <div class="box2">
               <div class="chicken-container">
                 <div class="chicken-parts-13">
-                  <img src="/assets/images/common/chicken-part3.png" alt="Chicken Part 3" class="chicken-part3">
-                  <img src="/assets/images/common/chicken-part1.png" alt="Chicken Part 1" class="chicken-part1">
+                  <img src="./assets/images/common/chicken-part3.png" alt="Chicken Part 3" class="chicken-part3">
+                  <img src="./assets/images/common/chicken-part1.png" alt="Chicken Part 1" class="chicken-part1">
                 </div>
-                <img src="/assets/images/common/chicken-part2.png" alt="Chicken Part 2" class="chicken-part2">
+                <img src="./assets/images/common/chicken-part2.png" alt="Chicken Part 2" class="chicken-part2">
               </div>
               <div class="spin-container">
                 <button class="spin-btn spin-btn-landscape">SPIN</button>
@@ -57,13 +70,13 @@
               <div class="game-content">
                 <div class="wheel-container">
                   <div class="wheel-wrapper">
-                    <img src="/assets/images/common/wheel-border.png" alt="Wheel Border" class="wheel-border">
-                    <img src="/assets/images/common/wheel-sectors.png" alt="Wheel Sectors" class="wheel-sectors">
-                    <img src="/assets/images/eu/wheel-text.png" alt="Wheel Text" class="wheel-text">
-                    <img src="/assets/images/common/wheel-light.png" alt="Wheel Light" class="wheel-light">
+                    <img src="./assets/images/common/wheel-border.png" alt="Wheel Border" class="wheel-border">
+                    <img src="./assets/images/common/wheel-sectors.png" alt="Wheel Sectors" class="wheel-sectors">
+                    <img src="./assets/images/eu/wheel-text.png" alt="Wheel Text" class="wheel-text">
+                    <img src="./assets/images/common/wheel-light.png" alt="Wheel Light" class="wheel-light">
                   </div>
-                  <img src="/assets/images/common/wheel-center.png" alt="Wheel Center" class="wheel-center">
-                  <img src="/assets/images/common/arrow.png" alt="Arrow" class="wheel-pointer">
+                  <img src="./assets/images/common/wheel-center.png" alt="Wheel Center" class="wheel-center">
+                  <img src="./assets/images/common/arrow.png" alt="Arrow" class="wheel-pointer">
                 </div>
                 <div class="spin-section">
                   <div class="spin-container">
@@ -82,7 +95,7 @@
         <!-- Bonus Modal -->
         <div class="bonus-modal" id="bonusModal" style="display: none;">
           
-            <img src="/assets/images/eu/bg-modal.png" alt="Bonus" class="bonus-modal-image" id="bonusModalImage">
+            <img src="./assets/images/eu/bg-modal.png" alt="Bonus" class="bonus-modal-image" id="bonusModalImage">
           
         </div>
         
@@ -91,17 +104,17 @@
           <div class="header">
             <div class="logo">
               <div class="logo1">
-                <img src="/assets/images/common/logo1-part1.png" alt="Logo1 Part 1" class="logo1-part1">
+                <img src="./assets/images/common/logo1-part1.png" alt="Logo1 Part 1" class="logo1-part1">
                 <div class="logo1-animated-parts">
-                  <img src="/assets/images/common/logo1-part2.png" alt="Logo1 Part 2" class="logo1-part2">
-                  <img src="/assets/images/common/logo1-part3.png" alt="Logo1 Part 3" class="logo1-part3">
+                  <img src="./assets/images/common/logo1-part2.png" alt="Logo1 Part 2" class="logo1-part2">
+                  <img src="./assets/images/common/logo1-part3.png" alt="Logo1 Part 3" class="logo1-part3">
                 </div>
               </div>
             </div>
             <div class="nav-buttons">
-              <img src="/assets/images/eu/button1-header.png" alt="How to play?" class="header-btn-1">
-              <img src="/assets/images/eu/button2-header.png" alt="Counter" class="header-btn-2">
-              <img src="/assets/images/common/button3-header.png" alt="Fullscreen" class="header-btn-3">
+              <img src="./assets/images/eu/button1-header.png" alt="How to play?" class="header-btn-1">
+              <img src="./assets/images/eu/button2-header.png" alt="Counter" class="header-btn-2">
+              <img src="./assets/images/common/button3-header.png" alt="Fullscreen" class="header-btn-3">
             </div>
           </div>
           
