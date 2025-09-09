@@ -4,36 +4,12 @@ export const regionsConfig = {
     name: 'EU',
     currency: 'EUR',
     locale: 'en-EU',
-    modalImage: './assets/images/eu/bg-modal.png',
-    wheelText: './assets/images/eu/wheel-text.png',
-    button1Header: './assets/images/eu/button1-header.png',
-    button2Header: './assets/images/eu/button2-header.png',
-    button3Header: './assets/images/common/button3-header.png',
+    modalImage: './assets/images/bg-modal.png',
+    wheelText: './assets/images/wheel-text.png',
+    button1Header: './assets/images/button1-header.png',
+    button2Header: './assets/images/button2-header.png',
+    button3Header: './assets/images/button3-header.png',
     counterFormat: '627 154: 19',
-    multiplier: 'x5'
-  },
-  ca: {
-    name: 'CA', 
-    currency: 'CAD',
-    locale: 'en-CA',
-    modalImage: './assets/images/ca/bg-modal.png',
-    wheelText: './assets/images/ca/wheel-text.png',
-    button1Header: './assets/images/ca/button1-header.png',
-    button2Header: './assets/images/ca/button2-header.png',
-    button3Header: './assets/images/common/button3-header.png',
-    counterFormat: '627 154: 19',
-    multiplier: 'x5'
-  },
-  kr: {
-    name: 'KR',
-    currency: 'KRW', 
-    locale: 'ko-KR',
-    modalImage: './assets/images/kr/bg-modal.png',
-    wheelText: './assets/images/kr/wheel-text.png',
-    button1Header: './assets/images/kr/button1-header.png',
-    button2Header: './assets/images/kr/button2-header.png',
-    button3Header: './assets/images/common/button3-header.png',
-    counterFormat: '627,154: 19',
     multiplier: 'x5'
   }
 }

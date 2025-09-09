@@ -36,7 +36,7 @@ export class PixiHandAnimation {
       this.app.canvas.style.pointerEvents = 'none'
 
       // Load hand texture using modern Assets API
-      const handTexture = await PIXI.Assets.load('/assets/images/common/hand-pointer.png')
+      const handTexture = await PIXI.Assets.load('/assets/images/hand-pointer.png')
       
       // Create hand sprite
       this.handSprite = new PIXI.Sprite(handTexture)

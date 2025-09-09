@@ -5,19 +5,13 @@ let devMode = false;
 export function setupDevPanel(currentRegion, updateRegion, isDevelopment) {
   if (!isDevelopment) return;
 
-
   const devPanel = document.getElementById('devPanel');
-  const regionSelector = document.getElementById('regionSelector');
   const showBordersCheckbox = document.getElementById('showBorders');
 
-
-  if (!devPanel || !regionSelector) {
-    console.error('Dev panel elements not found!');
+  if (!devPanel) {
+    console.error('Dev panel not found!');
     return;
   }
-
-  // Initialize selector based on current region
-  regionSelector.value = currentRegion;
 
   // Borders checkbox handler (if exists)
   if (showBordersCheckbox) {
@@ -29,15 +23,4 @@ export function setupDevPanel(currentRegion, updateRegion, isDevelopment) {
       }
     });
   }
-
-  // Region selector handler
-  regionSelector.addEventListener('change', (e) => {
-    const newRegion = e.target.value;
-    
-    // Save region and reload
-    localStorage.setItem('chockoWheel_region', newRegion);
-    location.reload();
-  });
-
-  return { currentRegion };
 }

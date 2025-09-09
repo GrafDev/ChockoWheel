@@ -15,31 +15,31 @@ export class ImagePreloader {
     
     return [
       // Common images
-      './assets/images/common/bg-part1.png',
-      './assets/images/common/arrow.png',
-      './assets/images/common/sound-button.png',
-      './assets/images/common/hand-pointer.png',
-      './assets/images/common/spin-button.png',
-      './assets/images/common/wheel-light.png',
-      './assets/images/common/wheel-border.png',
-      './assets/images/common/wheel-center.png',
-      './assets/images/common/wheel-sectors.png',
-      './assets/images/common/logo1-part1.png',
-      './assets/images/common/logo1-part2.png',
-      './assets/images/common/logo1-part3.png',
-      './assets/images/common/logo2-part1.png',
-      './assets/images/common/logo2-part2.png',
-      './assets/images/common/chicken-part1.png',
-      './assets/images/common/chicken-part2.png',
-      './assets/images/common/chicken-part3.png',
-      './assets/images/common/spark.png',
-      './assets/images/common/button3-header.png',
+      './assets/images/bg-part1.png',
+      './assets/images/arrow.png',
+      './assets/images/sound-button.png',
+      './assets/images/hand-pointer.png',
+      './assets/images/spin-button.png',
+      './assets/images/wheel-light.png',
+      './assets/images/wheel-border.png',
+      './assets/images/wheel-center.png',
+      './assets/images/wheel-sectors.png',
+      './assets/images/logo1-part1.png',
+      './assets/images/logo1-part2.png',
+      './assets/images/logo1-part3.png',
+      './assets/images/logo2-part1.png',
+      './assets/images/logo2-part2.png',
+      './assets/images/chicken-part1.png',
+      './assets/images/chicken-part2.png',
+      './assets/images/chicken-part3.png',
+      './assets/images/spark.png',
+      './assets/images/button3-header.png',
       
-      // Region-specific images
-      '.' + config.modalImage,
-      '.' + config.wheelText,
-      '.' + config.button1Header,
-      '.' + config.button2Header
+      // Region-specific images (now all in root images folder)
+      config.modalImage,
+      config.wheelText,
+      config.button1Header,
+      config.button2Header
     ].filter((url, index, self) => self.indexOf(url) === index) // Remove duplicates
   }
 

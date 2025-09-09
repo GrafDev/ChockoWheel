@@ -60,7 +60,7 @@ export class CanvasFlameDistortion {
         resolve(false)
       }
       
-      img.src = '/assets/images/common/logo2-part2.png'
+      img.src = '/assets/images/logo2-part2.png'
     })
   }
   

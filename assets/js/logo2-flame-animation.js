@@ -46,7 +46,7 @@ export class Logo2FlameAnimation {
     let texture;
     try {
       const { imagePreloader } = await import('./image-preloader.js');
-      const preloadedImg = imagePreloader.getImage('/assets/images/common/logo2-part2.png');
+      const preloadedImg = imagePreloader.getImage('./assets/images/logo2-part2.png');
       
       if (preloadedImg) {
         texture = PIXI.Texture.from(preloadedImg);

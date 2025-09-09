@@ -13,9 +13,7 @@ export default defineConfig(({ mode }) => {
         const parts = mode.split('-')
         if (parts[0] === 'playable') {
             isPlayable = true
-            region = parts[1] || 'eu'
-        } else if (parts.length >= 1) {
-            region = parts[0]
+            region = 'eu' // Only EU region
         }
     }
     
@@ -43,10 +41,7 @@ export default defineConfig(({ mode }) => {
         },
         plugins: isPlayable ? [viteSingleFile()] : [],
         build: {
-            outDir: isPlayable ? `dist/playable-${region}` :
-                    mode === 'eu' ? 'dist/chocko-wheel-eu' : 
-                    mode === 'kr' ? 'dist/chocko-wheel-kr' : 
-                    mode === 'ca' ? 'dist/chocko-wheel-ca' : 'dist',
+            outDir: isPlayable ? 'dist/playable-eu' : 'dist/chocko-wheel-eu',
             assetsDir: isPlayable ? '' : 'assets',
             cssCodeSplit: !isPlayable,
             cssMinify: true,

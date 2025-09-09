@@ -8,18 +8,10 @@ export class ChickenAnimation {
     this.scaleX = 1
     this.isIdleAnimating = false
     this.isRotationAnimating = false
-    this.isMouseTracking = false
     
     // Animation controls
     this.idleAnimationTimeout = null
     this.rotationAnimation = null
-    this.animationFrame = null
-    
-    // Mouse tracking
-    this.currentRotation = 0
-    this.targetRotation = 0
-    this.onMouseMove = this.onMouseMove.bind(this)
-    this.updateMouseTracking = this.updateMouseTracking.bind(this)
   }
   
   init(element, scaleX = 1) {
@@ -197,13 +189,8 @@ export class ChickenAnimation {
   animateRandomRotation() {
     if (!this.isRotationAnimating) return
     
-    // Generate random angle between 0 and 360 degrees with minimum 70 degree change
-    const currentRotation = gsap.getProperty(this.part2Element, "rotation") || 0
-    let randomAngle
-    
-    do {
-      randomAngle = Math.random() * 360
-    } while (Math.abs(randomAngle - currentRotation) < 70)
+    // Generate random angle between 70 and 170 degrees
+    const randomAngle = 70 + Math.random() * (170 - 70)
     
     // Rotate to the random angle
     this.rotationAnimation = gsap.to(this.part2Element, {
@@ -237,70 +224,6 @@ export class ChickenAnimation {
     }
   }
   
-  // MOUSE TRACKING (part2 head follows mouse)
-  startMouseTracking() {
-    if (!this.part2Element || this.isMouseTracking) return
-    
-    this.isMouseTracking = true
-    document.addEventListener('mousemove', this.onMouseMove)
-    this.updateMouseTracking()
-  }
-  
-  stopMouseTracking() {
-    if (!this.isMouseTracking) return
-    
-    this.isMouseTracking = false
-    document.removeEventListener('mousemove', this.onMouseMove)
-    
-    if (this.animationFrame) {
-      cancelAnimationFrame(this.animationFrame)
-      this.animationFrame = null
-    }
-  }
-  
-  onMouseMove(event) {
-    if (!this.isMouseTracking || !this.element || !this.part2Element) return
-    
-    // Get chicken container position
-    const containerRect = this.element.getBoundingClientRect()
-    const centerX = containerRect.left + containerRect.width / 2
-    const centerY = containerRect.top + containerRect.height / 2
-    
-    // Calculate angle to mouse
-    const deltaX = event.clientX - centerX
-    const deltaY = event.clientY - centerY
-    
-    // Calculate rotation angle in degrees
-    let angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI
-    
-    // Always add +155 degrees offset to the calculated angle
-    angle += 155
-    
-    this.targetRotation = angle
-  }
-  
-  updateMouseTracking() {
-    if (!this.isMouseTracking) return
-    
-    // Normalize angles to avoid 360° jumps
-    let rotationDiff = this.targetRotation - this.currentRotation
-    
-    // Find shortest rotation path
-    while (rotationDiff > 180) rotationDiff -= 360
-    while (rotationDiff < -180) rotationDiff += 360
-    
-    // Smooth interpolation to target rotation
-    this.currentRotation += rotationDiff * 0.1 // Smooth factor
-    
-    // Apply rotation to chicken part 2 (head)
-    if (this.part2Element) {
-      this.part2Element.style.transform = `rotate(${this.currentRotation}deg)`
-      this.part2Element.style.transformOrigin = 'center center'
-    }
-    
-    // Continue animation loop
-    this.animationFrame = requestAnimationFrame(this.updateMouseTracking)
-  }
   
   // ENTRANCE ANIMATION (hopping from side)
   animateEntrance(moveFromRight = false, onComplete = null) {
@@ -466,7 +389,6 @@ export class ChickenAnimation {
   stopAll() {
     this.stopIdleAnimation()
     this.stopRotationAnimation()
-    this.stopMouseTracking()
   }
   
   destroy() {

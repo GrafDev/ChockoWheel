@@ -30,7 +30,7 @@ export class Header {
 
   createLogo() {
     // Load logo1.png from common folder
-    const logoTexture = PIXI.Texture.from('/assets/images/common/logo1.png')
+    const logoTexture = PIXI.Texture.from('/assets/images/logo1.png')
     this.logo = new PIXI.Sprite(logoTexture)
     this.logo.anchor.set(0.5)
     this.container.addChild(this.logo)

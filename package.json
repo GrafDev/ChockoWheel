@@ -4,16 +4,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:all",
+    "build": "vite build --mode playable-eu",
     "preview": "vite preview",
-    "build:all": "npm run build:eu && npm run build:kr && npm run build:ca",
-    "build:eu": "vite build --mode playable-eu",
-    "build:kr": "vite build --mode playable-kr",
-    "build:ca": "vite build --mode playable-ca",
-    "deploy": "npm run build:all && firebase deploy",
-    "deploy:eu": "npm run build:eu && firebase deploy --only hosting:chocko-wheel-eu",
-    "deploy:kr": "npm run build:kr && firebase deploy --only hosting:chocko-wheel-kr",
-    "deploy:ca": "npm run build:ca && firebase deploy --only hosting:chocko-wheel-ca"
+    "deploy": "npm run build && firebase deploy"
   },
   "keywords": [],
   "author": "",
