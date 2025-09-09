@@ -99,7 +99,7 @@
 
 /* Main box layout */
 .main-box {
-  height: 100vh;
+  height: calc(100vh - max(5vh, 80px));
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -295,6 +295,7 @@
 /* Mobile portrait styles */
 @media (max-width: 480px) and (orientation: portrait) {
   .main-box {
+    height: calc(100vh - max(4vh, 50px));
     justify-content: center;
     align-items: center;
   }
@@ -386,7 +387,7 @@
   }
   
   .main-box {
-    height: calc(100% - 35px);
+    height: calc(100vh - 35px);
   }
   
   

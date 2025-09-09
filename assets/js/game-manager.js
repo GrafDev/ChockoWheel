@@ -214,11 +214,8 @@ export class GameManager {
     
     // Stop all chicken animations
     if (window.persistentAnimations) {
-      if (window.persistentAnimations.chickenIdleAnimation) {
-        window.persistentAnimations.chickenIdleAnimation.stop()
-      }
-      if (window.persistentAnimations.chickenMouseTracking) {
-        window.persistentAnimations.chickenMouseTracking.stop()
+      if (window.persistentAnimations.chickenAnimation) {
+        window.persistentAnimations.chickenAnimation.stopAll()
       }
       window.persistentAnimations.stopHandTapping()
     }

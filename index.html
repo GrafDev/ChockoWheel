@@ -204,7 +204,8 @@
         </div>
       </div>
       
-      <!-- Dev panel (always visible with opacity) -->
+      <!-- Dev panel (only in development) -->
+      <!-- #if DEV -->
       <div class="dev-panel" id="devPanel">
         <div class="dev-section">
           <h4>Debug</h4>
@@ -213,6 +214,7 @@
           </label>
         </div>
       </div>
+      <!-- #endif -->
     </div>
     <script type="module" src="/assets/js/main.js"></script>
   </body>
