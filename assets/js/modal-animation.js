@@ -8,6 +8,7 @@ export class ModalAnimation {
     this.modalImage = null
     this.isAnimating = false
     this.currentImagePath = null
+    this.autoTransitionTimer = null
   }
 
   async init() {
@@ -121,6 +122,12 @@ export class ModalAnimation {
   }
 
   hide(onComplete = null) {
+    // Cancel auto-transition timer if user clicks manually
+    if (this.autoTransitionTimer) {
+      clearTimeout(this.autoTransitionTimer)
+      this.autoTransitionTimer = null
+    }
+    
     if (!this.app || !this.modalSprite || this.isAnimating) {
       // Fallback - hide modal container
       this.container.style.display = 'none'
@@ -271,13 +278,33 @@ export class ModalAnimation {
     })
     
     // Animation complete
-    
     this.isAnimating = false
+    
+    // Auto-transition to road screen after 2 seconds
+    this.autoTransitionTimer = setTimeout(() => {
+      this.transitionToRoadScreen()
+    }, 2000)
+  }
+
+  transitionToRoadScreen() {
+    // Hide modal first
+    this.hide(() => {
+      // Get game manager instance and show road page
+      if (window.gameManager) {
+        window.gameManager.showPage('roadPage')
+      }
+    })
   }
 
 
 
   destroy() {
+    // Cancel auto-transition timer
+    if (this.autoTransitionTimer) {
+      clearTimeout(this.autoTransitionTimer)
+      this.autoTransitionTimer = null
+    }
+    
     if (this.app) {
       this.app.destroy(true, true)
       this.app = null

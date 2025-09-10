@@ -11,16 +11,34 @@ export class Logo1BounceAnimation {
   }
   
   init() {
-    this.element = document.querySelector('.logo1-animated-parts')
-    this.part3Element = document.querySelector('.logo1-part3')
+    this.updateElements()
+    return true
+  }
+
+  updateElements() {
+    // Find visible logo1 elements (not in hidden page)
+    const allAnimatedParts = document.querySelectorAll('.logo1-animated-parts')
+    const allPart3Elements = document.querySelectorAll('.logo1-part3')
+    
+    // Find the visible one
+    this.element = null
+    this.part3Element = null
+    
+    for (let i = 0; i < allAnimatedParts.length; i++) {
+      if (allAnimatedParts[i].offsetParent !== null) {
+        this.element = allAnimatedParts[i]
+        this.part3Element = allPart3Elements[i]
+        break
+      }
+    }
     
     if (!this.element) {
-      console.warn('Logo1 animated parts container not found')
+      console.warn('No visible logo1 animated parts container found')
       return false
     }
     
     if (!this.part3Element) {
-      console.warn('Logo1-part3 element not found')
+      console.warn('No visible logo1-part3 element found')  
       return false
     }
     
@@ -28,8 +46,8 @@ export class Logo1BounceAnimation {
   }
   
   start() {
-    if (!this.element) {
-      console.warn('Cannot start animation: missing element')
+    // Update elements to find currently visible ones
+    if (!this.updateElements()) {
       return
     }
     

@@ -284,6 +284,19 @@ export class GameManager {
     if (targetPage) {
       targetPage.style.display = 'block'
       this.currentPage = pageId
+      
+      // Start logo1 animation when road screen appears
+      if (pageId === 'roadPage') {
+        // Add small delay to ensure DOM is ready
+        setTimeout(() => {
+          if (window.logo1BounceAnimation) {
+            // Stop first to reset state
+            window.logo1BounceAnimation.stop()
+            // Then start
+            window.logo1BounceAnimation.start()
+          }
+        }, 100)
+      }
     }
   }
 

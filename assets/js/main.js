@@ -35,7 +35,6 @@ async function preloadAllImages() {
       (progress, loaded, total) => {
         progressFill.style.width = `${progress}%`;
         progressText.textContent = `${progress}%`;
-        console.log(`Image preload progress: ${progress}% (${loaded}/${total})`);
       },
       // onComplete callback
       () => {
@@ -115,6 +114,7 @@ async function initGame() {
     await gameManager.init();
     
     // Make animations globally accessible for stopping
+    window.gameManager = gameManager;
     window.wheelLightAnimation = wheelLightAnimation;
     window.fireSparksAnimation = persistentAnimations?.fireSparksAnimation;
     window.chickenRotationAnimation = persistentAnimations?.chickenRotationAnimation;
