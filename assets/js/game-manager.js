@@ -31,8 +31,10 @@ export class GameManager {
       setupDevPanel(this.currentRegion, (region) => this.updateRegion(region), this.isDevelopment)
     }
 
-    // Show initial page
-    this.showPage('wheelPage')
+    // Show initial page (check dev panel settings first)
+    const savedStartPage = localStorage.getItem('devStartPage');
+    const initialPage = (this.isDevelopment && savedStartPage) ? savedStartPage : 'wheelPage';
+    this.showPage(initialPage)
     
     
     // Initialize modal animation

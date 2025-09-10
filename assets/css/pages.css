@@ -468,3 +468,114 @@
   
 }
 
+/* Road Page Specific Styles */
+#roadPage .main-box {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.road-container {
+  flex: 1;
+}
+
+.cash-out-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgba(59, 65, 80, 0.8);
+  padding: 20px;
+  z-index: 50;
+  height: 10dvh; /* Desktop default */
+}
+
+/* Tablet landscape */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .cash-out-section {
+    height: 15dvh;
+  }
+}
+
+/* Tablet portrait */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .cash-out-section {
+    height: 10dvh;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 767px) and (orientation: portrait) {
+  .cash-out-section {
+    height: 12dvh;
+  }
+}
+
+/* Mobile landscape */
+@media (max-width: 767px) and (orientation: landscape) {
+  .cash-out-section {
+    height: 15dvh;
+  }
+}
+
+.cash-out-amount {
+  color: #FFB20B;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.go-btn,
+.cash-out-btn {
+  background-image: url('/images/spin-button.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 24px;
+  cursor: pointer;
+  min-width: 120px;
+  min-height: 50px;
+  transition: transform 0.1s ease;
+}
+
+.go-btn:hover,
+.cash-out-btn:hover {
+  transform: scale(1.05);
+}
+
+.go-btn:active,
+.cash-out-btn:active {
+  transform: scale(0.95);
+}
+
+/* Road Screen Lanes */
+.road-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.road-lanes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.lane {
+  position: absolute;
+  height: 100%;
+  border-right: 2px dashed rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+

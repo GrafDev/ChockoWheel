@@ -5,6 +5,7 @@ import { CanvasFlameDistortion } from './canvas-flame-distortion.js'
 import { WheelAnimations } from './animations.js'
 import { WheelLightAnimation } from './wheel-light-animation.js'
 import { imagePreloader } from './image-preloader.js'
+import { setupDevPanel } from './dev-panel.js'
 
 // CONFIGURATION
 const isDevelopment = import.meta.env.DEV;
@@ -50,6 +51,15 @@ function showApp() {
   const loadingScreen = document.getElementById('loadingScreen');
   const app = document.getElementById('app');
   
+  // Setup dev panel FIRST - before any other initialization
+  if (isDevelopment) {
+    const devPanel = document.getElementById('devPanel');
+    if (devPanel) {
+      devPanel.style.display = 'block';
+      setupDevPanel(null, null, isDevelopment);
+    }
+  }
+  
   // Fade out loading screen
   loadingScreen.style.opacity = '0';
   loadingScreen.style.transition = 'opacity 0.5s ease';
@@ -71,13 +81,6 @@ function showApp() {
 async function initGame() {
   try {
     
-    // Show dev panel in development mode
-    if (isDevelopment) {
-      const devPanel = document.getElementById('devPanel');
-      if (devPanel) {
-        devPanel.style.display = 'block';
-      }
-    }
     
     // Wait a bit for DOM to settle
     await new Promise(resolve => setTimeout(resolve, 100));

@@ -121,30 +121,21 @@
           <div class="main-box">
             <div class="road-container">
               <div class="road-background"></div>
-              <div class="chicken-character"></div>
-              <div class="money-hatches">
-                <div class="hatch hatch-1">
-                  <div class="hatch-amount">112 EUR x5</div>
-                </div>
-                <div class="hatch hatch-2">
-                  <div class="hatch-amount">148 EUR x5</div>
-                </div>
-                <div class="hatch hatch-3">
-                  <div class="hatch-amount">204 EUR x5</div>
-                </div>
-                <div class="hatch hatch-4">
-                  <div class="hatch-amount">270 EUR x5</div>
-                </div>
-                <div class="hatch hatch-5">
-                  <div class="hatch-amount">346 EUR x5</div>
-                </div>
-                <div class="hatch hatch-6">
-                  <div class="hatch-amount">432 EUR x5</div>
-                </div>
-                <div class="hatch hatch-7">
-                  <div class="hatch-amount">528 EUR x5</div>
-                </div>
+              <div class="road-lanes">
+                <div class="lane" data-lane="0"></div>
+                <div class="lane" data-lane="1"></div>
+                <div class="lane" data-lane="2"></div>
+                <div class="lane" data-lane="3"></div>
+                <div class="lane" data-lane="4"></div>
+                <div class="lane" data-lane="5"></div>
+                <div class="lane" data-lane="6"></div>
+                <div class="lane" data-lane="7"></div>
+                <div class="lane" data-lane="8"></div>
+                <div class="lane" data-lane="9"></div>
+                <div class="lane" data-lane="10"></div>
+                <div class="lane" data-lane="11"></div>
               </div>
+              <div class="chicken-character"></div>
               <div class="cars-animation"></div>
               <div class="barrier" style="display: none;"></div>
             </div>
@@ -211,6 +202,17 @@
           <h4>Debug</h4>
           <label>
             <input type="checkbox" id="showBorders"> Показать рамки
+          </label>
+        </div>
+        <div class="dev-section">
+          <h4>Страницы</h4>
+          <label>
+            <select id="startPage">
+              <option value="wheelPage">1. Wheel Screen</option>
+              <option value="roadPage">2. Road Screen</option>
+              <option value="bankPage">3. Bank App Screen</option>
+              <option value="downloadPage">4. Download Screen</option>
+            </select>
           </label>
         </div>
       </div>

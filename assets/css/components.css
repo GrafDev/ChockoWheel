@@ -155,7 +155,6 @@
 
 .spin-btn:disabled {
   opacity: 0.5;
-  cursor: not-allowed;
   filter: grayscale(0.7);
 }
 
