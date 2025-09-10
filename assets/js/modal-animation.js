@@ -280,10 +280,10 @@ export class ModalAnimation {
     // Animation complete
     this.isAnimating = false
     
-    // Auto-transition to road screen after 2 seconds
+    // Auto-transition to road screen after 0.8 seconds
     this.autoTransitionTimer = setTimeout(() => {
       this.transitionToRoadScreen()
-    }, 2000)
+    }, 800)
   }
 
   transitionToRoadScreen() {

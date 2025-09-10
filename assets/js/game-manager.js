@@ -287,9 +287,15 @@ export class GameManager {
       targetPage.style.display = 'block'
       this.currentPage = pageId
       
-      // Start logo1 animation when road screen appears
+      // Handle road page entrance animation
       if (pageId === 'roadPage') {
-        // Add small delay to ensure DOM is ready
+        // Add entrance animation
+        targetPage.classList.add('page-entering');
+        setTimeout(() => {
+          targetPage.classList.remove('page-entering');
+        }, 1500);
+        
+        // Start logo1 animation when road screen appears
         setTimeout(() => {
           if (window.logo1BounceAnimation) {
             // Stop first to reset state

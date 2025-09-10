@@ -115,7 +115,7 @@
   position: relative;
 }
 
-.main-box::before {
+#wheelPage .main-box::before {
   content: '';
   position: absolute;
   top: 0;
@@ -475,6 +475,88 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+}
+
+/* Road page entrance animation */
+#roadPage.page-entering {
+  animation: roadPageSlideIn 0.8s ease-out forwards;
+}
+
+#roadPage.page-entering .road-container {
+  animation: roadContainerFadeIn 1.2s ease-out 0.2s forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+#roadPage.page-entering .cash-out-section {
+  animation: cashOutSlideUp 0.6s ease-out 0.5s forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+#roadPage.page-entering .lane {
+  animation: laneAppear 0.4s ease-out forwards;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* Staggered lane animation delays */
+#roadPage.page-entering .lane[data-lane="0"] { animation-delay: 0.6s; }
+#roadPage.page-entering .lane[data-lane="1"] { animation-delay: 0.65s; }
+#roadPage.page-entering .lane[data-lane="2"] { animation-delay: 0.7s; }
+#roadPage.page-entering .lane[data-lane="3"] { animation-delay: 0.75s; }
+#roadPage.page-entering .lane[data-lane="4"] { animation-delay: 0.8s; }
+#roadPage.page-entering .lane[data-lane="5"] { animation-delay: 0.85s; }
+#roadPage.page-entering .lane[data-lane="6"] { animation-delay: 0.9s; }
+#roadPage.page-entering .lane[data-lane="7"] { animation-delay: 0.95s; }
+#roadPage.page-entering .lane[data-lane="8"] { animation-delay: 1.0s; }
+#roadPage.page-entering .lane[data-lane="9"] { animation-delay: 1.05s; }
+#roadPage.page-entering .lane[data-lane="10"] { animation-delay: 1.1s; }
+#roadPage.page-entering .lane[data-lane="11"] { animation-delay: 1.15s; }
+
+@keyframes roadPageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes roadContainerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cashOutSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes laneAppear {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
 }
 
 .road-container {
