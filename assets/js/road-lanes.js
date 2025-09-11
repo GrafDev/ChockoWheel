@@ -34,14 +34,13 @@ export class RoadLanes {
     const containerRect = this.container.getBoundingClientRect()
     const containerWidth = containerRect.width
     
-    // Calculate widths for 12 lanes to fit exactly in container width
-    // First lane 10% wider than base, last lane 10% of total width
-    // Formula: 1.1x + 10x + 10% = 100%
-    // 11.1x = 90%
-    // x = 90% / 11.1 ≈ 8.108%
-    const baseLaneWidth = containerWidth * 0.08108 // Base lane width
-    const firstLaneWidth = containerWidth * 0.08919 // 10% wider than base
-    const lastLaneWidth = containerWidth * 0.10 // Last lane is 10%
+    // Calculate base lane width
+    // Formula: 1.1x + 10x + 0.1x = 100% (first lane 10% wider, last lane 10% of base, 10 middle lanes)
+    // 11.2x = 100%
+    // x = 100% / 11.2 ≈ 8.93%
+    const baseLaneWidth = containerWidth / 11.2
+    const firstLaneWidth = baseLaneWidth * 1.1  // 10% wider than base
+    const lastLaneWidth = baseLaneWidth * 0.1   // 10% of base (90% smaller)
     
     let currentX = 0
     
@@ -49,10 +48,10 @@ export class RoadLanes {
       let laneWidth
       
       if (index === 0) {
-        // First lane is 10% wider
+        // First lane is 10% wider than base
         laneWidth = firstLaneWidth
       } else if (index === this.lanes.length - 1) {
-        // Last lane is 10% width
+        // Last lane is 10% of base width (90% smaller)
         laneWidth = lastLaneWidth
       } else {
         // Middle lanes have base width
@@ -92,6 +91,33 @@ export class RoadLanes {
 
   getLaneCount() {
     return this.lanes.length
+  }
+
+  hideLanes() {
+    this.lanes.forEach(lane => {
+      lane.style.opacity = '0'
+      lane.style.transform = 'scaleX(0)'
+    })
+  }
+
+  showLanes() {
+    console.log('showLanes() called, lanes count:', this.lanes.length)
+    
+    this.lanes.forEach((lane, index) => {
+      // Reset transform and opacity for animation
+      lane.style.transformOrigin = 'left center'
+      lane.style.transition = 'opacity 0.4s ease-out, transform 0.4s ease-out'
+      
+      // Staggered animation delay
+      const delay = 600 + (index * 50)
+      console.log(`Lane ${index} will show in ${delay}ms`)
+      
+      setTimeout(() => {
+        console.log(`Showing lane ${index}`)
+        lane.style.opacity = '1'
+        lane.style.transform = 'scaleX(1)'
+      }, delay)
+    })
   }
 
   hide() {

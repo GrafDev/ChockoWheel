@@ -6,6 +6,7 @@ import { WheelAnimations } from './animations.js'
 import { WheelLightAnimation } from './wheel-light-animation.js'
 import { imagePreloader } from './image-preloader.js'
 import { setupDevPanel } from './dev-panel.js'
+import { RoadLanes } from './road-lanes.js'
 
 // CONFIGURATION
 const isDevelopment = import.meta.env.DEV;
@@ -17,6 +18,7 @@ let wheelAnimations = null;
 let wheelLightAnimation = null;
 let canvasFlameDistortion = null;
 let spinButtonBulgeAnimation = null;
+let roadLanes = null;
 
 // Preload images function
 async function preloadAllImages() {
@@ -112,6 +114,10 @@ async function initGame() {
     //   console.log('Spin button bulge animation initialized');
     // }
     
+    // Initialize Road Lanes
+    roadLanes = new RoadLanes();
+    roadLanes.init();
+    
     // Initialize GameManager
     gameManager = new GameManager();
     await gameManager.init();
@@ -128,6 +134,7 @@ async function initGame() {
     window.canvasFlameDistortion = canvasFlameDistortion;
     window.logo2FlameAnimation = persistentAnimations?.logo2FlameAnimation;
     window.persistentAnimations = persistentAnimations;
+    window.roadLanes = roadLanes;
     
     // Add resize handler directly in main.js
     window.addEventListener('resize', () => {
@@ -141,6 +148,9 @@ async function initGame() {
       if (gameManager && gameManager.modalAnimation) {
         gameManager.modalAnimation.resize();
       }
+      if (roadLanes) {
+        roadLanes.updateLanes();
+      }
     });
     
     // Also add orientationchange for mobile devices
@@ -151,6 +161,9 @@ async function initGame() {
         }
         if (gameManager && gameManager.modalAnimation) {
           gameManager.modalAnimation.resize();
+        }
+        if (roadLanes) {
+          roadLanes.updateLanes();
         }
       }, 100);
     });
