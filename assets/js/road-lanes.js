@@ -19,40 +19,85 @@ export class RoadLanes {
       return false
     }
 
+    // Calculate how many lanes to show based on aspect ratio
+    this.calculateVisibleLanes()
+    
     // Initialize lane positioning
     this.updateLanes()
     
     // Setup resize handler
-    window.addEventListener('resize', () => this.updateLanes())
+    window.addEventListener('resize', () => this.handleResize())
     
     return true
   }
 
+  calculateVisibleLanes() {
+    const containerRect = this.container.getBoundingClientRect()
+    const containerWidth = containerRect.width
+    const containerHeight = containerRect.height
+    
+    let visibleCount = 12
+    
+    // Find optimal number of lanes where base lane aspect ratio is between 1/10 and 1/4
+    for (let count = 6; count <= 12; count++) {
+      // Formula: first(1.1x) + middle((count-2)x) + last(0.1x) = containerWidth
+      // So: x * (1.1 + count - 2 + 0.1) = containerWidth
+      // Therefore: x = containerWidth / (count - 0.8)
+      const baseLaneWidth = containerWidth / (count - 0.8)
+      const aspectRatio = baseLaneWidth / containerHeight
+      
+      if (aspectRatio >= 0.1 && aspectRatio <= 0.25) {
+        visibleCount = count
+        break
+      }
+    }
+    
+    // Show/hide lanes - hide from the end (keep first lanes visible)
+    this.lanes.forEach((lane, index) => {
+      if (index < visibleCount) {
+        lane.style.display = 'block'
+      } else {
+        lane.style.display = 'none'
+      }
+    })
+    
+    console.log(`Showing ${visibleCount} of 12 lanes`)
+    this.visibleLaneCount = visibleCount
+  }
+
+  handleResize() {
+    this.calculateVisibleLanes()
+    this.updateLanes()
+  }
+
   updateLanes() {
     if (!this.container || this.lanes.length === 0) return
+    
+    // Set default if not calculated yet
+    if (!this.visibleLaneCount) {
+      this.visibleLaneCount = this.lanes.length
+    }
 
     const containerRect = this.container.getBoundingClientRect()
     const containerWidth = containerRect.width
     
-    // Calculate base lane width
-    // Formula: 1.1x + 10x + 0.1x = 100% (first lane 10% wider, last lane 10% of base, 10 middle lanes)
-    // 11.2x = 100%
-    // x = 100% / 11.2 ≈ 8.93%
-    const baseLaneWidth = containerWidth / 11.2
-    const firstLaneWidth = baseLaneWidth * 1.1  // 10% wider than base
-    const lastLaneWidth = baseLaneWidth * 0.1   // 10% of base (90% smaller)
+    // Calculate base lane width using visible lane count
+    // Formula: first(1.1x) + middle((count-2)x) + last(0.1x) = containerWidth
+    const baseLaneWidth = containerWidth / (this.visibleLaneCount - 0.8)
     
     let currentX = 0
     
     this.lanes.forEach((lane, index) => {
+      if (index >= this.visibleLaneCount) return // Skip hidden lanes
+      
       let laneWidth
       
       if (index === 0) {
-        // First lane is 10% wider than base
-        laneWidth = firstLaneWidth
-      } else if (index === this.lanes.length - 1) {
-        // Last lane is 10% of base width (90% smaller)
-        laneWidth = lastLaneWidth
+        // First lane is 1.1x (10% wider than base)
+        laneWidth = baseLaneWidth * 1.1
+      } else if (index === this.visibleLaneCount - 1) {
+        // Last visible lane is 0.1x 
+        laneWidth = baseLaneWidth * 0.1
       } else {
         // Middle lanes have base width
         laneWidth = baseLaneWidth
@@ -61,9 +106,11 @@ export class RoadLanes {
       lane.style.left = `${currentX}px`
       lane.style.width = `${laneWidth}px`
       
-      // Remove border from last lane
-      if (index === this.lanes.length - 1) {
+      // Remove border from last visible lane
+      if (index === this.visibleLaneCount - 1) {
         lane.style.borderRight = 'none'
+      } else {
+        lane.style.borderRight = '2px dashed rgba(255, 255, 255, 0.6)'
       }
       
       currentX += laneWidth

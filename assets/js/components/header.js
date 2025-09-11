@@ -144,7 +144,7 @@ export class Header {
   resize() {
     const screenWidth = this.app.screen.width
     const screenHeight = this.app.screen.height
-    const isMobile = screenWidth < 768
+    const isMobile = screenWidth < 800
     
     // Update header background
     const headerHeight = 80
