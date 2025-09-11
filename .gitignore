@@ -45,3 +45,28 @@ Thumbs.db
 .Spotlight-V100
 .Trashes
 ehthumbs.db
+
+# Package lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build artifacts
+build/
+out/
+tmp/
+temp/
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Cache directories
+.cache/
+.parcel-cache/
