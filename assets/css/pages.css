@@ -476,6 +476,10 @@
 }
 
 /* Road Page Specific Styles */
+#roadPage {
+  background-color: #6E6966;
+}
+
 #roadPage .main-box {
   margin: 0;
   padding: 0;
@@ -546,6 +550,7 @@
   align-items: center;
   justify-content: space-around;
   background-color: rgba(59, 65, 80, 0.8);
+  width: 100dvw;
   padding: 20px;
   z-index: 50;
   height: 10dvh; /* Desktop default */
@@ -634,9 +639,9 @@
 .lane {
   position: absolute;
   height: 100%;
-  border-right: 2px dashed rgba(255, 255, 255, 0.6);
   pointer-events: none;
 }
+
 
 #roadPage.page-entering .lane {
   animation: laneFade 0.4s ease-out forwards;

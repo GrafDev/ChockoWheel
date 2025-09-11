@@ -106,11 +106,31 @@ export class RoadLanes {
       lane.style.left = `${currentX}px`
       lane.style.width = `${laneWidth}px`
       
-      // Remove border from last visible lane
-      if (index === this.visibleLaneCount - 1) {
+      // Create custom dashed border through JS
+      if (index === 0 || index === this.visibleLaneCount - 1) {
+        // First and last visible lane - no border
         lane.style.borderRight = 'none'
+        lane.style.backgroundImage = 'none'
       } else {
-        lane.style.borderRight = '2px dashed rgba(255, 255, 255, 0.6)'
+        // Calculate dash parameters based on lane width
+        const dashThickness = laneWidth / 30  // толщина в 30 раз меньше ширины полосы
+        const dashLength = dashThickness * 10  // длина в 10 раз больше толщины
+        const dashSpacing = dashLength / 2     // расстояние в 2 раза меньше длины
+        const totalCycle = dashLength + dashSpacing
+        
+        lane.style.borderRight = `${dashThickness}px solid transparent`
+        lane.style.backgroundImage = `
+          repeating-linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.6) 0,
+            rgba(255, 255, 255, 0.6) ${dashLength}px,
+            transparent ${dashLength}px,
+            transparent ${totalCycle}px
+          )
+        `
+        lane.style.backgroundPosition = 'right'
+        lane.style.backgroundSize = `${dashThickness}px 100%`
+        lane.style.backgroundRepeat = 'no-repeat'
       }
       
       currentX += laneWidth

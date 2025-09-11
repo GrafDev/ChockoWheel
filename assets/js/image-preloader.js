@@ -33,6 +33,7 @@ export class ImagePreloader {
       './images/chicken-part2.png',
       './images/chicken-part3.png',
       './images/spark.png',
+      './assets/images/sidewalk.png',
       './images/button3-header.png',
       
       // Region-specific images (now all in root images folder)
