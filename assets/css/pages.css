@@ -544,6 +544,26 @@
   flex: 1;
 }
 
+.road-gradient-top,
+.road-gradient-bottom {
+  position: absolute;
+  width: 100%;
+  height: 10%;
+  left: 0;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.road-gradient-top {
+  top: 0;
+  background: linear-gradient(to bottom, #6E6966, transparent);
+}
+
+.road-gradient-bottom {
+  bottom: 0;
+  background: linear-gradient(to top, #6E6966, transparent);
+}
+
 .cash-out-section {
   display: flex;
   flex-direction: row;
