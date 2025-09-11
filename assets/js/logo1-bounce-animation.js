@@ -103,25 +103,21 @@ export class Logo1BounceAnimation {
       duration: 0.3,
       ease: "power2.inOut",
       onComplete: () => {
-        // Hide both part2 and part3 together
+        // Move entire logo up off screen
         gsap.to(this.element, {
-          opacity: 0,
-          duration: 0.3,
-          ease: "power2.inOut",
+          y: -200, // Move far up off screen
+          duration: 0.6,
+          ease: "power2.in",
           onComplete: () => {
-            // Wait 0.5 seconds then show them again
-            gsap.delayedCall(0.5, () => {
-              // Show the container back (part2 visible)
-              gsap.to(this.element, {
-                opacity: 1,
-                duration: 0.8,
-                ease: "power2.inOut"
-              })
-              // Hide part3 again
-              gsap.to(this.part3Element, {
-                opacity: 0,
-                duration: 0.1
-              })
+            // Switch parts while off screen
+            gsap.set(this.part3Element, { opacity: 0 })
+            
+            // Move to top of screen and come back down with part2
+            gsap.set(this.element, { y: -150 })
+            gsap.to(this.element, {
+              y: 0,
+              duration: 0.8,
+              ease: "power2.out"
             })
           }
         })
