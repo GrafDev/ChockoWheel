@@ -8,6 +8,7 @@ import { imagePreloader } from './image-preloader.js'
 import { setupDevPanel } from './dev-panel.js'
 import { RoadLanes } from './road-lanes.js'
 import { SidewalkLightAnimation } from './sidewalk-light-animation.js'
+import { SidewalkTreeAnimation } from './sidewalk-tree-animation.js'
 
 // CONFIGURATION
 const isDevelopment = import.meta.env.DEV;
@@ -21,6 +22,7 @@ let canvasFlameDistortion = null;
 let spinButtonBulgeAnimation = null;
 let roadLanes = null;
 let sidewalkLightAnimation = null;
+let sidewalkTreeAnimation = null;
 
 // Preload images function
 async function preloadAllImages() {
@@ -122,6 +124,10 @@ async function initGame() {
     
     // Initialize Sidewalk Light Animation
     sidewalkLightAnimation = new SidewalkLightAnimation();
+    
+    // Initialize Sidewalk Tree Animation
+    sidewalkTreeAnimation = new SidewalkTreeAnimation();
+    sidewalkTreeAnimation.init();
     
     // Initialize GameManager
     gameManager = new GameManager();

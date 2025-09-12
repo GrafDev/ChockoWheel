@@ -2,7 +2,7 @@ import { gsap } from 'gsap'
 
 export class SidewalkLightAnimation {
   constructor() {
-    this.lightElement = document.querySelector('.sidewalk-part2')
+    this.lightElement = document.querySelector('.sidewalk-light .sidewalk-part2')
     this.isActive = false
     this.currentTimeout = null
     this.init()
