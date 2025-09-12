@@ -110,7 +110,10 @@ export class RoadLanes {
       if (index === 0 || index === this.visibleLaneCount - 1) {
         // First and last visible lane - no border
         lane.style.borderRight = 'none'
-        lane.style.backgroundImage = 'none'
+        // Don't override background for sidewalk lane
+        if (!lane.classList.contains('lane-sidewalk')) {
+          lane.style.backgroundImage = 'none'
+        }
       } else {
         // Calculate dash parameters based on lane width
         const dashThickness = laneWidth / 30  // толщина в 30 раз меньше ширины полосы
