@@ -50,7 +50,7 @@ export const gameConfig = {
   elements: {
     logo1: {
       widthRatio: 0.7,   // 70% of wheel size (увеличено в 2 раза)
-      heightRatio: 0.35,  // 35% of wheel size (оставляем исходную высоту)
+      heightRatio: 0.45,  // 45% of wheel size (увеличено для 90% от родителя)
     },
     logo2: {
       widthRatio: 0.35,   // 35% of wheel size

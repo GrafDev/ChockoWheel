@@ -64,17 +64,33 @@
   position: relative;
 }
 
-.header .logo img {
-  height: 40px;
+.header .logo1 {
+  height: 50%;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.header .logo1 .logo1-part1 {
+  height: 100%;
+  width: auto;
   object-fit: contain;
 }
 
-.header .logo .logo1 {
-  height: 40px;
+.header .logo1 .logo1-animated-parts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.header .logo .logo1 img {
+.header .logo1 .logo1-animated-parts img {
   height: 100%;
+  width: auto;
+  object-fit: contain;
 }
 
 .nav-buttons {
@@ -354,14 +370,9 @@
     display: block;
   }
   
-  .header .logo {
+  .header .logo1 {
     flex: 0 0 33.33%;
-  }
-  
-  .header .logo img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
+    height: 50%;
   }
   
   .nav-buttons {
@@ -383,8 +394,8 @@
     padding: 0 10px;
   }
   
-  .header .logo img {
-    height: 25px !important;
+  .header .logo1 {
+    height: 50%;
   }
   
   .header .nav-buttons .header-btn-1,
@@ -406,8 +417,8 @@
   }
   
   
-  .header .logo img {
-    height: 20px;
+  .header .logo1 {
+    height: 50%;
   }
   
   .header .nav-buttons .header-btn-1,
@@ -673,8 +684,8 @@
 
 .lane-sidewalk {
   background-image: url('../images/sidewalk.png');
-  background-repeat: repeat;
-  background-size: auto auto;
+  background-repeat: repeat-y;
+  background-size: 100% auto;
   background-position: top left;
 }
 
