@@ -715,6 +715,7 @@
   height: 100%;
   object-fit: contain;
   z-index: 20;
+  opacity: 0;
 }
 
 
