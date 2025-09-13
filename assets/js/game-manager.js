@@ -280,6 +280,11 @@ export class GameManager {
         page.style.display = 'none'
       }
     })
+
+    // Hide leaf animation when leaving road page
+    if (this.currentPage === 'roadPage' && pageId !== 'roadPage' && window.leafAnimation) {
+      window.leafAnimation.hide()
+    }
     
     // Show target page
     const targetPage = document.getElementById(pageId)
@@ -295,7 +300,7 @@ export class GameManager {
           targetPage.classList.remove('page-entering');
         }, 1500);
         
-        // Start logo1 animation when road screen appears
+        // Start animations when road screen appears
         setTimeout(() => {
           if (window.logo1BounceAnimation) {
             // Stop first to reset state
@@ -303,8 +308,41 @@ export class GameManager {
             // Then start
             window.logo1BounceAnimation.start()
           }
+
+          // Activate road lanes
+          if (window.roadLanes) {
+            window.roadLanes.updateLanes()
+          }
+
+          // Initialize and start leaf animation
+          this.initLeafAnimation()
         }, 100)
       }
+    }
+  }
+
+  async initLeafAnimation() {
+    // Only initialize if not already done
+    if (window.leafAnimation && window.leafAnimation.isInitialized) {
+      console.log('Leaf animation already initialized, just showing')
+      window.leafAnimation.show()
+      return
+    }
+
+    console.log('Initializing leaf animation for road screen')
+
+    // Import LeafAnimation class
+    const { LeafAnimation } = await import('./leaf-animation.js')
+
+    // Create and initialize
+    window.leafAnimation = new LeafAnimation()
+    const result = await window.leafAnimation.init()
+
+    if (result) {
+      console.log('Leaf animation initialized and started')
+      window.leafAnimation.show()
+    } else {
+      console.warn('Failed to initialize leaf animation')
     }
   }
 

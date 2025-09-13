@@ -101,8 +101,8 @@ export class LeafAnimation {
       // Set anchor to center for better rotation
       leaf.anchor.set(0.5)
       
-      // Random starting position (spread across screen width)
-      leaf.x = Math.random() * (this.app.screen.width + 200) - 100 // From left edge to right edge
+      // Random starting position (all leaves start from left side off-screen)
+      leaf.x = -50 - Math.random() * 150 // Start between -50 and -200 pixels off-screen
       leaf.y = Math.random() * this.app.screen.height
       
       // Random rotation
@@ -174,11 +174,26 @@ export class LeafAnimation {
 
   resize() {
     if (!this.app) return
-    
+
     const targetElement = document.querySelector('.road-container')
     if (targetElement) {
       const rect = targetElement.getBoundingClientRect()
       this.app.renderer.resize(rect.width, rect.height)
+    }
+  }
+
+  show() {
+    if (this.app && this.app.canvas) {
+      this.app.canvas.style.display = 'block'
+      this.app.canvas.style.opacity = '1'
+      console.log('Leaf animation canvas shown')
+    }
+  }
+
+  hide() {
+    if (this.app && this.app.canvas) {
+      this.app.canvas.style.display = 'none'
+      console.log('Leaf animation canvas hidden')
     }
   }
 

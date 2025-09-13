@@ -9,7 +9,6 @@ import { setupDevPanel } from './dev-panel.js'
 import { RoadLanes } from './road-lanes.js'
 import { SidewalkLightAnimation } from './sidewalk-light-animation.js'
 import { SidewalkTreeAnimation } from './sidewalk-tree-animation.js'
-import { LeafAnimation } from './leaf-animation.js'
 
 // CONFIGURATION
 const isDevelopment = import.meta.env.DEV;
@@ -24,7 +23,6 @@ let spinButtonBulgeAnimation = null;
 let roadLanes = null;
 let sidewalkLightAnimation = null;
 let sidewalkTreeAnimation = null;
-let leafAnimation = null;
 
 // Preload images function
 async function preloadAllImages() {
@@ -131,12 +129,7 @@ async function initGame() {
     sidewalkTreeAnimation = new SidewalkTreeAnimation();
     sidewalkTreeAnimation.init();
     
-    // Initialize Leaf Animation
-    console.log('Creating leaf animation...');
-    leafAnimation = new LeafAnimation();
-    console.log('Leaf animation created, calling init...');
-    const leafResult = await leafAnimation.init();
-    console.log('Leaf animation init result:', leafResult);
+    // Leaf Animation will be initialized when needed (on road screen transition)
     
     // Initialize GameManager
     gameManager = new GameManager();
@@ -155,7 +148,6 @@ async function initGame() {
     window.logo2FlameAnimation = persistentAnimations?.logo2FlameAnimation;
     window.persistentAnimations = persistentAnimations;
     window.roadLanes = roadLanes;
-    window.leafAnimation = leafAnimation;
     
     // Add resize handler directly in main.js
     window.addEventListener('resize', () => {
@@ -172,8 +164,8 @@ async function initGame() {
       if (roadLanes) {
         roadLanes.updateLanes();
       }
-      if (leafAnimation) {
-        leafAnimation.resize();
+      if (window.leafAnimation) {
+        window.leafAnimation.resize();
       }
     });
     
@@ -189,8 +181,8 @@ async function initGame() {
         if (roadLanes) {
           roadLanes.updateLanes();
         }
-        if (leafAnimation) {
-          leafAnimation.resize();
+        if (window.leafAnimation) {
+          window.leafAnimation.resize();
         }
       }, 100);
     });
