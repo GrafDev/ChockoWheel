@@ -32,25 +32,47 @@ export class RoadLanes {
   }
 
   calculateVisibleLanes() {
+    // Ensure container is visible before calculating
+    if (!this.container.offsetWidth || !this.container.offsetHeight) {
+      console.warn('Container not visible yet, skipping calculation')
+      return
+    }
+
     const containerRect = this.container.getBoundingClientRect()
     const containerWidth = containerRect.width
     const containerHeight = containerRect.height
+
+    console.log(`Container dimensions: ${containerWidth}x${containerHeight}`)
     
     let visibleCount = 12
-    
-    // Find optimal number of lanes where base lane aspect ratio is between 1/10 and 1/4
+    let bestCount = 12
+    let bestAspectRatio = 0
+    const targetAspectRatio = 0.1 // Target 1:10 ratio
+
+    // Find lane count with aspect ratio closest to 1:10
     for (let count = 6; count <= 12; count++) {
       // Formula: first(1.1x) + middle((count-2)x) + last(0.1x) = containerWidth
       // So: x * (1.1 + count - 2 + 0.1) = containerWidth
       // Therefore: x = containerWidth / (count - 0.8)
       const baseLaneWidth = containerWidth / (count - 0.8)
       const aspectRatio = baseLaneWidth / containerHeight
-      
-      if (aspectRatio >= 0.1 && aspectRatio <= 0.25) {
-        visibleCount = count
-        break
+
+      console.log(`Count: ${count}, baseLaneWidth: ${baseLaneWidth.toFixed(2)}, aspectRatio: ${aspectRatio.toFixed(4)} (1:${(1/aspectRatio).toFixed(1)})`)
+
+      // Accept ratios between 1:30 and 1:3, but prefer closest to 1:10
+      if (aspectRatio >= 0.033 && aspectRatio <= 0.33) {
+        const distanceFromTarget = Math.abs(aspectRatio - targetAspectRatio)
+        const currentBestDistance = Math.abs(bestAspectRatio - targetAspectRatio)
+
+        if (bestAspectRatio === 0 || distanceFromTarget < currentBestDistance) {
+          bestCount = count
+          bestAspectRatio = aspectRatio
+        }
       }
     }
+
+    visibleCount = bestCount
+    console.log(`✓ Best aspect ratio: ${bestAspectRatio.toFixed(4)} (1:${(1/bestAspectRatio).toFixed(1)}) with ${bestCount} lanes`)
     
     // Show/hide lanes - hide from the end (keep first lanes visible)
     this.lanes.forEach((lane, index) => {

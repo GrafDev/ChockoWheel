@@ -311,6 +311,7 @@ export class GameManager {
 
           // Activate road lanes
           if (window.roadLanes) {
+            window.roadLanes.calculateVisibleLanes()
             window.roadLanes.updateLanes()
           }
 
