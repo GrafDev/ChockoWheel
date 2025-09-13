@@ -16,8 +16,9 @@ export class ChickenAnimation {
   
   init(element, scaleX = 1) {
     this.element = element
-    this.part2Element = document.querySelector('.chicken-part2')
-    this.part3Element = document.querySelector('.chicken-part3')
+    // Find elements within the provided container, not globally
+    this.part2Element = element ? element.querySelector('.chicken-part2') : null
+    this.part3Element = element ? element.querySelector('.chicken-part3') : null
     this.scaleX = scaleX
     
     if (!this.element) {

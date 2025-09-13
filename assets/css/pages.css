@@ -775,3 +775,17 @@
   }
 }
 
+/* Make chicken visible in road lanes */
+.lane .chicken-container {
+  opacity: 1;
+  z-index: 30; /* Above sidewalk elements */
+  width: 130%; /* 130% of lane width */
+}
+
+/* Make sidewalk lane behave like box2 for chicken positioning */
+.lane-sidewalk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

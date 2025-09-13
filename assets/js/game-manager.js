@@ -316,6 +316,9 @@ export class GameManager {
 
           // Initialize and start leaf animation
           this.initLeafAnimation()
+
+          // Initialize road chicken animation
+          this.initRoadChickenAnimation()
         }, 100)
       }
     }
@@ -343,6 +346,34 @@ export class GameManager {
       window.leafAnimation.show()
     } else {
       console.warn('Failed to initialize leaf animation')
+    }
+  }
+
+  async initRoadChickenAnimation() {
+    // Find chicken container in road (lane 0)
+    const roadChickenContainer = document.querySelector('.lane-sidewalk .chicken-container')
+
+    if (!roadChickenContainer) {
+      console.warn('Road chicken container not found')
+      return
+    }
+
+    console.log('Initializing road chicken animation')
+
+    // Import ChickenAnimation class
+    const { ChickenAnimation } = await import('./chicken-animation.js')
+
+    // Create road chicken animation instance
+    if (!window.roadChickenAnimation) {
+      window.roadChickenAnimation = new ChickenAnimation()
+    }
+
+    // Initialize with road chicken container
+    const scaleX = 1 // No flip for road chicken
+    if (window.roadChickenAnimation.init(roadChickenContainer, scaleX)) {
+      console.log('Starting road chicken animations')
+      window.roadChickenAnimation.startIdleAnimation()
+      window.roadChickenAnimation.startRotationAnimation()
     }
   }
 

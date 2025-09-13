@@ -88,7 +88,7 @@ export class LeafAnimation {
   }
 
   createLeaves() {
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 10; i++) {
       const leaf = new PIXI.Sprite(this.leafTexture)
       
       // Make leaves smaller - about 3% of screen height
